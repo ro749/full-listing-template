@@ -1,47 +1,45 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "ro749/full-listing-template",
+    "description": "This is my package full-listing-template",
     "keywords": [
-        ":vendor_name",
+        "ro749",
         "laravel",
-        ":package_slug"
+        "full-listing-template"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/ro749/full-listing-template",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "ro749",
+            "email": "45647699+ro749@users.noreply.github.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.4",
+        "php": "^8.2",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "illuminate/contracts": "^10.0||^11.0||^12.0",
+        "ro749/shared-utils": "dev-main",
+        "ro749/listing-utils": "dev-main",
+        "ro749/login-template": "dev-main"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
-        "nunomaduro/collision": "^8.8",
-        "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^10.0.0||^9.0.0",
-        "pestphp/pest": "^4.0",
-        "pestphp/pest-plugin-arch": "^4.0",
-        "pestphp/pest-plugin-laravel": "^4.0",
-        "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan-deprecation-rules": "^2.0",
-        "phpstan/phpstan-phpunit": "^2.0",
-        "spatie/laravel-ray": "^1.35"
+        "nunomaduro/collision": "^8.1.1||^7.10.0",
+        "orchestra/testbench": "^10.0.0||^9.0.0||^8.22.0",
+        "pestphp/pest": "^2.0||^3.0",
+        "pestphp/pest-plugin-arch": "^2.5||^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0||^3.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Ro749\\FullListingTemplate\\": "src/",
+            "Ro749\\FullListingTemplate\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Ro749\\FullListingTemplate\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -63,13 +61,27 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Ro749\\FullListingTemplate\\FullListingTemplateServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FullListingTemplate": "Ro749\\FullListingTemplate\\Facades\\FullListingTemplate"
             }
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../shared-utils"
+        },
+        {
+            "type": "path",
+            "url": "../listing-utils"
+        },
+        {
+            "type": "path",
+            "url": "../login-template"
+        }
+    ]
 }

@@ -1,0 +1,89 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('asesors', function (Blueprint $table) {
+            $table->id();
+            $table->string('number',4);
+            $table->string('password')->default(bcrypt('0000'));
+            $table->string('phone', 10);
+            $table->string('mail');
+            $table->string('name');
+            $table->integer('category');
+            $table->integer('status')->default(0);
+            $table->boolean('reset')->default(false);
+            $table->string('pfp')->default('');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+        Schema::create('clients', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('phone', 10);
+            $table->string('mail');
+            $table->integer('asesor')->default('');
+            $table->integer('category')->default(0);
+            $table->integer('priority')->default(0);
+            $table->string('short_comment')->default('');
+            $table->string('long_comment')->default('');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+
+        Schema::create('quotations', function (Blueprint $table) {
+            $table->id();
+            $table->integer('client');
+            $table->integer('medium');
+            $table->integer('asesor');
+            $table->integer('unit');
+            $table->integer('status')->default(0);
+            $table->decimal('quoted_price', 12, 2);
+            $table->integer('n_open')->default(0);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+
+        Schema::create('units', function (Blueprint $table) {
+            $table->id();
+            $table->integer('asesor')->nullable()->default(null);
+            $table->integer('client')->nullable()->default(null);
+            $table->string('unit',32);
+            $table->integer('status')->default(0);
+            $table->decimal('price', 12, 2);
+            $table->decimal('final_price', 12, 2)->default(0);
+            $table->date('sale_date')->default(DB::raw('CURRENT_DATE'));
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+        Schema::create('settings', function (Blueprint $table) {
+            $table->id();
+            $table->boolean('loocked');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+        Schema::create('plans', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->decimal('discount', 5, 2);
+            $table->date('final_date')->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+
+        Schema::create('planlines', function (Blueprint $table) {
+            $table->id();
+            $table->integer('plan');
+            $table->string('description');
+            $table->decimal('percent', 5, 2);
+            $table->boolean('months')->default(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+    }
+};

@@ -1,0 +1,49 @@
+<?php
+
+// config for Ro749/FullListingTemplate
+return [
+    'overrides'=>[
+        'forms'=>[
+            'AdminLogin'=>\Ro749\FullListingTemplate\Forms\AdminLogin::class,
+            'ClientComment'=>\Ro749\FullListingTemplate\Forms\ClientComment::class,
+            'ClientEdit'=>\Ro749\FullListingTemplate\Forms\ClientEdit::class,
+            'EditUser'=>\Ro749\FullListingTemplate\Forms\EditUser::class,
+            'LoginForm'=>\Ro749\FullListingTemplate\Forms\LoginForm::class,
+            'ProfileImageEdit'=>\Ro749\FullListingTemplate\Forms\ProfileImageEdit::class,
+            'QuotationEdit'=>\Ro749\FullListingTemplate\Forms\QuotationEdit::class,
+            'RegisterClient'=>\Ro749\FullListingTemplate\Forms\RegisterClient::class,
+            'RegisterUser'=>\Ro749\FullListingTemplate\Forms\RegisterUser::class,
+            'SelectClient'=>\Ro749\FullListingTemplate\Forms\SelectClient::class,
+            'UnitEdit'=>\Ro749\FullListingTemplate\Forms\UnitEdit::class,
+            'VentaEdit'=>\Ro749\FullListingTemplate\Forms\VentaEdit::class,
+        ],
+        'tables'=>[
+            'ClientProfileTable'=>\Ro749\FullListingTemplate\Tables\ClientProfileTable::class,
+            'Clients'=>\Ro749\FullListingTemplate\Tables\Clients::class,
+            'ClientsAdmin'=>\Ro749\FullListingTemplate\Tables\ClientsAdmin::class,
+            'Profile'=>\Ro749\FullListingTemplate\Tables\Profile::class,
+            'ProfileAdmin'=>\Ro749\FullListingTemplate\Tables\ProfileAdmin::class,
+            'Quotations'=>\Ro749\FullListingTemplate\Tables\Quotations::class,
+            'QuotationsAdmin'=>\Ro749\FullListingTemplate\Tables\QuotationsAdmin::class,
+            'Torre'=>\Ro749\FullListingTemplate\Tables\Torre::class,
+            'TorreAdmin'=>\Ro749\FullListingTemplate\Tables\TorreAdmin::class,
+            'Users'=>\Ro749\FullListingTemplate\Tables\Users::class,
+            'Ventas'=>\Ro749\FullListingTemplate\Tables\Ventas::class,
+        ],
+        'models'=>[
+            'Asesor'=>\Ro749\FullListingTemplate\Models\Asesor::class,
+            'Client'=>\Ro749\FullListingTemplate\Models\Client::class,
+            'Quotation'=>\Ro749\FullListingTemplate\Models\Quotation::class,
+            'Unit'=>\Ro749\FullListingTemplate\Models\Unit::class,  
+        ],
+        'controllers'=>[
+            'AdminController'=>\Ro749\FullListingTemplate\Controllers\AdminController::class,
+            'AsesorController'=>\Ro749\FullListingTemplate\Controllers\AsesorController::class,
+            'DispoController'=>\Ro749\FullListingTemplate\Controllers\DispoController::class,
+            'AdminLoginController'=>\Ro749\FullListingTemplate\Controllers\AdminLoginController::class
+        ],
+        'image_map_pro'=>\Ro749\ListingUtils\ImageMapPro\SingleImageMapPro::class,
+        'plans'=>\Ro749\ListingUtils\Plans\PlansBase::class,
+        'sender'=>\Ro749\ListingUtils\Sender\CotizationSenderBase::class
+    ]
+];
