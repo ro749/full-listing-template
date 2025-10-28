@@ -11,7 +11,8 @@ use Ro749\FullListingTemplate\Tables\QuotationsAdmin;
 use Ro749\FullListingTemplate\Tables\Ventas;
 use Ro749\FullListingTemplate\Tables\TorreAdmin;
 use Ro749\FullListingTemplate\Tables\ClientProfileTable;
-
+use Ro749\FullListingTemplate\Forms\UpdatePrices;
+use Ro749\FullListingTemplate\Tables\PreviewTable;
 class AdminController extends Controller
 {
     public function clients() {
@@ -32,6 +33,12 @@ class AdminController extends Controller
     public function ventas() {
         $table = Ventas::instance();
         return view('sales-table', ['table'=>$table]);
+    }
+
+    public function precios() {
+        $form = UpdatePrices::instanciate();
+        $table = PreviewTable::instance();
+        return view('actualizar-precios',['form'=>$form, 'table'=>$table]);
     }
 
     public function profile(Request $request){

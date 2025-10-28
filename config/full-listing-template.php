@@ -16,6 +16,7 @@ return [
             'SelectClient'=>\Ro749\FullListingTemplate\Forms\SelectClient::class,
             'UnitEdit'=>\Ro749\FullListingTemplate\Forms\UnitEdit::class,
             'VentaEdit'=>\Ro749\FullListingTemplate\Forms\VentaEdit::class,
+            'UpdatePrices'=>\Ro749\FullListingTemplate\Forms\UpdatePrices::class,
         ],
         'tables'=>[
             'ClientProfileTable'=>\Ro749\FullListingTemplate\Tables\ClientProfileTable::class,
@@ -29,6 +30,7 @@ return [
             'TorreAdmin'=>\Ro749\FullListingTemplate\Tables\TorreAdmin::class,
             'Users'=>\Ro749\FullListingTemplate\Tables\Users::class,
             'Ventas'=>\Ro749\FullListingTemplate\Tables\Ventas::class,
+            'PreviewTable'=>\Ro749\FullListingTemplate\Tables\PreviewTable::class,
         ],
         'models'=>[
             'Asesor'=>\Ro749\FullListingTemplate\Models\Asesor::class,

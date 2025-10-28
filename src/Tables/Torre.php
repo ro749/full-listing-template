@@ -33,29 +33,10 @@ class Torre extends BaseTable
                     'unit'=>new Column(
                         display:"Unidad",
                     ),
-                    'recámaras'=>new Column(
-                        display:"Recámaras",
-                    ),
-                    'baños'=>new Column(
-                        display:"Baños",
-                    ),
-                    'estacionamiento'=>new Column(
-                        display:"Estacionamiento",
-                    ),
-                    'concepto'=>new Column(
-                        display:"Concepto",
-                    ),
-                    'ubicación'=>new Column(
-                        display:"Ubicación",
-                    ),
                     'price'=>new Column(
                         display:"Precio",
                         modifier: Modifier::MONEY,
-                    ),
-                    'm2_totales'=>new Column(
-                        display:"M² Totales",
-                        modifier: Modifier::METERS,
-                    ),
+                    )
                 ],
                 filters: [],
                 backend_filters: [

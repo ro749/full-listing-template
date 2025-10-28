@@ -45,7 +45,7 @@ class DispoController extends Controller
             $cotization->n_open += 1;
             $cotization->save();
         }
-        $unit = Unit::get('id', $cotization->unit);
+        $unit = Unit::instance()->get('id', $cotization->unit);
         $asesor = Asesor::where('id', $cotization->asesor)->first();
         if(
             $unit->status != UnitsStatus::Disponible->value && (
@@ -77,7 +77,7 @@ class DispoController extends Controller
 
     function asesor(Request $request){
         $id = $request->input('id');
-        $unit = Unit::get('id', $id);
+        $unit = Unit::instance()->get('id', $id);
         $plans = config()->get('overrides.plans')::instance();
         $cotization =  config()->get('overrides.sender')::instance();
         $client_id = session()->get('client_id');
