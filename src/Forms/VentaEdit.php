@@ -13,11 +13,7 @@ class VentaEdit extends BaseForm
     {
         parent::__construct(
             model_class: Unit::class,
-            submit_text: "",
             fields: [
-                'id' => new FormField(
-                    type: InputType::HIDDEN
-                ),
                 'final_price' => new FormField(
                     type: InputType::NUMBER,
                 ),

@@ -26,8 +26,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone', 10);
-            $table->string('mail');
-            $table->integer('asesor')->default('');
+            $table->string('mail')->default('');
+            $table->integer('asesor');
             $table->integer('category')->default(0);
             $table->integer('priority')->default(0);
             $table->string('short_comment')->default('');
@@ -84,6 +84,10 @@ return new class extends Migration
             $table->boolean('months')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+
+        Schema::table('sessions', function (Blueprint $table) {
+            $table->string('guard')->nullable()->after('user_id')->default(null);
         });
     }
 };

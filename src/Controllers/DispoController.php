@@ -81,11 +81,18 @@ class DispoController extends Controller
         $plans = config()->get('overrides.plans')::instance();
         $cotization =  config()->get('overrides.sender')::instance();
         $client_id = session()->get('client_id');
+        $client = null;
+        if(!empty($client_id)){
+            $client = Client::where('id', $client_id)->value('name');
+        }
+        $asesor = Auth::guard('asesor')->user();
         return view('disponibilidad',[
             'plans'=>$plans->get(),
             'unit'=>$unit,
             'sender'=>$client_id!=null?$cotization:null,
-            'menu'=>true
+            'menu'=>true,
+            'client'=>$client,
+            'asesor'=>$asesor->name,
         ]);
     }
 }

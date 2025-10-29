@@ -14,5 +14,9 @@ class Unit extends Model
     protected $fillable = [
         'price',
         'status',
+        'asesor',
+        'client',
+        'final_price',
+        'sale_date'
     ];
 }
