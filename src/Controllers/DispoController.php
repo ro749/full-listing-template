@@ -26,7 +26,7 @@ class DispoController extends Controller
             $client = Client::where('id', $client_id)->value('name');
         }
         $asesor = Auth::guard('asesor')->user();
-        return view('disponibilidad',[
+        return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans->get(),
             'imp'=>$imp,
             'sender'=>$client!=null?$cotization:null,
@@ -52,10 +52,10 @@ class DispoController extends Controller
             $cotization->status == QuotationStatus::Pendiente->value ||
             $cotization->status == QuotationStatus::Rechazado->value)
         ){
-            return view('unavailable',['asesor'=>$asesor]);
+            return view(config('overrides.views.unavailable'),['asesor'=>$asesor]);
         }
         $plans = config()->get('overrides.plans')::instance();
-        return view('disponibilidad',[
+        return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans->get(),
             'unit'=>$unit,
             'asesor_area'=>$asesor,
@@ -67,7 +67,7 @@ class DispoController extends Controller
         $client_id = session()->get('client_id');
         if(!$client_id) return redirect()->route('client-login');
         $client = Client::where('id', $client_id)->first()->name;
-        return view('torre',[
+        return view(config('overrides.views.torre'),[
             'table'=>$torre,
             'client'=>$client,
             'asesor'=>Auth::guard('asesor')->user()->name,
@@ -86,7 +86,7 @@ class DispoController extends Controller
             $client = Client::where('id', $client_id)->value('name');
         }
         $asesor = Auth::guard('asesor')->user();
-        return view('disponibilidad',[
+        return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans->get(),
             'unit'=>$unit,
             'sender'=>$client_id!=null?$cotization:null,

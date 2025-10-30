@@ -25,7 +25,7 @@ class AsesorController extends Controller
             ]);
         $form_register = RegisterClient::instanciate();
         $form_select = SelectClient::instanciate();
-        return view('client-login', [
+        return view(config('overrides.views.client-login'), [
             'form_register'=>$form_register, 
             'form_select'=>$form_select
         ]);
@@ -33,19 +33,19 @@ class AsesorController extends Controller
 
     public function clients(){
         $table = Clients::instance();
-        return view('table-asesor', ['table'=>$table]);
+        return view(config('overrides.views.table-asesor'), ['table'=>$table]);
     }
 
     public function quotations(){
         $table = Quotations::instance();
-        return view('table-asesor', ['table'=>$table]);
+        return view(config('overrides.views.table-asesor'), ['table'=>$table]);
     }
 
     public function profile(Request $request){
         $client = DB::table('clients')->where('id', $request->input('id'))->first();
         $form = ClientComment::instanciate();
         $form->initial_data = ['long_comment'=>$client->long_comment];
-        return view('client-profile', [
+        return view(config('overrides.views.client-profile'), [
             'client'=>$client,
             'form'=>$form,
             'table'=>ClientProfileTable::instance()

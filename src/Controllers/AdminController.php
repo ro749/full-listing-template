@@ -17,35 +17,35 @@ class AdminController extends Controller
 {
     public function clients() {
         $table = ClientsAdmin::instance();
-        return view('simple-table', ['table'=>$table]);
+        return view(config('overrides.views.simple-table'), ['table'=>$table]);
     }
 
     public function quotations() {
         $table = QuotationsAdmin::instance();
-        return view('simple-table', ['table'=>$table]);
+        return view(config('overrides.views.simple-table'), ['table'=>$table]);
     }
 
     public function torre() {
         $table = TorreAdmin::instance();
-        return view('simple-table', ['table'=>$table]);
+        return view(config('overrides.views.simple-table'), ['table'=>$table]);
     }
 
     public function ventas() {
         $table = Ventas::instance();
-        return view('sales-table', ['table'=>$table]);
+        return view(config('overrides.views.sales-table'), ['table'=>$table]);
     }
 
     public function precios() {
         $form = UpdatePrices::instanciate();
         $table = PreviewTable::instance();
-        return view('actualizar-precios',['form'=>$form, 'table'=>$table]);
+        return view(config('overrides.views.actualizar-precios'),['form'=>$form, 'table'=>$table]);
     }
 
     public function profile(Request $request){
         $client = DB::table('clients')->where('id', $request->input('id'))->first();
         $form = ClientComment::instanciate();
         $form->initial_data = ['long_comment'=>$client->long_comment];
-        return view('client-profile-admin', [
+        return view(config('overrides.views.client-profile-admin'), [
             'client'=>$client,
             'form'=>$form,
             'table'=>ClientProfileTable::instance()

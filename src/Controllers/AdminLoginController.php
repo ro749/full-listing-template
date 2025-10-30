@@ -7,6 +7,6 @@ class AdminLoginController extends Controller
 {
     public function index() {
         $form = AdminLogin::instanciate();
-        return view('simple-login', ['form'=>$form]);
+        return view(config('overrides.views.simple-login'), ['form'=>$form]);
     }
 }
