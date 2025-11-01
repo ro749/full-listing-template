@@ -7,7 +7,7 @@
 
 
 <body>
-    @include('header-admin')
+    @include(config('overrides.views.header-admin'))
     <div style="height: 60px"></div>
     <div style="display:flex; flex-direction:row; justify-content:center;">
         <h4>{{ $client->name }}</h4>

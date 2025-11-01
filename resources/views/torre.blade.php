@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('head')
+    @include(config('overrides.views.head'))
 </head>
 
 
 <body>
-    @include('header')
+    @include(config('overrides.views.header'))
     <div style="padding: 1.5rem">
     @include('sharedutils::components.tables.smartTable', ['table' => $table])
     </div>

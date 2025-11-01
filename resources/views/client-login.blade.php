@@ -48,7 +48,7 @@
 
 
 <body>
-    @include('header-asesor')
+    @include(config('overrides.views.header-asesor'))
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem; flex-direction: column;">
         <a href="{{ route('disponibilidad') }}">
             <button class="btn btn-light" style="margin-bottom: 2rem">

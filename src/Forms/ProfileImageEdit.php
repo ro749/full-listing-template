@@ -19,7 +19,7 @@ class ProfileImageEdit extends BaseForm
             fields: [
                 'pfp' => new ImageUploader(
                     route: 'uploads/',
-                    view: 'pfp',
+                    view: config('overrides.views.pfp'),
                     view_data: ['user' => DB::table('asesors')->where('id', auth()->guard('asesor')->user()->id)->first()],
                     autosave: true
                 ),

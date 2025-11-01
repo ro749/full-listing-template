@@ -7,7 +7,7 @@
 
 
 <body>
-    @include('header-asesor')
+    @include(config('overrides.views.header-asesor'))
     <div style="height: 60px"></div>
     <div style="display:flex; flex-direction:row; justify-content:center;">
         <h4>{{ $client->name }}</h4>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
-@include('head')
+@include(config('overrides.views.head'))
 
 <body>
 
@@ -12,7 +11,7 @@
         </div>
         <div class="scrollbar-v show-on-scroll"></div>
         
-        @include('header')
+        @include(config('overrides.views.header'))
                 @if(isset($imp))
                     <div id="image-map-pro"></div>
                 @else
@@ -73,7 +72,7 @@
                     @endif
                 </section>
         @if(isset($asesor_area))
-        @include('asesor-area')
+        @include(config('overrides.views.asesor-area'))
         @endif
     </div>
 
@@ -142,7 +141,7 @@
     });
 </script>
 @endpush
-@include('scripts')
+@include(config('overrides.views.scripts'))
 </body>
 
 </html>

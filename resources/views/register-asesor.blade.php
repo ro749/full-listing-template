@@ -14,7 +14,7 @@
 
 
 <body>
-    @include('header-admin')
+    @include(config('overrides.views.header-admin'))
     <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
         <div class="card login-card" style="padding:1.5rem;">
             <p style="text-align:center; font-size:3vw;">Registro</p>
