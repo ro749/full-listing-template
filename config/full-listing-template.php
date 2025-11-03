@@ -63,6 +63,7 @@ return [
             'scripts'=>'full-listing-template::scripts',
             'simple-login'=>'full-listing-template::simple-login',
             'simple-table'=>'full-listing-template::simple-table',
+            'table-asesor'=>'full-listing-template::table-asesor',
             'title'=>'full-listing-template::title',
             'torre-admin'=>'full-listing-template::torre-admin',
             'torre'=>'full-listing-template::torre',
