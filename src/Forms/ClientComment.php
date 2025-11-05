@@ -3,7 +3,7 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Ro749\SharedUtils\Forms\BaseForm;
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\TextArea;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Client;
@@ -18,7 +18,7 @@ class ClientComment extends BaseForm
             success_msg: "Comentario guardado correctamente",
             fields: [
                 'long_comment' => new TextArea(),
-                'id' => new FormField(
+                'id' => new Field(
                     type: InputType::HIDDEN,
                 ),
             ],

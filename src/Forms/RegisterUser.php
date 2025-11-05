@@ -2,7 +2,7 @@
 
 namespace Ro749\FullListingTemplate\Forms;
 
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Enums\Icon;
@@ -16,28 +16,28 @@ class RegisterUser extends RegisterUserBase
         parent::__construct();
         $this->success_msg = 'Asesor registrado exitosamente. El NIP por defecto es 0000.';
         $this->fields = [
-            'name'=>new FormField(
+            'name'=>new Field(
                 type: InputType::TEXT,
                 label: "Nombre",
                 placeholder: "Escriba el nombre",
                 required: true,
                 icon: "f7:person"
             ),
-            'mail'=>new FormField(
+            'mail'=>new Field(
                 type: InputType::EMAIL,
                 label:"Email",
                 placeholder:"Escriba el email",
                 required: true,
                 icon: "mage:email"
             ),
-            'phone'=>new FormField(
+            'phone'=>new Field(
                 type: InputType::PHONE,
                 label:"Teléfono",
                 placeholder:"Escriba el teléfono",
                 required: true,
                 icon: "solar:phone-calling-linear"
             ),
-            'number'=>new FormField(
+            'number'=>new Field(
                 type: InputType::TEXT,
                 label:"Numero",
                 placeholder:"Escriba el numero",

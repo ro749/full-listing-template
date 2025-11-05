@@ -3,7 +3,7 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Ro749\SharedUtils\Forms\BaseForm;
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Client;
 class RegisterClient extends BaseForm
@@ -17,21 +17,21 @@ class RegisterClient extends BaseForm
             user: 'asesor',
             guard: 'asesor',
             fields: [
-                'name' => new FormField(
+                'name' => new Field(
                     type: InputType::TEXT,
                     label: "Nombre",
                     placeholder: "Escriba el nombre",
                     required: true,
                     icon: "f7:person"
                 ),
-                'mail' => new FormField(
+                'mail' => new Field(
                     type: InputType::EMAIL,
                     label:"Email",
                     placeholder:"Escriba el email",
                     //rules: ["required"],
                     icon: "mage:email"
                 ),
-                'phone' => new FormField(
+                'phone' => new Field(
                     type: InputType::PHONE,
                     label:"Teléfono",
                     placeholder:"Escriba el teléfono",

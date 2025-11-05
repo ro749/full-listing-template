@@ -3,7 +3,7 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Ro749\SharedUtils\Forms\LoginForm;
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 class AdminLogin extends LoginForm
 {
@@ -13,12 +13,12 @@ class AdminLogin extends LoginForm
             submit_text: "Entrar",
             redirect: route('admin-torre'),
             fields: [
-                "name" => new FormField(
+                "name" => new Field(
                     placeholder:"Usuario",
                     type: InputType::TEXT, 
                     icon: "bx bx-user"
                 ),
-                "password" => new FormField(
+                "password" => new Field(
                     placeholder:"Contraseña",
                     type: InputType::PASSWORD,
                     icon: "bx bx-lock-alt"

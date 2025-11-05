@@ -3,7 +3,7 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Ro749\SharedUtils\Forms\BaseForm;
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
@@ -16,10 +16,10 @@ class UnitEdit extends BaseForm
             model_class: Unit::class,
             submit_text: "",
             fields: [
-                'id' => new FormField(
+                'id' => new Field(
                     type: InputType::HIDDEN
                 ),
-                'price' => new FormField(
+                'price' => new Field(
                     type: InputType::NUMBER,
                 ),
                 'status' => new Selector(

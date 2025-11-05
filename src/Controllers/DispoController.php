@@ -14,12 +14,13 @@ use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Tables\Torre;
 use Ro749\FullListingTemplate\Enums\QuotationStatus;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
+use Illuminate\Support\Facades\Log;
 class DispoController extends Controller
 {
     function index() {
         $imp = config()->get('overrides.image_map_pro')::instance();
         $plans = config()->get('overrides.plans')::instance();
-        $cotization =  config()->get('overrides.sender')::instance();
+        $quotation =  config()->get('overrides.sender')::instance();
         $client_id = session()->get('client_id');
         $client = null;
         if(!empty($client_id)){
@@ -29,7 +30,7 @@ class DispoController extends Controller
         return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans->get(),
             'imp'=>$imp,
-            'sender'=>$client!=null?$cotization:null,
+            'sender'=>$client!=null?$quotation:null,
             'client'=>$client,
             'asesor'=>$asesor->name,
             'unit'=>null,
@@ -40,26 +41,39 @@ class DispoController extends Controller
 
     function client(Request $request) {
         $id = $request->input('id');
-        $cotization = Quotation::where('id', $id)->first();
+        $quotation = Quotation::where('id', $id)->first();
         if(!Auth::guard('asesor')->check() && !Auth::guard('web')->check()){
-            $cotization->n_open += 1;
-            $cotization->save();
+            $quotation->n_open += 1;
+            $quotation->save();
         }
-        $unit = Unit::instance()->get('id', $cotization->unit);
-        $asesor = Asesor::where('id', $cotization->asesor)->first();
+        $unit = Unit::instance()->get('id', $quotation->unit);
+        $asesor = Asesor::where('id', $quotation->asesor)->first();
         if(
             $unit->status != UnitsStatus::Disponible->value && (
-            $cotization->status == QuotationStatus::Pendiente->value ||
-            $cotization->status == QuotationStatus::Rechazado->value)
+            $quotation->status == QuotationStatus::Pendiente->value ||
+            $quotation->status == QuotationStatus::Rechazado->value)
         ){
             return view(config('overrides.views.unavailable'),['asesor'=>$asesor]);
         }
         $plans = config()->get('overrides.plans')::instance();
-        return view(config('overrides.views.disponibilidad'),[
-            'plans'=>$plans->get(),
+        $data = [
             'unit'=>$unit,
             'asesor_area'=>$asesor,
-        ]);
+        ];
+        if(config()->has('listing.plans.personalized_plan')){
+            $personal = config('overrides.models.PersonalPlan')::where('quotation', $quotation->id)->first();
+            if($personal){
+                $data['personal_plan'] = $personal;
+                $data['plans']=$plans->get();
+            }
+            else{
+                $data['plans']=$plans->get(needs_personal: false);
+            }
+        }
+        else{
+            $data['plans']=$plans->get();
+        }
+        return view(config('overrides.views.disponibilidad'),$data);
     }
 
     function torre(Request $request){
@@ -79,7 +93,7 @@ class DispoController extends Controller
         $id = $request->input('id');
         $unit = Unit::instance()->get('id', $id);
         $plans = config()->get('overrides.plans')::instance();
-        $cotization =  config()->get('overrides.sender')::instance();
+        $quotation =  config()->get('overrides.sender')::instance();
         $client_id = session()->get('client_id');
         $client = null;
         if(!empty($client_id)){
@@ -89,7 +103,7 @@ class DispoController extends Controller
         return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans->get(),
             'unit'=>$unit,
-            'sender'=>$client_id!=null?$cotization:null,
+            'sender'=>$client_id!=null?$quotation:null,
             'menu'=>true,
             'client'=>$client,
             'asesor'=>$asesor->name,

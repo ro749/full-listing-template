@@ -3,7 +3,7 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Ro749\SharedUtils\Forms\BaseForm;
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Unit;
@@ -14,7 +14,7 @@ class VentaEdit extends BaseForm
         parent::__construct(
             model_class: Unit::class,
             fields: [
-                'final_price' => new FormField(
+                'final_price' => new Field(
                     type: InputType::NUMBER,
                 ),
                 'asesor' => Selector::fromDB(
@@ -28,7 +28,7 @@ class VentaEdit extends BaseForm
                     label_column: 'name',
                     hot_reload: route('clients-asesor')
                 ),
-                'sale_date' => new FormField(
+                'sale_date' => new Field(
                     type: InputType::DATE,
                 ),
             ],

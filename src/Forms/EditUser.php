@@ -3,7 +3,7 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Illuminate\Support\Facades\DB;
-use Ro749\SharedUtils\Forms\FormField;
+use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\FullListingTemplate\Enums\Options;
@@ -15,31 +15,31 @@ class EditUser extends EditUserBase
     {
         parent::__construct();
         $this->fields = [
-            'id'=>new FormField(
+            'id'=>new Field(
                 type: InputType::HIDDEN,
             ),
-            'name'=>new FormField(
+            'name'=>new Field(
                 type: InputType::TEXT,
                 label: "Nombre",
                 placeholder: "Escriba el nombre",
                 required: true,
                 icon: "f7:person"
             ),
-            'mail'=>new FormField(
+            'mail'=>new Field(
                 type: InputType::EMAIL,
                 label:"Email",
                 placeholder:"Escriba el email",
                 required: true,
                 icon: "mage:email"
             ),
-            'phone'=>new FormField(
+            'phone'=>new Field(
                 type: InputType::PHONE,
                 label:"Teléfono",
                 placeholder:"Escriba el teléfono",
                 required: true,
                 icon: "solar:phone-calling-linear"
             ),
-            'number'=>new FormField(
+            'number'=>new Field(
                 type: InputType::TEXT,
                 label:"Numero",
                 placeholder:"Escriba el numero",
