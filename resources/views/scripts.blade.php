@@ -9,6 +9,7 @@
 @push('scripts')
 <script>
     var selected_unit_id = 0;
+    var data = null;
     $(function () {
       $("#date").datepicker({ 
             autoclose: true, 
@@ -16,9 +17,9 @@
       }).datepicker('update', new Date());
     });
     @if(empty($unit))
-    $(document).on('selected-unit', function(e, data) {
+    $(document).on('selected-unit', function(e, raw_data) {
         
-        data = data["unit"];
+        data = raw_data["unit"];
         selected_unit_id = data["id"];
         @stack('fill')
     });
