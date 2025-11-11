@@ -11,7 +11,7 @@ use Ro749\SharedUtils\Tables\Texts\TableTexts;
 use Ro749\SharedUtils\Models\LogicModifiers\Options;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 class PreviewTable extends BaseTable
 {

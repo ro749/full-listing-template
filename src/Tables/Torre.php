@@ -2,7 +2,7 @@
 
 namespace Ro749\FullListingTemplate\Tables;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Ro749\SharedUtils\Tables\BaseTable;
 use Ro749\SharedUtils\Getters\BaseGetter;
 use Ro749\SharedUtils\Tables\Column;
