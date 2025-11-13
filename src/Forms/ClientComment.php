@@ -15,6 +15,7 @@ class ClientComment extends BaseForm
             model_class: Client::class,
             submit_text: "Guardar",
             reload: false,
+            reset: false,
             success_msg: "Comentario guardado correctamente",
             fields: [
                 'long_comment' => new TextArea(),

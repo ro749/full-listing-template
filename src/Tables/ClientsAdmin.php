@@ -17,6 +17,7 @@ use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Enums\ClientCategories;
 use Ro749\FullListingTemplate\Forms\ClientEdit;
 use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Quotation;
 class ClientsAdmin extends BaseTable
 {
     public function __construct(){
@@ -28,10 +29,10 @@ class ClientsAdmin extends BaseTable
             ),
             form: ClientEdit::instanciate(),
             getter: new BaseGetter(
-                model_class: Client::class,
+                model_class: Client::get_class(),
                 statistics: [
                     'quotation_stats'=>new Statistic(
-                        table: 'quotations',
+                        model_class: Quotation::get_class(),
                         group_column: 'client',
                         columns: [
                             'sent'=>new StatisticColumn(

@@ -38,7 +38,7 @@ class Quotations extends BaseTable
                             table: "clients",
                             columns: [
                                 new ForeingKeyColumn("phone"),
-                                new ForeingKeyColumn("mail"),
+                                new ForeingKeyValue("Correo"),
                                 new ForeingKeyValue("Link")
                             ],
                         ),
