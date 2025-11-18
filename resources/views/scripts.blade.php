@@ -8,8 +8,11 @@
 
 @push('scripts')
 <script>
-    var selected_unit_id = 0;
+    @if(empty($unit))
     var data = null;
+    @else
+    var data = @json($unit);
+    @endif
     $(function () {
       $("#date").datepicker({ 
             autoclose: true, 

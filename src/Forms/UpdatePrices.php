@@ -20,9 +20,9 @@ class UpdatePrices extends BaseForm
                     accept: '.csv',
                     autosave: false,
                     updater: new DbUpdater(
-                            model_class: Unit::class,
-                            public_id: 'unit',
-                            required_columns: ['unit','price','status']
+                        model_class: Unit::class,
+                        public_id: 'unit',
+                        required_columns: ['unit','price','status']
                     ),
                     preview_table: PreviewTable::instance()
                 ),
