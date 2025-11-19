@@ -68,7 +68,7 @@
                     </div>
                     @include('listing-utils::Plans.plans',['plans'=>$plans])
                     @if(isset($sender))
-                    @include('listing-utils::Sender.sender-buttons',['sender'=>$sender])
+                    {!! $sender->render() !!}
                     @endif
                 </section>
         @if(isset($asesor_area))

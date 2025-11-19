@@ -59,7 +59,7 @@ class PreviewTable extends BaseTable
         );
     }
 
-    public function get($start = 0, $length = 10, $search = '',$order = [],$filters = []): mixed
+    public function get($start = 0, $length = 10, $search = '',$order = [],$filters = [],$start_date = null, $end_date = null): mixed
     {
         $data = $this->getter->get($start, $length, $search,$order,$filters);
         foreach($data['data'] as $key => &$value){
