@@ -8,11 +8,7 @@
 
 @push('scripts')
 <script>
-    @if(empty($unit))
-    var data = null;
-    @else
     var data = @json($unit);
-    @endif
     $(function () {
       $("#date").datepicker({ 
             autoclose: true, 
@@ -21,12 +17,13 @@
     });
     @if(empty($unit))
     $(document).on('selected-unit', function(e, raw_data) {
-        
         data = raw_data["unit"];
         selected_unit_id = data["id"];
+        @stack('before_fill') 
         @stack('fill')
     });
     @else
+    @stack('before_fill') 
     @stack('fill')
     @endif
 </script>
