@@ -28,7 +28,7 @@ class DispoController extends Controller
         }
         $asesor = Auth::guard('asesor')->user();
         return view(config('overrides.views.disponibilidad'),[
-            'plans'=>$plans->get(),
+            'plans'=>$plans,
             'imp'=>$imp,
             'sender'=>$client!=null?$quotation:null,
             'client'=>$client,
@@ -101,7 +101,7 @@ class DispoController extends Controller
         }
         $asesor = Auth::guard('asesor')->user();
         return view(config('overrides.views.disponibilidad'),[
-            'plans'=>$plans->get(),
+            'plans'=>$plans,
             'unit'=>$unit,
             'sender'=>$client_id!=null?$quotation:null,
             'menu'=>true,
