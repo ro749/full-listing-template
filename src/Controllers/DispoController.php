@@ -64,14 +64,15 @@ class DispoController extends Controller
             $personal = config('overrides.models.PersonalPlan')::where('quotation', $quotation->id)->first();
             if($personal){
                 $data['personal_plan'] = $personal;
-                $data['plans']=$plans->get();
+                $data['plans']=$plans;
             }
             else{
-                $data['plans']=$plans->get(needs_personal: false);
+                //$data['plans']=$plans->get(needs_personal: false);
+                $data['plans']=$plans;
             }
         }
         else{
-            $data['plans']=$plans->get();
+            $data['plans']=$plans;
         }
         return view(config('overrides.views.disponibilidad'),$data);
     }
