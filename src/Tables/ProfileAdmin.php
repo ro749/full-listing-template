@@ -16,7 +16,7 @@ class ProfileAdmin extends BaseTable
     public function __construct(){
         parent::__construct(
             getter: new BaseGetter(
-                model_class: Quotation::class,
+                model_class: Quotation::get_class(),
                 columns : [
                     'unit'=>new Column(
                         display:"Unidad",

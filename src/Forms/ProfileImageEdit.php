@@ -12,7 +12,7 @@ class ProfileImageEdit extends BaseForm
     public function __construct()
     {
         parent::__construct(
-            model_class: Asesor::class,
+            model_class: Asesor::get_class(),
             submit_text: "",
             reload: true,
             db_id: Auth::guard('asesor')->user()->id,

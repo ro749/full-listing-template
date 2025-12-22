@@ -13,7 +13,7 @@ class QuotationEdit extends BaseForm
     public function __construct()
     {
         parent::__construct(
-            model_class: Quotation::class,
+            model_class: Quotation::get_class(),
             submit_text: "",
             fields: [
                 'id' => new Field(

@@ -28,7 +28,7 @@ class Torre extends BaseTable
                 info: 'Mostrando _START_ a _END_ de _TOTAL_ Departamentos Disponibles',
             ),
             getter: new BaseGetter(
-                model_class: Unit::class,
+                model_class: Unit::get_class(),
                 columns : [
                     'unit'=>new Column(
                         display:"Unidad",

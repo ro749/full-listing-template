@@ -13,7 +13,7 @@ class UnitEdit extends BaseForm
     public function __construct()
     {
         parent::__construct(
-            model_class: Unit::class,
+            model_class: Unit::get_class(),
             submit_text: "",
             fields: [
                 'id' => new Field(

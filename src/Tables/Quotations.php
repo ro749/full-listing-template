@@ -22,7 +22,7 @@ class Quotations extends BaseTable
     public function __construct(){
         parent::__construct(
             getter: new BaseGetter(
-                model_class: Quotation::class,
+                model_class: Quotation::get_class(),
                 columns : [
                     'client'=>new Column(
                         display:"Cliente",

@@ -16,7 +16,7 @@ class TorreAdmin extends BaseTable
         parent::__construct(
             form: UnitEdit::instanciate(),
             getter: new BaseGetter(
-                model_class: Unit::class,
+                model_class: Unit::get_class(),
                 columns : [
                     'unit'=>new Column(
                         display:"Unidad",

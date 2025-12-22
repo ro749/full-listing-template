@@ -12,7 +12,7 @@ class VentaEdit extends BaseForm
     public function __construct()
     {
         parent::__construct(
-            model_class: Unit::class,
+            model_class: Unit::get_class(),
             fields: [
                 'final_price' => new Field(
                     type: InputType::NUMBER,

@@ -13,7 +13,7 @@ class ClientEdit extends BaseForm
     public function __construct()
     {
         parent::__construct(
-            model_class: Client::class,
+            model_class: Client::get_class(),
             submit_text: "",
             fields: [
                 'id' => new Field(

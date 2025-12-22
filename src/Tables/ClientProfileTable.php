@@ -26,7 +26,7 @@ class ClientProfileTable extends BaseTable
             ),
             form: QuotationEdit::instanciate(),
             getter: new BaseGetter(
-                model_class: Quotation::class,
+                model_class: Quotation::get_class(),
                 columns : [
                     'unit'=>new Column(
                         display:"Unidad",

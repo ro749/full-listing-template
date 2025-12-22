@@ -17,7 +17,7 @@ class Ventas extends BaseTable
         parent::__construct(
             form: VentaEdit::instanciate(),
             getter: new BaseGetter(
-                model_class: Unit::class,
+                model_class: Unit::get_class(),
                 columns : [
                     'unit'=>new Column(
                         display:"Unidad",
