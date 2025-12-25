@@ -2,6 +2,7 @@
 <html>
 <head>
     @include(config('overrides.views.head'))
+    @stack('styles')
 </head>
 
 

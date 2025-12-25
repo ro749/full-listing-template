@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('shared-utils::components.head')
+    @include('head')
     @push('styles')
         <style>
             #form-field-category{
@@ -50,11 +50,13 @@
 <body>
     @include(config('overrides.views.header-asesor'))
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem; flex-direction: column;">
+        @if(config('listing.not_force_client'))
         <a href="{{ route('disponibilidad') }}">
             <button class="btn btn-light" style="margin-bottom: 2rem">
                 Ver disponibilidad
             </button>
         </a>
+        @endif
         <div class="card login-card" style="padding:1.5rem;">
             <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 2rem;">
                 <img src="" style="width: 12rem">
