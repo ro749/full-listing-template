@@ -68,6 +68,7 @@ class DispoController extends Controller
             }
             else{
                 //$data['plans']=$plans->get(needs_personal: false);
+                $data['personal_plan'] = null;
                 $data['plans']=$plans;
             }
         }
