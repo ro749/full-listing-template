@@ -36,6 +36,7 @@ class DispoController extends Controller
             'unit'=>null,
             'menu'=>true,
             'asesor_area'=>$asesor,
+            'personal_plan'=>null
         ]);
     }
 
@@ -109,6 +110,7 @@ class DispoController extends Controller
             'menu'=>true,
             'client'=>$client,
             'asesor'=>$asesor->name,
+            'personal_plan'=>null
         ]);
     }
 }
