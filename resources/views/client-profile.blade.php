@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('listing-utils::head')
+    @include('full-listing-template::head')
     @stack('styles')
 </head>
 
@@ -9,13 +9,15 @@
 <body>
     @include(config('overrides.views.header-asesor'))
     <div style="height: 60px"></div>
-    <div style="display:flex; flex-direction:row; justify-content:center;">
-        <h4>{{ $client->name }}</h4>
-    </div>
-    <div style="display:flex; flex-direction:row; gap:18px; justify-content:center;">
-        <h5>{{ $client->mail }}</h5>
-        <h4></h4>
-        <h5>{{ $client->phone }}</h5>
+    <div id="client-info">
+        <div style="display:flex; flex-direction:row; justify-content:center;">
+            <h4>{{ $client->name }}</h4>
+        </div>
+        <div style="display:flex; flex-direction:row; gap:18px; justify-content:center;">
+            <h5>{{ $client->mail }}</h5>
+            <h4></h4>
+            <h5>{{ $client->phone }}</h5>
+        </div>
     </div>
     <div style="display:flex; flex-direction:row; justify-content:center;">
         <x-smartForm :form="$form" />
