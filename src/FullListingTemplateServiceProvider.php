@@ -5,6 +5,7 @@ namespace Ro749\FullListingTemplate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ro749\FullListingTemplate\Commands\FullListingTemplateCommand;
+use Ro749\FullListingTemplate\Middleware\Admin;
 
 class FullListingTemplateServiceProvider extends PackageServiceProvider
 {
@@ -22,6 +23,11 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
             ->hasMigration('create_full_listing_template_table')
             ->hasCommand(FullListingTemplateCommand::class)
             ->hasRoutes('web');
+    }
+
+    public function bootingPackage()
+    {
+        app('router')->pushMiddlewareToGroup('admin', Admin::class);
     }
 
     public function register()
