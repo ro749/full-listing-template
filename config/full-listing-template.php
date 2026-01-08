@@ -69,8 +69,22 @@ return [
             'torre'=>'full-listing-template::torre',
             'unavailable'=>'full-listing-template::unavailable',
         ],
+        'data'=>[
+            'Dashboard'=>\Ro749\FullListingTemplate\Data\Dashboard::class,
+        ],
+        'charts'=>[
+            'AsesorsChart'=>\Ro749\FullListingTemplate\Charts\AsesorsChart::class,
+        ],
         'image_map_pro'=>\Ro749\ListingUtils\ImageMapPro\SingleImageMapPro::class,
         'plans'=>\Ro749\ListingUtils\Plans\PlansBase::class,
         'sender'=>\Ro749\ListingUtils\Sender\CotizationSenderBase::class
+    ],
+    'login'=>[
+        'guard'=>'asesor',
+        'admin_guard'=>'asesor',
+        'table'=>'asesors',
+        'model'=>Ro749\FullListingTemplate\Models\Asesor::class,
+        'default_password'=>'0000',
+        'redirect'=>'/client-login',
     ]
 ];
