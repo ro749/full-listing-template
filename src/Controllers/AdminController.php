@@ -4,6 +4,7 @@ namespace Ro749\FullListingTemplate\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Ro749\SharedUtils\Controllers\Controller;
 use Ro749\FullListingTemplate\Forms\ClientComment;
 use Ro749\FullListingTemplate\Tables\ClientsAdmin;
@@ -13,6 +14,14 @@ use Ro749\FullListingTemplate\Tables\TorreAdmin;
 use Ro749\FullListingTemplate\Tables\ClientProfileTable;
 use Ro749\FullListingTemplate\Forms\UpdatePrices;
 use Ro749\FullListingTemplate\Tables\PreviewTable;
+use Ro749\FullListingTemplate\Data\Dashboard as DashboardData;
+use Ro749\SharedUtils\Statistics\ChartTime;
+use Ro749\SharedUtils\Getters\TimeGetter;
+use Ro749\FullListingTemplate\Charts\AsesorsChart;
+use Ro749\FullListingTemplate\Charts\ClientsChart;
+use Ro749\FullListingTemplate\Charts\SoldUnitsChart;
+use Ro749\FullListingTemplate\Charts\AvailableUnitsChart;
+use Ro749\FullListingTemplate\Charts\QuotesChart;
 class AdminController extends Controller
 {
     public function clients() {
@@ -60,5 +69,22 @@ class AdminController extends Controller
         return DB::table('clients')
         ->select('id', 'name as value')
         ->where('asesor', $unit->asesor)->get();
+    }
+
+    public function dashboard(){
+        $data = DashboardData::instance();
+        $asesors_chart = new AsesorsChart();
+        $clients_chart = new ClientsChart();
+        $sold_units_chart = new SoldUnitsChart();
+        $available_units_chart = new AvailableUnitsChart();
+        $quotes_chart = new QuotesChart();
+        return view('full-listing-template::dashboard', [
+            'data'=>$data,
+            'asesors_chart'=>$asesors_chart,
+            'clients_chart'=>$clients_chart,
+            'sold_units_chart'=>$sold_units_chart,
+            'available_units_chart'=>$available_units_chart,
+            'quotes_chart'=>$quotes_chart
+        ]);
     }
 }

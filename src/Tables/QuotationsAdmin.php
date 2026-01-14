@@ -50,6 +50,22 @@ class QuotationsAdmin extends BaseTable
                             column: 'unit',
                         )
                     ),
+                    'asesor'=>new Column(
+                        display:"Asesor",
+                        logic_modifier: new ForeignKey(
+                            table: 'asesors',
+                            column: 'name',
+                        )
+                    ),
+                    'status'=>new Column(
+                        display:"Status",
+                        logic_modifier: new Options(
+                            options: OptionsEnum::QuotationStatus
+                        )
+                    ),
+                    'n_open'=>new Column(
+                        display:"Vistas",
+                    ),
                     'quoted_price'=>new Column(
                         display:"Precio Cotizado",
                         modifier: Modifier::MONEY,
@@ -67,23 +83,6 @@ class QuotationsAdmin extends BaseTable
                         modifier: Modifier::DATE,
                         order: ColumnOrder::DESC
                     ),
-                    'asesor'=>new Column(
-                        display:"Asesor",
-                        logic_modifier: new ForeignKey(
-                            table: 'asesors',
-                            column: 'name',
-                        )
-                    ),
-                    'status'=>new Column(
-                        display:"Status",
-                        logic_modifier: new Options(
-                            options: OptionsEnum::QuotationStatus
-                        )
-                    ),
-                    'n_open'=>new Column(
-                        display:"Vistas",
-                    )
-
                 ],
                 filters: [],
                 backend_filters: [],

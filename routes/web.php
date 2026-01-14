@@ -13,6 +13,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/admin/client-profile', [$admin_controller, 'profile'])->name('admin-client-profile');
         Route::get('/admin/clients-asesor', [$admin_controller, 'get_clients'])->name('clients-asesor');
         Route::post('/admin/reset-password', [$admin_controller, 'reset_password'])->name('reset-password');
+        Route::get('/admin/dashboard', [$admin_controller, 'dashboard'])->name('dashboard');
     });
     Route::middleware('auth:asesor')->group(function () {
         $asesor_controller = config('overrides.controllers.AsesorController');
