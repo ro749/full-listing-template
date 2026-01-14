@@ -20,6 +20,7 @@ class AvailableUnitsChart extends BaseChart
         parent::__construct(
             data_column: 'units',
             label_column: 'label_date',
+            inverted: Unit::count(),
             getter: new TimeGetter(
                 columns: [
                     'units'=>new Column(
@@ -47,12 +48,15 @@ class AvailableUnitsChart extends BaseChart
                             'status' => new BasicFilter(
                                 id:'status',
                                 filter: function ($query,$data) {
-                                    return $query->where('status', '=', UnitsStatus::Disponible->value);
+                                    return $query->where('status', '=', UnitsStatus::Vendido->value);
                                 }
                             )
-                        ]
+                        ],
+                        cumulative: true,
+                        group_column:'sale_date'
                     ),
                 ],
+                debug: true
             )
         );
     }
