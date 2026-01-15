@@ -22,6 +22,7 @@ use Ro749\FullListingTemplate\Charts\ClientsChart;
 use Ro749\FullListingTemplate\Charts\SoldUnitsChart;
 use Ro749\FullListingTemplate\Charts\AvailableUnitsChart;
 use Ro749\FullListingTemplate\Charts\QuotesChart;
+use Ro749\FullListingTemplate\Charts\SalesChart;
 class AdminController extends Controller
 {
     public function clients() {
@@ -78,13 +79,15 @@ class AdminController extends Controller
         $sold_units_chart = new SoldUnitsChart();
         $available_units_chart = new AvailableUnitsChart();
         $quotes_chart = new QuotesChart();
+        $sales_chart = new SalesChart();
         return view('full-listing-template::dashboard', [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
             'clients_chart'=>$clients_chart,
             'sold_units_chart'=>$sold_units_chart,
             'available_units_chart'=>$available_units_chart,
-            'quotes_chart'=>$quotes_chart
+            'quotes_chart'=>$quotes_chart,
+            'sales_chart'=>$sales_chart
         ]);
     }
 }

@@ -55,7 +55,6 @@ class SoldUnitsChart extends BaseChart
                         group_column:'sale_date'
                     ),
                 ],
-                debug: true
             )
         );
     }

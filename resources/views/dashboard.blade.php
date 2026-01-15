@@ -113,6 +113,61 @@
                 </div>
             </div>
         </div>
+        <div class="col-xxl-8">
+            <div class="card h-100 radius-8 border-0">
+                <div class="card-body p-24">
+                    <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
+                        <div>
+                            <h6 class="mb-2 fw-bold text-lg">Ventas</h6>
+                            <span class="text-sm fw-medium text-secondary-light">Yearly earning overview</span>
+                        </div>
+                        <div class="">
+                            <select class="form-select form-select-sm w-auto bg-base border text-secondary-light">
+                                <option>Yearly</option>
+                                <option>Monthly</option>
+                                <option>Weekly</option>
+                                <option>Today</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-20 d-flex justify-content-center flex-wrap gap-3">
+
+                        <div class="d-inline-flex align-items-center gap-2 p-2 radius-8 border pe-36 br-hover-primary group-item">
+                            <span class="bg-neutral-100 w-44-px h-44-px text-xxl radius-8 d-flex justify-content-center align-items-center text-secondary-light group-hover:bg-primary-600 group-hover:text-white">
+                                <iconify-icon icon="fluent:cart-16-filled" class="icon"></iconify-icon>
+                            </span>
+                            <div>
+                                <span class="text-secondary-light text-sm fw-medium">Sales</span>
+                                <h6 class="text-md fw-semibold mb-0">$200k</h6>
+                            </div>
+                        </div>
+
+                        <div class="d-inline-flex align-items-center gap-2 p-2 radius-8 border pe-36 br-hover-primary group-item">
+                            <span class="bg-neutral-100 w-44-px h-44-px text-xxl radius-8 d-flex justify-content-center align-items-center text-secondary-light group-hover:bg-primary-600 group-hover:text-white">
+                                <iconify-icon icon="uis:chart" class="icon"></iconify-icon>
+                            </span>
+                            <div>
+                                <span class="text-secondary-light text-sm fw-medium">Income</span>
+                                <h6 class="text-md fw-semibold mb-0">$200k</h6>
+                            </div>
+                        </div>
+
+                        <div class="d-inline-flex align-items-center gap-2 p-2 radius-8 border pe-36 br-hover-primary group-item">
+                            <span class="bg-neutral-100 w-44-px h-44-px text-xxl radius-8 d-flex justify-content-center align-items-center text-secondary-light group-hover:bg-primary-600 group-hover:text-white">
+                                <iconify-icon icon="ph:arrow-fat-up-fill" class="icon"></iconify-icon>
+                            </span>
+                            <div>
+                                <span class="text-secondary-light text-sm fw-medium">Profit</span>
+                                <h6 class="text-md fw-semibold mb-0">$200k</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <x-chart3 :chart="$sales_chart" color="#487fff" ></x-chart3>
+                </div>
+            </div>
+        </div>
     </x-data>
     @stack('script-includes')
     @stack('scripts')
