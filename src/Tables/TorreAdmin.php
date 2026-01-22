@@ -17,19 +17,7 @@ class TorreAdmin extends BaseTable
             form: UnitEdit::instanciate(),
             getter: new BaseGetter(
                 model_class: Unit::get_class(),
-                columns : [
-                    'unit'=>new Column(
-                        display:"Unidad",
-                    ),
-                    'price'=>new Column(
-                        display:"Precio",
-                        modifier: Modifier::MONEY,
-                    ),
-                    'status'=>new Column(
-                        display:"Estado",
-                        logic_modifier: new Options (options: OptionsEnum::UnitsStatus),
-                    ),
-                ],
+                columns : Unit::get_columns(['unit','price','status']),
                 filters: [],
                 backend_filters: []
             )

@@ -5,7 +5,7 @@
     	visibility: hidden;
     }
 
-    label {
+    /*label {
     	cursor: pointer;
     	text-indent: -9999px;
     	width: 200px;
@@ -26,7 +26,7 @@
     	background: #fff;
     	border-radius: 90px;
     	transition: 0.3s;
-    }
+    }*/
 
     input:checked + label {
     	background: #bada55;

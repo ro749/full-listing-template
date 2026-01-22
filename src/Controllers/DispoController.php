@@ -2,11 +2,9 @@
 
 namespace Ro749\FullListingTemplate\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Ro749\SharedUtils\Controllers\Controller;
-use Ro749\FullListingTemplate\Senders\CotizationSender;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Quotation;

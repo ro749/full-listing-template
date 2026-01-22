@@ -29,15 +29,7 @@ class Torre extends BaseTable
             ),
             getter: new BaseGetter(
                 model_class: Unit::get_class(),
-                columns : [
-                    'unit'=>new Column(
-                        display:"Unidad",
-                    ),
-                    'price'=>new Column(
-                        display:"Precio",
-                        modifier: Modifier::MONEY,
-                    )
-                ],
+                columns : Unit::get_columns(['unit','price']),
                 filters: [],
                 backend_filters: [
                     new BasicFilter(

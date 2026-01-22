@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 @include(config('overrides.views.head'))
-
+@stack('styles')
 <body>
 
     <div id="wrapper">
@@ -66,7 +66,7 @@
 
                         <div class="spacer-double"></div>
                     </div>
-                    @include('listing-utils::Plans.plans',['plans'=>$plans])
+                    {!! $plans->render($personal_plan) !!}
                     @if(isset($sender))
                     {!! $sender->render() !!}
                     @endif
