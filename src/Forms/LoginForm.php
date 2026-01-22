@@ -16,13 +16,13 @@ class LoginForm extends LoginFormBase
                 type: InputType::TEXT,
                 placeholder:"Número de asesor", 
                 icon: "bx bx-user",
-                max_length: 4
+                max: 4
             ),
             "password" => new Field(
                 placeholder:"Nip",
                 type: InputType::PASSWORD,
                 icon: "bx bx-lock-alt",
-                max_length: 4
+                max: 4
             ),
         ];
     }

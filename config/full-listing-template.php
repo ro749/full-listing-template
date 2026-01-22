@@ -86,5 +86,39 @@ return [
         'model'=>Ro749\FullListingTemplate\Models\Asesor::class,
         'default_password'=>'0000',
         'redirect'=>'/client-login',
-    ]
+    ],
+    'options'=>[
+        "UnitsStatus" => [
+            "Disponible",
+            "Vendido",
+            "Apartado",
+            "Bloqueado"
+        ],
+        "AsesorCategories" => [
+            "Interno",
+            "Externo",
+            "Inmobiliario"
+        ],
+        "ClientCategories" => [
+            "Nuevo",
+            "Perfilado",
+            "Negociacion",
+            "Cerrado"
+        ],
+        "ClientPriorities" => [
+            "Baja",
+            "Media",
+            "Alta"
+        ],
+        "QuotationStatus"=> [
+            "Pendiente",
+            "Aprobado",
+            "Rechazado",
+            "Cerrado"
+        ],
+        "AsesorStatus"=> [
+            "Activo",
+            "Inactivo"
+        ]
+    ],
 ];

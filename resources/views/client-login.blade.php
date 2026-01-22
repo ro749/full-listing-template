@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('head')
+    @include(config('overrides.views.head'))
     @push('styles')
         <style>
             #form-field-category{

@@ -19,13 +19,16 @@
     $(document).on('selected-unit', function(e, raw_data) {
         data = raw_data["unit"];
         selected_unit_id = data["id"];
-        @stack('before_fill') 
-        @stack('fill')
+        fill_data();
     });
     @else
-    @stack('before_fill') 
-    @stack('fill')
+    fill_data();
     @endif
+    function fill_data(){
+        @stack('before_fill') 
+        @stack('fill')
+        @stack('after_fill')
+    }
 </script>
 @endpush
 @if(isset($imp))
