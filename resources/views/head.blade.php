@@ -1,15 +1,15 @@
 @include('listing-utils::head')
 @push('styles')
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
-<link href="css/plugins.css" rel="stylesheet" type="text/css" >
-<link href="css/swiper.css" rel="stylesheet" type="text/css" >
-<link href="css/style.css" rel="stylesheet" type="text/css" >
-<link href="css/coloring.css" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bootstrap">
+<link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/swiper.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/coloring.css') }}" rel="stylesheet" type="text/css" >
 <!-- custom-css -->
-<link href="css/swiper-custom-1.css" rel="stylesheet" type="text/css" >
-<link href="css/datepicker.css" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/swiper-custom-1.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" >
 <!-- color scheme -->
-<link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
+<link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css" >css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
 <style>
     /* correct head */
     .plan-div p, .plan-div span, .sender-popup p, .sender-popup h4, .sender-popup h5{

@@ -1,3 +1,6 @@
+@php
+
+@endphp
 <!DOCTYPE html>
 <html>
 <head>
@@ -204,38 +207,52 @@
                         <div class="card h-100 radius-8 border-0 overflow-hidden">
                             <div class="card-body p-24">
                                 <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                                    <h6 class="mb-2 fw-bold text-lg">Customer Overview</h6>
-                                    <div class="">
-                                        <select class="form-select form-select-sm w-auto bg-base border text-secondary-light">
-                                            <option>Yearly</option>
-                                            <option>Monthly</option>
-                                            <option>Weekly</option>
-                                            <option>Today</option>
-                                        </select>
-                                    </div>
+                                    <h6 class="mb-2 fw-bold text-lg">Modelos Disponibles</h6>
                                 </div>
 
                                 <div class="d-flex flex-wrap align-items-center mt-3">
                                     <ul class="flex-shrink-0">
+                                        @foreach($model_data as $model)
                                         <li class="d-flex align-items-center gap-2 mb-28">
-                                            <span class="w-12-px h-12-px rounded-circle bg-success-main"></span>
-                                            <span class="text-secondary-light text-sm fw-medium">Total: 500</span>
+                                            <span class="w-12-px h-12-px rounded-circle" style="background-color: {{ $model['color'] }}"></span>
+                                            <span class="text-secondary-light text-sm fw-medium">{{ $model['name'] }}: {{ $model['modelo_percent'] }}</span>
                                         </li>
-                                        <li class="d-flex align-items-center gap-2 mb-28">
-                                            <span class="w-12-px h-12-px rounded-circle bg-warning-main"></span>
-                                            <span class="text-secondary-light text-sm fw-medium">New: 500</span>
-                                        </li>
-                                        <li class="d-flex align-items-center gap-2">
-                                            <span class="w-12-px h-12-px rounded-circle bg-primary-600"></span>
-                                            <span class="text-secondary-light text-sm fw-medium">Active: 1500</span>
-                                        </li>
+                                        @endforeach
                                     </ul>
-                                    <div id="donutChart" class="flex-grow-1 apexcharts-tooltip-z-none title-style circle-none"></div>
+                                    <x-donut-chart :data="$model_data"> </x-donut-chart>
                                 </div>
 
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
+                        <h6 class="mb-2 fw-bold text-lg mb-0">Cotizaciones por Modelo</h6>
+                    </div>
+
+                    <div class="mt-32">
+
+                        @foreach($model_data as $model)
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-32">
+                            <div class="d-flex align-items-center">
+                                <img src="https://propstudios.mx/img/Soho/Modelos/ISO/{{ $model['name'] }}.png" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                                <div class="flex-grow-1">
+                                    <h6 class="text-md mb-0">{{ $model['name'] }}</h6>
+                                    <span class="text-sm text-secondary-light fw-medium"></span>
+                                </div>
+                            </div>
+                            <span class="text-primary-light text-md fw-medium"></span>
+                        </div>
+                        @endforeach
+
+                    </div>
+
                 </div>
             </div>
         </div>

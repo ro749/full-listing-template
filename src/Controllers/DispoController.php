@@ -93,7 +93,7 @@ class DispoController extends Controller
     function asesor(Request $request){
         $id = $request->input('id');
         $unit = Unit::instance()->get('id', $id);
-        $plans = config()->get('overrides.plans')::instance();
+        //$plans = config()->get('overrides.plans')::instance();
         $quotation =  config()->get('overrides.sender')::instance();
         $client_id = session()->get('client_id');
         $client = null;
@@ -102,7 +102,7 @@ class DispoController extends Controller
         }
         $asesor = Auth::guard('asesor')->user();
         return view(config('overrides.views.disponibilidad'),[
-            'plans'=>$plans,
+            //'plans'=>$plans,
             'unit'=>$unit,
             'sender'=>$client_id!=null?$quotation:null,
             'menu'=>true,

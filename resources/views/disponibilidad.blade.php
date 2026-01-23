@@ -60,7 +60,7 @@
                             
                                              
                             <div class="col-lg-8">
-                                <x-f-image :unit="$unit" id="iso" data="modelo" src="https://propstudios.mx/img//Modelos/" ext="." class="w-100 wow fadeInUp" data-wow-delay=".2s" alt=""></x-f-image>
+                                <x-f-image :unit="$unit" id="iso" data="modelo" src="https://propstudios.mx/img/Modelos/" ext="." class="w-100 wow fadeInUp" data-wow-delay=".2s" alt=""></x-f-image>
                             </div>
                         </div>
 

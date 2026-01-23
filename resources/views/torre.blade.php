@@ -12,11 +12,11 @@
     @include('sharedutils::components.tables.smartTable', ['table' => $table])
     </div>
     @push('script-includes')
-    <script src="js/vendors.js"></script>
-    <script src="js/designesia.js"></script>
-    <script src="js/validation-booking.js"></script>
-    <script src="js/swiper.js"></script>
-    <script src="js/custom-swiper-2.js"></script>
+    <script src="{{ asset('js/vendors.js') }}"></script>
+    <script src="{{ asset('js/designesia.js') }}"></script>
+    <script src="{{ asset('js/validation-booking.js') }}"></script>
+    <script src="{{ asset('js/swiper.js') }}"></script>
+    <script src="{{ asset('js/custom-swiper-2.js') }}"></script>
     @endpush
     @push('scripts')
     <script>

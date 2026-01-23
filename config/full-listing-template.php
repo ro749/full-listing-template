@@ -37,6 +37,7 @@ return [
             'Client'=>\Ro749\FullListingTemplate\Models\Client::class,
             'Quotation'=>\Ro749\FullListingTemplate\Models\Quotation::class,
             'Unit'=>\Ro749\FullListingTemplate\Models\Unit::class,  
+            'Model'=>\Ro749\FullListingTemplate\Models\Model::class,  
         ],
         'controllers'=>[
             'AdminController'=>\Ro749\FullListingTemplate\Controllers\AdminController::class,

@@ -36,6 +36,7 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
         $packageConfig = require __DIR__.'/../config/full-listing-template.php';
         config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
         config(['login' => $this->mergeConfigs($packageConfig['login'], config('login', []))]);
+        config(['options' => $this->mergeConfigs($packageConfig['options'], config('options', []))]);
     }
 
     protected function mergeConfigs(array $package, array $project): array

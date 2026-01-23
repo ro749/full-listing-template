@@ -15,14 +15,24 @@ use Ro749\FullListingTemplate\Tables\ClientProfileTable;
 use Ro749\FullListingTemplate\Forms\UpdatePrices;
 use Ro749\FullListingTemplate\Tables\PreviewTable;
 use Ro749\FullListingTemplate\Data\Dashboard as DashboardData;
-use Ro749\SharedUtils\Statistics\ChartTime;
-use Ro749\SharedUtils\Getters\TimeGetter;
 use Ro749\FullListingTemplate\Charts\AsesorsChart;
 use Ro749\FullListingTemplate\Charts\ClientsChart;
 use Ro749\FullListingTemplate\Charts\SoldUnitsChart;
 use Ro749\FullListingTemplate\Charts\AvailableUnitsChart;
 use Ro749\FullListingTemplate\Charts\QuotesChart;
 use Ro749\FullListingTemplate\Charts\SalesChart;
+
+use Ro749\SharedUtils\Getters\BaseGetter;
+use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Models\Model;
+use Ro749\SharedUtils\Models\LogicModifiers\LogicModifier;
+use Ro749\SharedUtils\Statistics\Statistic;
+use Ro749\SharedUtils\Statistics\StatisticColumn;
+use Ro749\SharedUtils\Statistics\StatisticType;
+use Ro749\SharedUtils\Tables\Column;
+use Ro749\SharedUtils\Models\LogicModifiers\ForeignKey;
+use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\SharedUtils\Statistics\StatisticLink;
 class AdminController extends Controller
 {
     public function clients() {
@@ -80,6 +90,51 @@ class AdminController extends Controller
         $available_units_chart = new AvailableUnitsChart();
         $quotes_chart = new QuotesChart();
         $sales_chart = new SalesChart();
+        $models__getter = new BaseGetter(
+            model_class: Model::get_class(),
+            columns : [
+                'name'=>new Column(
+                    display:"Modelos",
+                ),
+                'modelo_percent'=>new Column(
+                    display:"Porcentaje",
+                    logic_modifier: new ForeignKey(
+                        table: 'model_stats',
+                        column: 'modelo_percent'
+                    )
+                )
+            ],
+            statistics:[
+                'model_stats' => new Statistic(
+                    model_class: Unit::get_class(),
+                    group_column: 'modelo',
+                    columns: [
+                        'modelo_percent'=>new StatisticColumn(
+                            type: StatisticType::COUNT
+                        ),
+                    ]
+                ),
+                'quote_stats' => new Statistic(
+                    model_class: Quotation::get_class(),
+                    group_column: 'modelo',
+                    columns: [
+                        'quote_count'=>new StatisticColumn(
+                            type: StatisticType::COUNT
+                        ),
+                    ],
+                    link: new StatisticLink(
+                        model_class: Unit::get_class(),
+                        column: 'unit',
+                    )
+                )
+            ],
+            //debug: true
+        );
+        $model_data = $models__getter->get()['data'];
+        foreach($model_data as $index => $model){
+            $model_data[$index]->color = generate_color($index+1);
+        }
+        Log::info($model_data);
         return view('full-listing-template::dashboard', [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
@@ -87,7 +142,42 @@ class AdminController extends Controller
             'sold_units_chart'=>$sold_units_chart,
             'available_units_chart'=>$available_units_chart,
             'quotes_chart'=>$quotes_chart,
-            'sales_chart'=>$sales_chart
+            'sales_chart'=>$sales_chart,
+            'model_data'=>$model_data
         ]);
     }
+}
+
+function generate_color(int $seed){
+    $goldenAngle = 137.5;
+
+    $hue = ($seed * $goldenAngle) % 360;
+    $saturation = 60 + (($seed * 23) % 35);
+    $lightness = 50 + (($seed * 17) % 15); 
+    return hslToHex($hue, $saturation, $lightness);
+}
+
+function hslToHex($h, $s, $l) {
+    $s /= 100;
+    $l /= 100;
+    $c = (1 - abs(2 * $l - 1)) * $s;
+    $x = $c * (1 - abs(fmod($h / 60, 2) - 1));
+    $m = $l - $c / 2;
+    if ($h < 60) {
+        $r = $c; $g = $x; $b = 0;
+    } elseif ($h < 120) {
+        $r = $x; $g = $c; $b = 0;
+    } elseif ($h < 180) {
+        $r = 0; $g = $c; $b = $x;
+    } elseif ($h < 240) {
+        $r = 0; $g = $x; $b = $c;
+    } elseif ($h < 300) {
+        $r = $x; $g = 0; $b = $c;
+    } else {
+        $r = $c; $g = 0; $b = $x;
+    }
+    $r = round(($r + $m) * 255);
+    $g = round(($g + $m) * 255);
+    $b = round(($b + $m) * 255);
+    return sprintf("#%02x%02x%02x", $r, $g, $b);
 }
