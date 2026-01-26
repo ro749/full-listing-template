@@ -141,6 +141,13 @@ class AdminController extends Controller
         foreach($model_data as $index => $model){
             $model_data[$index]->color = generate_color($index+1);
         }
+        $total = 0;
+        foreach($model_data as $index => $model){
+            $total += $model_data[$index]->quote_count;
+        }
+        foreach($model_data as $index => $model){
+            $model_data[$index]->quote_percent = $total > 0 ? round(($model_data[$index]->quote_count / $total) * 100, 2) : 0;
+        }
         return view('full-listing-template::dashboard', [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,

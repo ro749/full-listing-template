@@ -1,5 +1,9 @@
 @php
-
+  $model_data = $model_data->toArray();
+  $model_names = array_column($model_data, 'name');
+  $model_disponibility_percents = array_column($model_data, 'modelo_percent');
+  $model_colors = array_column($model_data, 'color');
+  $model_quote_percents = array_column($model_data, 'quote_percent');
 @endphp
 <!DOCTYPE html>
 <html>
@@ -194,7 +198,7 @@
                                                 </div>
                                             </div>
                                             <span class="text-secondary-light font-xs fw-semibold">
-                                                <x-f-text id="percent_sold" :data="$data"></x-f-text>
+                                                <x-f-text id="percent_sold" :data="$data" :></x-f-text>
                                             </span>
                                         </div>
                                     </div>
@@ -219,7 +223,12 @@
                                         </li>
                                         @endforeach
                                     </ul>
-                                    <x-donut-chart :data="$model_data"> </x-donut-chart>
+                                    <x-donut-chart 
+                                        id="model-donut" 
+                                        :names="$model_names" 
+                                        :percents="$model_disponibility_percents" 
+                                        :colors="$model_colors"
+                                    > </x-donut-chart>
                                 </div>
 
                             </div>
@@ -228,31 +237,58 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-4">
-            <div class="card">
+        <div class="row gy-4">
+            <div class="col-xxl-4">
+                <div class="card">
 
-                <div class="card-body">
-                    <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                        <h6 class="mb-2 fw-bold text-lg mb-0">Cotizaciones por Modelo</h6>
-                    </div>
-
-                    <div class="mt-32">
-
-                        @foreach($model_data as $model)
-                        <div class="d-flex align-items-center justify-content-between gap-3 mb-32">
-                            <div class="d-flex align-items-center">
-                                <img src="https://propstudios.mx/img/Soho/Modelos/ISO/{{ $model['name'] }}.png" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
-                                <div class="flex-grow-1">
-                                    <h6 class="text-md mb-0">{{ $model['name'] }}</h6>
-                                    <span class="text-sm text-secondary-light fw-medium"></span>
-                                </div>
-                            </div>
-                            <span class="text-primary-light text-md fw-medium">{{ $model['quote_count'] }}</span>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
+                            <h6 class="mb-2 fw-bold text-lg mb-0">Cotizaciones por Modelo</h6>
                         </div>
-                        @endforeach
+
+                        <div class="mt-32">
+
+                            @foreach($model_data as $model)
+                            <div class="d-flex align-items-center justify-content-between gap-3 mb-32">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://propstudios.mx/img/Soho/Modelos/ISO/{{ $model['name'] }}.png" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                                    <div class="flex-grow-1">
+                                        <h6 class="text-md mb-0">{{ $model['name'] }}</h6>
+                                        <span class="text-sm text-secondary-light fw-medium"></span>
+                                    </div>
+                                </div>
+                                <span class="text-primary-light text-md fw-medium">{{ $model['quote_count'] }}</span>
+                            </div>
+                            @endforeach
+
+                        </div>
 
                     </div>
-
+                </div>
+            </div>
+            <div class="col-xxl-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
+                            <h6 class="mb-2 fw-bold text-lg mb-0">Porcentaje de Cotizaciones por Modelo</h6>
+                        </div>
+                    </div>
+                    <div class="card-body p-24 d-flex align-items-center gap-16">
+                        <x-multi-radial-chart 
+                            id="radialMultipleBar"
+                            :names="$model_names" 
+                            :percents="$model_quote_percents" 
+                            :colors="$model_colors"
+                        >
+                        </x-multi-radial-chart>
+                        <ul class="d-flex flex-column gap-12">
+                            @foreach ($model_data as $model)
+                            <li>
+                                <span class="text-lg">{{ $model['name'] }}: <span class="fw-semibold" style="color:{{ $model['color'] }}">{{ $model['quote_percent'] }}%</span> </span>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
