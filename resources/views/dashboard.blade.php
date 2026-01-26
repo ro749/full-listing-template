@@ -247,7 +247,7 @@
                                     <span class="text-sm text-secondary-light fw-medium"></span>
                                 </div>
                             </div>
-                            <span class="text-primary-light text-md fw-medium"></span>
+                            <span class="text-primary-light text-md fw-medium">{{ $model['quote_count'] }}</span>
                         </div>
                         @endforeach
 

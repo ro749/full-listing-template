@@ -102,6 +102,13 @@ class AdminController extends Controller
                         table: 'model_stats',
                         column: 'modelo_percent'
                     )
+                ),
+                'quote_count'=>new Column(
+                    display:"Cotizaciones",
+                    logic_modifier: new ForeignKey(
+                        table: 'quote_stats',
+                        column: 'quote_count'
+                    )
                 )
             ],
             statistics:[
@@ -134,7 +141,6 @@ class AdminController extends Controller
         foreach($model_data as $index => $model){
             $model_data[$index]->color = generate_color($index+1);
         }
-        Log::info($model_data);
         return view('full-listing-template::dashboard', [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
