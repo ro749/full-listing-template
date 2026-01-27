@@ -109,7 +109,14 @@ class AdminController extends Controller
                         table: 'quote_stats',
                         column: 'quote_count'
                     )
-                )
+                ),
+                'price'=>new Column(
+                    display:"Precio Promedio",
+                    logic_modifier: new ForeignKey(
+                        table: 'model_stats',
+                        column: 'price'
+                    )
+                ),
             ],
             statistics:[
                 'model_stats' => new Statistic(
@@ -118,6 +125,9 @@ class AdminController extends Controller
                     columns: [
                         'modelo_percent'=>new StatisticColumn(
                             type: StatisticType::COUNT
+                        ),
+                        'price' => new StatisticColumn(
+                            type: StatisticType::AVERAGE,
                         ),
                     ]
                 ),

@@ -254,7 +254,7 @@
                                     <img src="https://propstudios.mx/img/Soho/Modelos/ISO/{{ $model['name'] }}.png" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
                                     <div class="flex-grow-1">
                                         <h6 class="text-md mb-0">{{ $model['name'] }}</h6>
-                                        <span class="text-sm text-secondary-light fw-medium"></span>
+                                        <span class="text-sm text-secondary-light fw-medium">Precio promedio: ${{ number_format($model['price'], 2, '.', ',') }}</span>
                                     </div>
                                 </div>
                                 <span class="text-primary-light text-md fw-medium">{{ $model['quote_count'] }}</span>
