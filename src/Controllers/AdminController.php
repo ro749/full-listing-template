@@ -21,6 +21,7 @@ use Ro749\FullListingTemplate\Charts\SoldUnitsChart;
 use Ro749\FullListingTemplate\Charts\AvailableUnitsChart;
 use Ro749\FullListingTemplate\Charts\QuotesChart;
 use Ro749\FullListingTemplate\Charts\SalesChart;
+use Ro749\FullListingTemplate\Charts\AsesorsQuotesChart;
 
 use Ro749\SharedUtils\Getters\BaseGetter;
 use Ro749\FullListingTemplate\Models\Unit;
@@ -33,6 +34,8 @@ use Ro749\SharedUtils\Tables\Column;
 use Ro749\SharedUtils\Models\LogicModifiers\ForeignKey;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\SharedUtils\Statistics\StatisticLink;
+use Ro749\FullListingTemplate\Tables\AsesorsDashboard;
+
 class AdminController extends Controller
 {
     public function clients() {
@@ -90,7 +93,9 @@ class AdminController extends Controller
         $available_units_chart = new AvailableUnitsChart();
         $quotes_chart = new QuotesChart();
         $sales_chart = new SalesChart();
-        $models__getter = new BaseGetter(
+        $asesores_table = AsesorsDashboard::instance();
+        $asesors_quotes = new AsesorsQuotesChart();
+        $models_getter = new BaseGetter(
             model_class: Model::get_class(),
             columns : [
                 'name'=>new Column(
@@ -147,7 +152,10 @@ class AdminController extends Controller
             ],
             //debug: true
         );
-        $model_data = $models__getter->get()['data'];
+        //$asesors_quotes = new BaseGetter(
+        //    
+        //)
+        $model_data = $models_getter->get()['data'];
         foreach($model_data as $index => $model){
             $model_data[$index]->color = generate_color($index+1);
         }
@@ -166,7 +174,9 @@ class AdminController extends Controller
             'available_units_chart'=>$available_units_chart,
             'quotes_chart'=>$quotes_chart,
             'sales_chart'=>$sales_chart,
-            'model_data'=>$model_data
+            'model_data'=>$model_data,
+            'asesores_table'=>$asesores_table,
+            'asesors_quotes'=>$asesors_quotes
         ]);
     }
 }

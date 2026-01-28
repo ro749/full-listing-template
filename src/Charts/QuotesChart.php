@@ -2,7 +2,7 @@
 
 namespace Ro749\FullListingTemplate\Charts;
 
-use Ro749\SharedUtils\Charts\BaseChart;
+use Ro749\SharedUtils\Charts\TimeChart;
 use Ro749\SharedUtils\Getters\TimeGetter;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\SharedUtils\Statistics\Chart;
@@ -11,7 +11,7 @@ use Ro749\SharedUtils\Statistics\StatisticColumn;
 use Ro749\SharedUtils\Statistics\ChartTime;
 use Ro749\SharedUtils\Tables\Column;
 use Ro749\SharedUtils\Models\LogicModifiers\ForeignKey;
-class QuotesChart extends BaseChart
+class QuotesChart extends TimeChart
 {
     public function __construct()
     {

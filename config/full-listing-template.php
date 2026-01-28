@@ -31,6 +31,7 @@ return [
             'Users'=>\Ro749\FullListingTemplate\Tables\Users::class,
             'Ventas'=>\Ro749\FullListingTemplate\Tables\Ventas::class,
             'PreviewTable'=>\Ro749\FullListingTemplate\Tables\PreviewTable::class,
+            'AsesorsDashboard'=>\Ro749\FullListingTemplate\Tables\AsesorsDashboard::class
         ],
         'models'=>[
             'Asesor'=>\Ro749\FullListingTemplate\Models\Asesor::class,

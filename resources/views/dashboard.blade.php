@@ -1,18 +1,17 @@
 @php
+use Ro749\SharedUtils\Charts\TimeChartGetData;
+use Ro749\SharedUtils\Charts\BaseChartGetData;
+use Ro749\SharedUtils\Statistics\ChartTime;
   $model_data = $model_data->toArray();
   $model_names = array_column($model_data, 'name');
   $model_disponibility_percents = array_column($model_data, 'modelo_percent');
   $model_colors = array_column($model_data, 'color');
   $model_quote_percents = array_column($model_data, 'quote_percent');
+
+  $initial_data = new TimeChartGetData(interval: ChartTime::MONTH, number: 12);
+  $null_data = new BaseChartGetData();
 @endphp
-<!DOCTYPE html>
-<html>
-<head>
-    @include('shared-utils::components.head')
-    @stack('styles')
-</head>
-
-
+<x-layout>
 <body>
     @include(config('overrides.views.header-admin'))
     <div style="height: 60px">
@@ -35,7 +34,7 @@
                                                 <h6 class="fw-semibold"><x-f-text id="total_asesores" :data="$data"></x-f-text></h6>
                                             </div>
                                         </div>
-                                        <x-chart :chart="$asesors_chart" color="#487fff" ></x-chart>
+                                        <x-chart :chart="$asesors_chart" color="#487fff" :data="$initial_data"></x-chart>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +53,7 @@
                                                 <h6 class="fw-semibold"><x-f-text id="total_clients" :data="$data"></x-f-text></h6>
                                             </div>
                                         </div>
-                                        <x-chart :chart="$clients_chart" color="#45b369" ></x-chart>
+                                        <x-chart :chart="$clients_chart" color="#45b369" :data="$initial_data"></x-chart>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +72,7 @@
                                                 <h6 class="fw-semibold"><x-f-text id="sold_units" :data="$data"></x-f-text></h6>
                                             </div>
                                         </div>
-                                        <x-chart :chart="$sold_units_chart" color="#f4941e" ></x-chart>
+                                        <x-chart :chart="$sold_units_chart" color="#f4941e" :data="$initial_data"></x-chart>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +91,7 @@
                                                 <h6 class="fw-semibold"><x-f-text id="available_units" :data="$data"></x-f-text></h6>
                                             </div>
                                         </div>
-                                        <x-chart :chart="$available_units_chart" color="#8252e9" ></x-chart>
+                                        <x-chart :chart="$available_units_chart" color="#8252e9" :data="$initial_data"></x-chart>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +115,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <x-chart2 :chart="$quotes_chart" color="#487fff" ></x-chart2>
+                            <x-chart2 :chart="$quotes_chart" color="#487fff" :data="$initial_data"></x-chart2>
                         </div>
                     </div>
                 </div>
@@ -130,7 +129,7 @@
                             </div>
                         </div>
 
-                        <x-chart3 :chart="$sales_chart" color="#487fff" ></x-chart3>
+                        <x-chart3 :chart="$sales_chart" color="#487fff" :data="$initial_data"></x-chart3>
                     </div>
                 </div>
             </div>
@@ -292,8 +291,29 @@
                 </div>
             </div>
         </div>
+        <div class="row gy-4">
+            <div class="col-xxl-8">
+                <div class="card h-100">
+                    <div class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center justify-content-between">
+                        <h6 class="text-lg fw-semibold mb-0">Asesores</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive scroll-sm">
+                            @include('sharedutils::components.tables.smartTable', ['table' => $asesores_table])
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-xl-6">
+                <div class="card h-100">
+                    <div class="card-body p-24">
+                        <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
+                            <h6 class="mb-2 fw-bold text-lg mb-0">Cotizaciones por Tipo de Asesor</h6>
+                        </div>
+                        <x-chart3 color="#487FFF" :chart="$asesors_quotes" :data="$null_data"></x-chart3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-data>
-    @stack('script-includes')
-    @stack('scripts')
-</body>
-</html>
+</x-layout>

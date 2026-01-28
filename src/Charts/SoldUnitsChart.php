@@ -2,7 +2,7 @@
 
 namespace Ro749\FullListingTemplate\Charts;
 
-use Ro749\SharedUtils\Charts\BaseChart;
+use Ro749\SharedUtils\Charts\TimeChart;
 use Ro749\SharedUtils\Getters\TimeGetter;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\SharedUtils\Statistics\Chart;
@@ -13,7 +13,7 @@ use Ro749\SharedUtils\Tables\Column;
 use Ro749\SharedUtils\Models\LogicModifiers\ForeignKey;
 use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
-class SoldUnitsChart extends BaseChart
+class SoldUnitsChart extends TimeChart
 {
     public function __construct()
     {

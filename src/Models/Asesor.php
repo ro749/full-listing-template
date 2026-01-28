@@ -14,7 +14,8 @@ class Asesor extends Authenticable
         'category',
         'pfp',
         'status',
-        'reset'
+        'reset',
+        'last_session_register'
     ];
 
     protected $hidden = [
