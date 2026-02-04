@@ -9,7 +9,7 @@
 <link href="{{ asset('css/swiper-custom-1.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" >
 <!-- color scheme -->
-<link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css" >css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
+<link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css" >
 <style>
     /* correct head */
     .plan-div p, .plan-div span, .sender-popup p, .sender-popup h4, .sender-popup h5{
