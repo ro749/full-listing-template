@@ -14,7 +14,7 @@ class Unit extends Model
     static function get(string $column,string $id){
         return DB::table('units')->where($column,$id)->first();
     }
-    protected static function allColumns(): array
+    public static function allColumns(): array
     {
         return [
             'unit'=>new Column(
