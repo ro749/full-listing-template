@@ -66,7 +66,7 @@
 
                         <div class="spacer-double"></div>
                     </div>
-                    {!! $plans->render($personal_plan) !!}
+                    {!! $plans->render() !!}
                     @if(isset($sender))
                     {!! $sender->render() !!}
                     @endif

@@ -18,7 +18,8 @@ class DispoController extends Controller
     function index() {
         $imp = config()->get('overrides.image_map_pro')::instance();
         $plans = config()->get('overrides.plans')::instance();
-        $quotation =  config()->get('overrides.sender')::instance();
+        $senderClass = config('overrides.sender');
+        $sender = new $senderClass($plans);
         $client_id = session()->get('client_id');
         $client = null;
         if(!empty($client_id)){
@@ -28,7 +29,7 @@ class DispoController extends Controller
         return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans,
             'imp'=>$imp,
-            'sender'=>$client!=null?$quotation:null,
+            'sender'=>$client!=null?$sender:null,
             'client'=>$client,
             'asesor'=>$asesor->name,
             'unit'=>null,
@@ -54,10 +55,13 @@ class DispoController extends Controller
         ){
             return view(config('overrides.views.unavailable'),['asesor'=>$asesor]);
         }
+        $client = Client::where('id', $quotation->client)->first()->name;
         $plans = config()->get('overrides.plans')::instance();
         $data = [
             'unit'=>$unit,
             'asesor_area'=>$asesor,
+            'asesor'=>$asesor->name,
+            'client'=>$client,
         ];
         if(config()->has('listing.plans.personalized_plan')){
             $personal = config('overrides.models.PersonalPlan')::where('quotation', $quotation->id)->first();
@@ -94,7 +98,8 @@ class DispoController extends Controller
         $id = $request->input('id');
         $unit = Unit::instance()->get('id', $id);
         $plans = config()->get('overrides.plans')::instance();
-        $quotation =  config()->get('overrides.sender')::instance();
+        $senderClass = config('overrides.sender');
+        $sender = new $senderClass($plans);
         $client_id = session()->get('client_id');
         $client = null;
         if(!empty($client_id)){
@@ -104,7 +109,7 @@ class DispoController extends Controller
         return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans,
             'unit'=>$unit,
-            'sender'=>$client_id!=null?$quotation:null,
+            'sender'=>$client_id!=null?$sender:null,
             'menu'=>true,
             'client'=>$client,
             'asesor'=>$asesor->name,
