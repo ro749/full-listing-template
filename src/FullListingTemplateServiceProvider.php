@@ -6,6 +6,7 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ro749\FullListingTemplate\Commands\FullListingTemplateCommand;
 use Ro749\FullListingTemplate\Middleware\Admin;
+use Illuminate\Support\Facades\Log;
 
 class FullListingTemplateServiceProvider extends PackageServiceProvider
 {
@@ -37,6 +38,8 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
         config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
         config(['login' => $this->mergeConfigs($packageConfig['login'], config('login', []))]);
         config(['options' => $this->mergeConfigs($packageConfig['options'], config('options', []))]);
+        Log::info('FullListingTemplateServiceProvider::register');
+        Log::info(config('options'));
     }
 
     protected function mergeConfigs(array $package, array $project): array
