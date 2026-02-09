@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Selector;
-
+use Illuminate\Support\Facades\Log;
 
 class SelectClient extends BaseForm
 {
@@ -30,6 +30,9 @@ class SelectClient extends BaseForm
 
     public function prosses(Request $request): string
     {
+        if(empty($request->input('client'))){
+            return '';
+        }
         session()->put('client_id', $request->input('client'));
         return $this->redirect;
     }

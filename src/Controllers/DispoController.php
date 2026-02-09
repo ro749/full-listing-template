@@ -5,7 +5,7 @@ namespace Ro749\FullListingTemplate\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Ro749\SharedUtils\Controllers\Controller;
-use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Data\UnitData;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
@@ -46,7 +46,9 @@ class DispoController extends Controller
             $quotation->n_open += 1;
             $quotation->save();
         }
-        $unit = Unit::instance()->get('id', $quotation->unit);
+        $data_class = UnitData::get_class();
+        $data = new $data_class('id', $quotation->unit);
+        $unit = $data->get_data();
         $asesor = Asesor::where('id', $quotation->asesor)->first();
         if(
             $unit->status != UnitsStatus::Disponible->value && (
@@ -96,7 +98,9 @@ class DispoController extends Controller
 
     function asesor(Request $request){
         $id = $request->input('id');
-        $unit = Unit::instance()->get('id', $id);
+        $data_class = UnitData::get_class();
+        $data = new $data_class('id', $id);
+        $unit = $data->get_data();
         $plans = config()->get('overrides.plans')::instance();
         $senderClass = config('overrides.sender');
         $sender = new $senderClass($plans);
