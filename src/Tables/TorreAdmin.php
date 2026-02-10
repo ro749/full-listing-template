@@ -14,6 +14,7 @@ class TorreAdmin extends BaseTable
 {
     public function __construct(){
         parent::__construct(
+            page_length: 50,
             form: UnitEdit::instanciate(),
             getter: new BaseGetter(
                 model_class: Unit::get_class(),
