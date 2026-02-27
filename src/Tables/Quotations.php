@@ -78,7 +78,6 @@ class Quotations extends BaseTable
                     )
 
                 ],
-                filters: [],
                 backend_filters: [
                     new UserFilter(
                         id: 'client',

@@ -46,7 +46,6 @@ class PreviewTable extends BaseTable
                         logic_modifier: new Options (options: OptionsEnum::UnitsStatus)
                     ),
                 ],
-                filters: [],
                 backend_filters: [
                     new BasicFilter(
                         id: "id",

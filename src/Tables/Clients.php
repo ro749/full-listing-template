@@ -7,6 +7,7 @@ use Ro749\SharedUtils\Getters\BaseGetter;
 use Ro749\SharedUtils\Tables\Column;
 use Ro749\SharedUtils\Models\LogicModifiers\Options;
 use Ro749\SharedUtils\Filters\BackendFilters\UserFilter;
+use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\SharedUtils\Filters\Filters;
 use Ro749\SharedUtils\Filters\Filter;
 use Ro749\SharedUtils\Tables\View;
@@ -30,6 +31,20 @@ class Clients extends BaseTable
             ),
             page_length: 50,
             form: ClientEdit::instanciate(),
+            filters: [
+                'cartera'=>new Filters(
+                    id: 'cartera',
+                    display: 'Cartera',
+                    filters: [
+                        'abierta'=>new Filter(
+                            display: 'Abierta'
+                        ),
+                        'cerrada'=>new Filter(
+                            display: 'Cerrada'
+                        ),
+                    ]
+                )
+            ],
             getter: new BaseGetter(
                 model_class: Client::get_class(),
                 statistics: [
@@ -106,32 +121,25 @@ class Clients extends BaseTable
                         logic_modifier: new Options (options: OptionsEnum::ClientPriorities),
                     ),
                 ],
-                filters: [
-                    'cartera'=>new Filters(
-                        id: 'cartera',
-                        display: 'Cartera',
-                        filters: [
-                            'abierta'=>new Filter(
-                                display: 'Abierta',
-                                filter: function($query) {
-                                    $query->where('clients.category','!=', ClientCategories::Cerrado->value);
-                                }
-                            ),
-                            'cerrada'=>new Filter(
-                                display: 'Cerrada',
-                                filter: function($query) {
-                                    $query->where('clients.category','=', ClientCategories::Cerrado->value);
-                                }
-                            ),
-                        ]
-                    )
-                ],
+                
                 backend_filters: [
                     new UserFilter(
                         id: 'client',
                         column: 'asesor',
                         guard: 'asesor'
                     ),
+                    new BasicFilter(
+                        id: 'cartera',
+                        filter: function ($query,$data) {
+                            if(!isset($data['cartera'])) return;
+                            if($data['cartera'] == 'abierta'){
+                                $query->where('clients.category','!=', ClientCategories::Cerrado->value);
+                            }
+                            else if($data['cartera'] == 'cerrada'){
+                                $query->where('clients.category',ClientCategories::Cerrado->value);
+                            }
+                        }
+                    )
                 ]
             )
         );

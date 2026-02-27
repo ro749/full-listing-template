@@ -12,9 +12,11 @@ use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\SharedUtils\Tables\Texts\TableTexts;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
 use Ro749\FullListingTemplate\Models\Unit;
+use Illuminate\Support\Facades\Log;
 class Torre extends BaseTable
 {
     public function __construct(){
+        Log::info('Torre');
         parent::__construct(
             page_length: 50,
             view: new View(
@@ -30,7 +32,6 @@ class Torre extends BaseTable
             getter: new BaseGetter(
                 model_class: Unit::get_class(),
                 columns : Unit::get_columns(['unit','price']),
-                filters: [],
                 backend_filters: [
                     new BasicFilter(
                         id:'status',
@@ -38,7 +39,8 @@ class Torre extends BaseTable
                             return $query->where('status', '=', UnitsStatus::Disponible->value);
                         }
                     ),
-                ]
+                ],
+                debug: true
             )
         );
     }

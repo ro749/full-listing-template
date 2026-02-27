@@ -31,7 +31,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                             </span>
                                             <div>
                                                 <span class="mb-2 fw-medium text-secondary-light text-sm">Asesores</span>
-                                                <h6 class="fw-semibold"><x-f-text id="total_asesores" :data="$data"></x-f-text></h6>
+                                                <h6 class="fw-semibold"><x-f-text id="total_asesores" :data="$data"/></h6>
                                             </div>
                                         </div>
                                         <x-chart :chart="$asesors_chart" color="#487fff" :data="$initial_data"></x-chart>

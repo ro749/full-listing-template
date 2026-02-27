@@ -18,6 +18,7 @@ use Ro749\FullListingTemplate\Enums\ClientCategories;
 use Ro749\FullListingTemplate\Forms\ClientEdit;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 class ClientsAdmin extends BaseTable
 {
     public function __construct(){
@@ -28,6 +29,20 @@ class ClientsAdmin extends BaseTable
                 name: 'id'
             ),
             form: ClientEdit::instanciate(),
+            filters: [
+                'cartera'=>new Filters(
+                    id: 'cartera',
+                    display: 'Cartera',
+                    filters: [
+                        'abierta'=>new Filter(
+                            display: 'Abierta'
+                        ),
+                        'cerrada'=>new Filter(
+                            display: 'Cerrada'
+                        ),
+                    ]
+                )
+            ],
             getter: new BaseGetter(
                 model_class: Client::get_class(),
                 statistics: [
@@ -111,27 +126,20 @@ class ClientsAdmin extends BaseTable
                         logic_modifier: new Options (options: OptionsEnum::ClientPriorities),
                     ),
                 ],
-                filters: [
-                    'cartera'=>new Filters(
+                backend_filters: [
+                    new BasicFilter(
                         id: 'cartera',
-                        display: 'Cartera',
-                        filters: [
-                            'abierta'=>new Filter(
-                                display: 'Abierta',
-                                filter: function($query) {
-                                    $query->where('clients.category','!=', ClientCategories::Cerrado->value);
-                                }
-                            ),
-                            'cerrada'=>new Filter(
-                                display: 'Cerrada',
-                                filter: function($query) {
-                                    $query->where('clients.category','=', ClientCategories::Cerrado->value);
-                                }
-                            ),
-                        ]
+                        filter: function ($query,$data) {
+                            if(!isset($data['cartera'])) return;
+                            if($data['cartera'] == 'abierta'){
+                                $query->where('clients.category','!=', ClientCategories::Cerrado->value);
+                            }
+                            else if($data['cartera'] == 'cerrada'){
+                                $query->where('clients.category',ClientCategories::Cerrado->value);
+                            }
+                        }
                     )
-                ],
-                backend_filters: []
+                ]
             )
         );
     }

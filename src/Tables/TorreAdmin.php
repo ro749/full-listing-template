@@ -19,8 +19,6 @@ class TorreAdmin extends BaseTable
             getter: new BaseGetter(
                 model_class: Unit::get_class(),
                 columns : Unit::get_columns(['unit','price','status']),
-                filters: [],
-                backend_filters: []
             )
         );
     }

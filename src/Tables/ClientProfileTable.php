@@ -62,7 +62,6 @@ class ClientProfileTable extends BaseTable
                         display:"Vistas",
                     )
                 ],
-                filters: [],
                 backend_filters: [
                     new BasicFilter(
                         id: "id",

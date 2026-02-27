@@ -83,9 +83,7 @@ class QuotationsAdmin extends BaseTable
                         modifier: Modifier::DATE,
                         order: ColumnOrder::DESC
                     ),
-                ],
-                filters: [],
-                backend_filters: [],
+                ]
             ),
             view: new View(
                 url: route('client-view'),
