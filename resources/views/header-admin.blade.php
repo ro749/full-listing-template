@@ -1,12 +1,11 @@
 @php
     $items = [
-        ['label' => 'torre', 'url' => '/admin/torre'],
-        ['label' => 'ventas', 'url' => '/admin/ventas'],
+        ['label' => 'Torre', 'url' => '/admin/torre'],
+        ['label' => 'Ventas', 'url' => '/admin/ventas'],
         ['label' => 'Registrar Asesor', 'url' => '/admin/register-asesor'],
         ['label' => 'Asesores', 'url' => '/admin/asesors'],
         ['label' => 'Clientes', 'url' => '/admin/clients'],
         ['label' => 'Cotizaciones', 'url' => '/admin/cotizaciones'],
-        ['label' => 'Dashboard', 'url' => '/admin/dashboard'],
         ['label' => 'Logout', 'url' => '/logout'],
     ];
 @endphp
