@@ -45,15 +45,14 @@ class Ventas extends BaseTable
                         modifier: Modifier::DATE,
                     ),
                 ],
-                filters: [
+                backend_filters: [
                     new BasicFilter(
                         id:'status',
                         filter: function ($query,$data) {
                             return $query->where('status', '=', UnitsStatus::Vendido->value);
                         }
                     ),
-                ],
-                backend_filters: []
+                ]
             ),
         );
     }
