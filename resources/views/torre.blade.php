@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @include(config('overrides.views.head'))
-    @stack('styles')
-</head>
-
-
-<body>
+<x-layout>
     @include(config('overrides.views.header'))
     <div style="padding: 1.5rem">
     @include('sharedutils::components.tables.smartTable', ['table' => $table])
@@ -40,7 +32,4 @@
     </script>
     
     @endpush
-    @stack('script-includes')
-    @stack('scripts')
-</body>
-</html>
+</x-layout>

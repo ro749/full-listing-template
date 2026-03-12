@@ -2,7 +2,7 @@
    <div class="container relative z-2">
      <div class="row g-4 justify-content-center">                    
        <div class="col-lg-6 text-center">
-           <h2 class="wow fadeInUp" data-wow-delay=".2s" style="color: #c5693b" id="asesor-title">Tu Asesor</h2>
+           <h2 class="wow fadeInUp" data-wow-delay=".2s" style="color: var(--dark-color)" id="asesor-title">Tu Asesor</h2>
        </div>
      </div>
      <div class="row g-4 gx-5">
@@ -21,9 +21,9 @@
                    @endif
                    " class="w-60 circle" alt="">
                    <div class="mt-3">
-                       <h4 class="mb-0" style="color: #c5693b" id="asesor-name">{{ $asesor_area->name }}</h4>
-                       <div class="fw-500 id-color" id="asesor-phone">{{ $asesor_area->phone }}</div>
-                       <div class="fw-500 id-color" id="asesor-mail"><a href="mailto:{{ $asesor_area->mail }}">{{ $asesor_area->mail }}</a></div>
+                       <h4 class="mb-0" style="color: var(--dark-color)" id="asesor-name">{{ $asesor_area->name }}</h4>
+                       <div class="fw-500" style="color: var(--light-color)" id="asesor-phone">{{ $asesor_area->phone }}</div>
+                       <div class="fw-500" style="color: var(--light-color)" id="asesor-mail"><a href="mailto:{{ $asesor_area->mail }}">{{ $asesor_area->mail }}</a></div>
                </div>
            </div>
            <div class="col-md-4">

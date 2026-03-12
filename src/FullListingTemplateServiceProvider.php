@@ -5,6 +5,7 @@ namespace Ro749\FullListingTemplate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ro749\FullListingTemplate\Commands\FullListingTemplateCommand;
+use Ro749\FullListingTemplate\Commands\FixHeader;
 use Ro749\FullListingTemplate\Middleware\Admin;
 use Illuminate\Support\Facades\Log;
 
@@ -21,8 +22,12 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
             ->name('full-listing-template')
             ->hasConfigFile()
             ->hasViews()
+            ->hasAssets()
             ->hasMigration('create_full_listing_template_table')
-            ->hasCommand(FullListingTemplateCommand::class)
+            ->hasCommands([
+                FullListingTemplateCommand::class,
+                FixHeader::class
+            ])
             ->hasRoutes('web');
     }
 
@@ -38,6 +43,7 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
         config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
         config(['login' => $this->mergeConfigs($packageConfig['login'], config('login', []))]);
         config(['options' => $this->mergeConfigs($packageConfig['options'], config('options', []))]);
+        config(['auth' => $this->mergeConfigs($packageConfig['auth'], config('auth', []))]);
     }
 
     protected function mergeConfigs(array $package, array $project): array

@@ -34,5 +34,3 @@
 @if(isset($imp))
 @include('listing-utils::ImageMapPro.image-map-pro',['imp'=>$imp])
 @endif
-@stack('script-includes')
-@stack('scripts')

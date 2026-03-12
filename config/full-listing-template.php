@@ -70,6 +70,7 @@ return [
             'torre-admin'=>'full-listing-template::torre-admin',
             'torre'=>'full-listing-template::torre',
             'unavailable'=>'full-listing-template::unavailable',
+            'footer'=>'full-listing-template::footer',
         ],
         'data'=>[
             'Dashboard'=>\Ro749\FullListingTemplate\Data\Dashboard::class,
@@ -124,4 +125,18 @@ return [
             "Inactivo"
         ]
     ],
+    'auth'=>[
+        'guards' => [
+            'asesor' => [
+                'driver' => 'session',
+                'provider' => 'asesors',
+            ],
+        ],
+        'providers' => [
+            'asesors' => [
+                'driver' => 'eloquent',
+                'model' => \Ro749\FullListingTemplate\Models\Asesor::class,
+            ],
+        ],
+    ]
 ];

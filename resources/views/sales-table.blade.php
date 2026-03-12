@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @include('listing-utils::head')
-    @stack('styles')
+<x-layout>
     <style>
         .filter-on{
             background-color: gray;
         }
     </style>
-</head>
-
-
-<body>
     @include(config('overrides.views.header-admin'))
     <div style="height: 60px"></div>
     <div style="padding: 1.5rem">
@@ -38,7 +30,4 @@
         });
     </script>
     @endpush
-    @stack('script-includes')
-    @stack('scripts')
-</body>
-</html>
+</x-layout>
