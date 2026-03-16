@@ -1,6 +1,6 @@
 @php
     $items = [
-        ['label' => 'Torre', 'url' => '/admin/torre'],
+        ['label' => 'Unidades', 'url' => '/admin/unidades'],
         ['label' => 'Ventas', 'url' => '/admin/ventas'],
         ['label' => 'Registrar Asesor', 'url' => '/admin/register-asesor'],
         ['label' => 'Asesores', 'url' => '/admin/asesors'],

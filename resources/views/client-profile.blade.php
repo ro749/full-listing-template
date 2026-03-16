@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @include('full-listing-template::head')
-    @stack('styles')
-</head>
-
-
-<body>
+<x-layout>
     @include(config('overrides.views.header-asesor'))
     <div style="height: 60px"></div>
     <div id="client-info">
@@ -25,7 +17,4 @@
     <div style="padding: 1.5rem">
     @include('sharedutils::components.tables.smartTable', ['table' => $table])
     </div>
-    @stack('script-includes')
-    @stack('scripts')
-</body>
-</html>
+</x-layout>

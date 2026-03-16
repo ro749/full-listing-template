@@ -23,7 +23,9 @@
                    <div class="mt-3">
                        <h4 class="mb-0" style="color: var(--dark-color)" id="asesor-name">{{ $asesor_area->name }}</h4>
                        <div class="fw-500" style="color: var(--light-color)" id="asesor-phone">{{ $asesor_area->phone }}</div>
-                       <div class="fw-500" style="color: var(--light-color)" id="asesor-mail"><a href="mailto:{{ $asesor_area->mail }}">{{ $asesor_area->mail }}</a></div>
+                       <div class="fw-500" id="asesor-mail">
+                        <a style="color: var(--light-color)" href="mailto:{{ $asesor_area->mail }}">{{ $asesor_area->mail }}</a>
+                    </div>
                </div>
            </div>
            <div class="col-md-4">

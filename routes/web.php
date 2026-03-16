@@ -6,7 +6,7 @@ Route::middleware(['web'])->group(function () {
     Route::middleware('auth:web')->group(function () {
         $admin_controller = config('overrides.controllers.AdminController');
         Route::get('/admin/clients', [$admin_controller, 'clients']);
-        Route::get('/admin/torre', [$admin_controller, 'torre'])->name('admin-torre');
+        Route::get('/admin/unidades', [$admin_controller, 'torre'])->name('admin-torre');
         Route::get('/admin/ventas', [$admin_controller, 'ventas']);
         Route::get('/admin/actualizar-precios', [$admin_controller, 'precios'])->name('actualizar-precios');
         Route::get('/admin/cotizaciones', [$admin_controller, 'quotations']);

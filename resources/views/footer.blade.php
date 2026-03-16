@@ -5,7 +5,7 @@
                     <div class="text-center">
                         <div style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
                             @foreach ($logos as $logo)
-                                <img src="{{ image($logo) }}" class="w-400px" alt="">
+                                <img src="{{ image($logo) }}" class="footer-logo" alt="">
                             @endforeach
                         </div>
                         <div class="spacer-single"></div>

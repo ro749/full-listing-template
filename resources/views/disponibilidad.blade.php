@@ -38,4 +38,14 @@
     <script src="js/swiper.js"></script>
     <script src="js/custom-swiper-2.js"></script>
     @endpush
+    @push('scripts')
+    <script>
+        window.addEventListener('resize', function() {
+            $('body').css({
+              width: '100%',
+              height: '100%'
+            });
+        });
+    </script>
+    @endpush
 </x-layout>
