@@ -32,7 +32,7 @@
                         <i class="fs-30 icon_clock" style="height: auto; color: {{ $icon_color }};"></i>
                         <h4 class="mb-0">Horario</h4>      
                     </div>
-                    <p style="text-align: center">{{ $schedule }}</p>
+                    <p style="text-align: center">{!! $schedule !!}</p>
                 </div>
                     
                 <div class="col-lg-4 col-md-6 mb-sm-30">
