@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Log;
 class Torre extends BaseTable
 {
     public function __construct(){
-        Log::info('Torre');
         parent::__construct(
             page_length: 50,
             view: new View(
