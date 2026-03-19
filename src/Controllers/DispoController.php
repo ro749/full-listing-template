@@ -117,7 +117,6 @@ class DispoController extends Controller
             'menu'=>true,
             'client'=>$client,
             'asesor'=>$asesor->name,
-            'personal_plan'=>null,
             'asesor_area'=>$asesor,
         ]);
     }
