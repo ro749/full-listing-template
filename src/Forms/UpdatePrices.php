@@ -7,6 +7,7 @@ use Ro749\SharedUtils\Forms\FileUploader;
 use Ro749\SharedUtils\Readers\DbUpdater;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Tables\PreviewTable;
+
 class UpdatePrices extends BaseForm
 {
     public function __construct()
@@ -24,7 +25,15 @@ class UpdatePrices extends BaseForm
                         public_id: 'unit',
                         required_columns: ['unit','price','status']
                     ),
-                    preview_table: PreviewTable::instance()
+                    preview_table: PreviewTable::instance(),
+                    cancel: function(){
+                        $unit_class =Unit::get_class();
+                        $unit_class::query()->update([
+                            'new_price' => null,
+                            'new_status' => null
+                        ]);
+                    }
+
                 ),
             ],
         );

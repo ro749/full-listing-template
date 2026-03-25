@@ -22,7 +22,9 @@
         fill_data();
     });
     @else
-    fill_data();
+    $(document).ready(function () {
+        fill_data();    
+    });
     @endif
     function fill_data(){
         @stack('before_fill') 

@@ -13,6 +13,7 @@ use Ro749\FullListingTemplate\Tables\Torre;
 use Ro749\FullListingTemplate\Enums\QuotationStatus;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 class DispoController extends Controller
 {
     function index() {
@@ -64,9 +65,10 @@ class DispoController extends Controller
             'asesor_area'=>$asesor,
             'asesor'=>$asesor->name,
             'client'=>$client,
+            'personal_plan'=>null,
         ];
         if(config()->has('listing.plans.personalized_plan')){
-            $personal = config('overrides.models.PersonalPlan')::where('quotation', $quotation->id)->first();
+            $personal = DB::table('personal_plans')->where('quotation', $quotation->id)->first();
             if($personal){
                 $data['personal_plan'] = $personal;
                 $data['plans']=$plans;
