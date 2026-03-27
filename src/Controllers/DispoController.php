@@ -35,6 +35,7 @@ class DispoController extends Controller
             'asesor'=>$asesor->name,
             'unit'=>null,
             'menu'=>true,
+            'dispo_btns'=>true,
             'asesor_area'=>$asesor,
             'personal_plan'=>null
         ]);
@@ -94,7 +95,8 @@ class DispoController extends Controller
             'table'=>$torre,
             'client'=>$client,
             'asesor'=>Auth::guard('asesor')->user()->name,
-            'menu'=>true
+            'menu'=>true,
+            'dispo_btns'=>true,
         ]);
     }
 
@@ -117,9 +119,47 @@ class DispoController extends Controller
             'unit'=>$unit,
             'sender'=>$client_id!=null?$sender:null,
             'menu'=>true,
+            'dispo_btns'=>true,
             'client'=>$client,
             'asesor'=>$asesor->name,
             'asesor_area'=>$asesor,
+        ]);
+    }
+
+    function open() {
+        $imp = config()->get('overrides.image_map_pro')::instance();
+        $plans = config()->get('overrides.plans')::instance();
+        return view(config('overrides.views.disponibilidad'),[
+            'plans'=>$plans,
+            'imp'=>$imp,
+            'unit'=>null,
+            'personal_plan'=>null,
+            'dispo_btns'=>true,
+            'is_open'=>true,
+        ]);
+    }
+
+    function listado(Request $request){
+        $torre = Torre::instance();
+        $torre->view->url = route('view');
+        return view(config('overrides.views.torre'),[
+            'table'=>$torre,
+            'dispo_btns'=>true,
+            'is_open'=>true,
+        ]);
+    }
+
+    function view(Request $request){
+        $id = $request->input('id');
+        $data_class = UnitData::get_class();
+        $data = new $data_class('id', $id);
+        $unit = $data->get_data();
+        $plans = config()->get('overrides.plans')::instance();
+        return view(config('overrides.views.disponibilidad'),[
+            'plans'=>$plans,
+            'unit'=>$unit,
+            'dispo_btns'=>true,
+            'is_open'=>true,
         ]);
     }
 }

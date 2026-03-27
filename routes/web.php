@@ -33,7 +33,7 @@ Route::middleware(['web'])->group(function () {
     $dispo_controller = config('overrides.controllers.DispoController');
     Route::get('/client-view', [$dispo_controller, 'client'])->name('client-view');
     Route::get('/unavailable', [$dispo_controller, 'unavailable'])->name('unavailable');
-    Route::get('/test',function(){
-        return 'testing';
-    });
+    Route::get('/open', [$dispo_controller, 'open'])->name('open');
+    Route::get('/open/listado', [$dispo_controller, 'listado'])->name('listado');
+    Route::get('/open/view', [$dispo_controller, 'view'])->name('view');
 });
