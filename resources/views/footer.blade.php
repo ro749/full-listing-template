@@ -1,9 +1,28 @@
+<style>
+    #footer-logos{
+        justify-content: center; 
+        align-items: center; 
+    }
+    @media (min-width: 768px) {
+        #plan-div-personal{
+            width: 50%;
+        }
+        #footer-logos{
+            gap: 6rem;
+        }
+    }
+    @media (max-width: 768px) {
+        #footer-logos{
+            gap: 1rem;
+        }
+    }
+</style>
 <footer class="section-dark" style="background-color:{{ $color }} !important;">
         <div class="container">
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8">
                     <div class="text-center">
-                        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; gap: 6rem">
+                        <div id="footer-logos" class="responsive-row" style="">
                             @foreach ($logos as $logo)
                                 <img src="{{ image($logo) }}" class="footer-logo" alt="">
                             @endforeach
