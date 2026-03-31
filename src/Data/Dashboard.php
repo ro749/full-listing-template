@@ -30,7 +30,6 @@ class Dashboard extends Data
         $ans->percent_available = round($total_units > 0 ? $ans->available_units*100.0 / $total_units : 0,2).'%';
         $ans->percent_sold = round($total_units > 0 ? $ans->sold_units*100.0 / $total_units : 0,2).'%';
         $ans->percent_apartado = round($total_units > 0 ? $total_apartado*100.0 / $total_units : 0,2).'%';
-        Log::debug(json_encode($ans,JSON_PRETTY_PRINT));
         return $ans;
     }
 }
