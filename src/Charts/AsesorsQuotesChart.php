@@ -35,16 +35,16 @@ class AsesorsQuotesChart extends BaseChart
                 [
                     'quote_stats'=>new Statistic(
                         model_class: Quotation::get_class(),
-                        group_column: 'status',
+                        group_column: 'asesor',
                         columns: [
                             'quote_count'=>new StatisticColumn(
                                 type: StatisticType::COUNT
                             ),
                         ],
-                        link: new StatisticLink(
+                        links: [new StatisticLink(
                             model_class: Asesor::get_class(),
-                            column: 'asesor',
-                        )
+                            column: 'status',
+                        )]
                     )
                 ]
             )
