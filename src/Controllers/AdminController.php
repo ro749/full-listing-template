@@ -138,16 +138,16 @@ class AdminController extends Controller
                 ),
                 'quote_stats' => new Statistic(
                     model_class: Quotation::get_class(),
-                    group_column: 'modelo',
+                    group_column: 'unit',
                     columns: [
                         'quote_count'=>new StatisticColumn(
                             type: StatisticType::COUNT
                         ),
                     ],
-                    link: new StatisticLink(
+                    links: [new StatisticLink(
                         model_class: Unit::get_class(),
-                        column: 'unit',
-                    )
+                        column: 'modelo',
+                    )]
                 )
             ],
             //debug: true
