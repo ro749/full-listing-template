@@ -9,14 +9,12 @@ use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\TextArea;
-use Ro749\FullListingTemplate\Enums\UnitsStatus;
-use Ro749\OpenListingTemplate\Mail\ContactMail;
+use Ro749\FullListingTemplate\Mail\ContactMail;
 
 class Contact extends BaseForm
 {
     public string $mail_to = '';
     public function __construct(
-        string $mail_to = '',
         string $unit_column = 'unit',
         string $status_column = 'status',
     )
@@ -41,17 +39,17 @@ class Contact extends BaseForm
                     label: 'Teléfono',
                     rules: ["required"]
                 ),
-                'unit' => Selector::fromDB(
-                    id: 'unitselector',
-                    table: (new (config('overrides.models.Unit')))->getTable(),
-                    label_column: $unit_column,
-                    label: "Unidad de interés",
-                    rules: ["required"],
-                    query_modifier: function ($query) use ($status_column) {
-                        $query->where($status_column, UnitsStatus::Disponible->value);
-                    }
-
-                ),
+                //'unit' => Selector::fromDB(
+                //    id: 'unitselector',
+                //    table: (new (config('overrides.models.Unit')))->getTable(),
+                //    label_column: $unit_column,
+                //    label: "Unidad de interés",
+                //    rules: ["required"],
+                //    query_modifier: function ($query) use ($status_column) {
+                //        $query->where($status_column, UnitsStatus::Disponible->value);
+                //    }
+//
+                //),
                 'message' => new TextArea(
                     label: 'Mensaje',
                     rows: 3
@@ -59,7 +57,7 @@ class Contact extends BaseForm
 
             ],
         );
-        $this->mail_to = $mail_to;
+        $this->mail_to = config('listing.open.mail_to');
     }
 
     public function prosses(Request $rawRequest): string
