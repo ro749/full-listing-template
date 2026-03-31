@@ -129,7 +129,6 @@ class DispoController extends Controller
     function open() {
         $imp = config()->get('overrides.image_map_pro')::instance();
         $plans = config()->get('overrides.plans')::instance();
-        $form = config('overrides.forms.Contact')::instanciate();
         return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans,
             'imp'=>$imp,
@@ -137,7 +136,6 @@ class DispoController extends Controller
             'personal_plan'=>null,
             'dispo_btns'=>true,
             'is_open'=>true,
-            'form'=>$form,
         ]);
     }
 

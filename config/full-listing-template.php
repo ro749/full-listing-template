@@ -17,7 +17,6 @@ return [
             'UnitEdit'=>\Ro749\FullListingTemplate\Forms\UnitEdit::class,
             'VentaEdit'=>\Ro749\FullListingTemplate\Forms\VentaEdit::class,
             'UpdatePrices'=>\Ro749\FullListingTemplate\Forms\UpdatePrices::class,
-            'Contact'=>\Ro749\FullListingTemplate\Forms\Contact::class,
         ],
         'tables'=>[
             'ClientProfileTable'=>\Ro749\FullListingTemplate\Tables\ClientProfileTable::class,
