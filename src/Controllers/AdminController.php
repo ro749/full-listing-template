@@ -38,6 +38,9 @@ use Ro749\FullListingTemplate\Tables\AsesorsDashboard;
 
 class AdminController extends Controller
 {
+    protected $model_imgs_route = "https://propstudios.mx/img/Soho/Modelos/ISO/";
+    protected $imgs_type = "png";
+
     public function clients() {
         $table = ClientsAdmin::instance();
         return view(config('overrides.views.simple-table'), ['table'=>$table]);
@@ -137,16 +140,16 @@ class AdminController extends Controller
                     ]
                 ),
                 'quote_stats' => new Statistic(
-                    model_class: Quotation::get_class(),
-                    group_column: 'unit',
+                    model_class: Unit::get_class(),
+                    group_column: 'modelo',
                     columns: [
                         'quote_count'=>new StatisticColumn(
                             type: StatisticType::COUNT
                         ),
                     ],
                     links: [new StatisticLink(
-                        model_class: Unit::get_class(),
-                        column: 'modelo',
+                        model_class: Quotation::get_class(),
+                        column: 'unit',
                     )]
                 )
             ],
@@ -166,6 +169,8 @@ class AdminController extends Controller
         foreach($model_data as $index => $model){
             $model_data[$index]->quote_percent = $total > 0 ? round(($model_data[$index]->quote_count / $total) * 100, 2) : 0;
         }
+        Log::info('Models: '.json_encode($model_data, JSON_PRETTY_PRINT));
+        Log::info('Ruta de imágenes: '.$this->model_imgs_route);
         return view('full-listing-template::dashboard', [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
@@ -176,7 +181,9 @@ class AdminController extends Controller
             'sales_chart'=>$sales_chart,
             'model_data'=>$model_data,
             'asesores_table'=>$asesores_table,
-            'asesors_quotes'=>$asesors_quotes
+            'asesors_quotes'=>$asesors_quotes,
+            'model_imgs_route'=>$this->model_imgs_route,
+            'imgs_type'=>$this->imgs_type
         ]);
     }
 }

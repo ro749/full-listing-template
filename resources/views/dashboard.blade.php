@@ -87,11 +87,49 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                                 <iconify-icon icon="mdi:message-text" class="icon"></iconify-icon>
                                             </span>
                                             <div>
-                                                <span class="mb-2 fw-medium text-secondary-light text-sm">Unidades Vendidas</span>
+                                                <span class="mb-2 fw-medium text-secondary-light text-sm">Unidades Disponibles</span>
                                                 <h6 class="fw-semibold"><x-f-text id="available_units" :data="$data"></x-f-text></h6>
                                             </div>
                                         </div>
                                         <x-chart :chart="$available_units_chart" color="#8252e9" :data="$initial_data"></x-chart>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add more cards here as needed -->
+
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card p-3 shadow-2 radius-8 border input-form-light h-100 bg-gradient-end-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span style="align-items: end !important" class="mb-0 w-48-px h-48-px bg-pink flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
+                                                <iconify-icon icon="streamline:bag-dollar-solid" class="icon"></iconify-icon>
+                                            </span>
+                                            <div>
+                                                <span class="mb-2 fw-medium text-secondary-light text-sm">Unidades Disponibles Valor</span>
+                                                <h6 class="fw-semibold"><x-f-text id="available_units_value" :data="$data"></x-f-text></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card p-3 shadow-2 radius-8 border input-form-light h-100 bg-gradient-end-6">
+                                <div class="card-body p-0">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span style="align-items: end !important" class="mb-0 w-48-px h-48-px bg-cyan-500 flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
+                                                <iconify-icon icon="streamline:bag-dollar-solid" class="icon"></iconify-icon>
+                                            </span>
+                                            <div>
+                                                <span class="mb-2 fw-medium text-secondary-light text-sm">Unidades Disponibles Promedio</span>
+                                                <h6 class="fw-semibold"><x-f-text id="available_units_avg" :data="$data"></x-f-text></h6>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +288,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                             @foreach($model_data as $model)
                             <div class="d-flex align-items-center justify-content-between gap-3 mb-32">
                                 <div class="d-flex align-items-center">
-                                    <img src="https://propstudios.mx/img/Soho/Modelos/ISO/{{ $model['name'] }}.png" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                                    <img src="{{ $model_imgs_route }}{{ $model['name'] }}.{{ $imgs_type }}" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
                                     <div class="flex-grow-1">
                                         <h6 class="text-md mb-0">{{ $model['name'] }}</h6>
                                         <span class="text-sm text-secondary-light fw-medium">Precio promedio: ${{ number_format($model['price'], 2, '.', ',') }}</span>

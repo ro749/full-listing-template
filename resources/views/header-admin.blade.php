@@ -6,7 +6,7 @@
         ['label' => 'Asesores', 'url' => '/admin/asesors'],
         ['label' => 'Clientes', 'url' => '/admin/clients'],
         ['label' => 'Cotizaciones', 'url' => '/admin/cotizaciones'],
-        ['label' => 'Dashboard', 'url' => '/admin/dashboard'],
+        ...(!empty(config('listing.dashboard')) ? [['label' => 'Dashboard', 'url' => '/admin/dashboard']] : []),
         ['label' => 'Logout', 'url' => '/logout'],
     ];
 @endphp
