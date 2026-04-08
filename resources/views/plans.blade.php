@@ -8,12 +8,4 @@
 <div style="padding-bottom: 2em; padding-top: 1em;">
 
 {!! $sender->render() !!}
-@elseif (empty($personal_plan))
-    @push('scripts')
-    <script>
-        $('#plan-div-personal').hide();
-    </script>
-    @endpush
-
-</div>
 @endif
