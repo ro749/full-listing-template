@@ -1,7 +1,6 @@
-    @if(isset($plans))
-    <div style="padding-top: 2rem;">
-            {!! $plans->render($personal_plan,$sender??null) !!}
-        
+@if(isset($plans))
+<div style="padding-top: 2rem;">
+    {!! $plans->render($personal_plan??null,$sender??null) !!}    
 </div>
 @endif
 @if(isset($sender))

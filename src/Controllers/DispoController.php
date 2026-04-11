@@ -123,6 +123,7 @@ class DispoController extends Controller
             'client'=>$client,
             'asesor'=>$asesor->name,
             'asesor_area'=>$asesor,
+            'personal_plan'=>null
         ]);
     }
 
