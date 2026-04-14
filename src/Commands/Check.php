@@ -75,14 +75,10 @@ class Check extends Command
             return self::FAILURE;
         }
 
-        //foreach ($asesor as $route) {
-        //    $request = Request::create('/asesor/' . $route, 'GET');
-        //    app()->instance('request', $request);
-        //    
-        //}
-        return self::SUCCESS;
-
-        
+        if($this->check_dispo_controller() == self::FAILURE){
+            $this->error('Error en DispoController');
+            return self::FAILURE;
+        }
 
         $this->call('check');
         return self::SUCCESS;
@@ -111,6 +107,8 @@ class Check extends Command
             $quotation = Quotation::first();
             $req = Request::create('/', 'GET',['id'=>$quotation->id]);
             $control->client($req);
+            $control->unavailable();
+
         }
         catch (\Exception $e){
             $this->error($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());

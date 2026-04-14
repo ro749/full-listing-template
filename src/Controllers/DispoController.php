@@ -127,6 +127,12 @@ class DispoController extends Controller
         ]);
     }
 
+    function unavailable(){
+        return view(config('overrides.views.unavailable'),[
+            $asesor=Auth::guard('asesor')->user()
+        ]);
+    }
+
     function open() {
         $imp = config()->get('overrides.image_map_pro')::instance();
         $plans = config()->get('overrides.plans')::instance();
