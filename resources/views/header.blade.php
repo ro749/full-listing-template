@@ -119,7 +119,7 @@
                 <div class="col-md-5">
                     <img src="images/fluye.png" class="w-100 wow fadeInUp" data-wow-delay=".2s" alt="">
                 </div>
-                @if(!empty($menu))
+                @if(!empty($sender))
                 <div class="col-lg-4">
                     <a class="btn-main btn-line bg-blur fx-slide" href="{{ route('disponibilidad') }}"><span>Disponibilidad</span></a>&nbsp;
                     <a class="btn-main btn-line bg-blur fx-slide" href="{{ route('torre') }}"><span>Listado</span></a>&nbsp;
