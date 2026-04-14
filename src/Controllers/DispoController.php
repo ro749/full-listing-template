@@ -86,7 +86,7 @@ class DispoController extends Controller
         return view(config('overrides.views.disponibilidad'),$data);
     }
 
-    function torre(Request $request){
+    function torre(){
         $torre = Torre::instance();
         $client_id = session()->get('client_id');
         if(!$client_id) return redirect()->route('client-login');
@@ -123,6 +123,13 @@ class DispoController extends Controller
             'client'=>$client,
             'asesor'=>$asesor->name,
             'asesor_area'=>$asesor,
+            'personal_plan'=>null
+        ]);
+    }
+
+    function unavailable(){
+        return view(config('overrides.views.unavailable'),[
+            $asesor=Auth::guard('asesor')->user()
         ]);
     }
 
