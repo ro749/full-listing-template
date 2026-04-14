@@ -9,8 +9,10 @@ use Ro749\FullListingTemplate\Controllers\DispoController;
 use Ro749\FullListingTemplate\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Ro749\FullListingTemplate\Models\Quotation;
 use Illuminate\Support\Facades\Config;
+use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\FullListingTemplate\Models\Client;
 
 class Check extends Command
 {
@@ -59,6 +61,11 @@ class Check extends Command
             return self::FAILURE;
         }
 
+        if($this->check_admin_controller() == self::FAILURE){
+            $this->error('Error en AdminController');
+            return self::FAILURE;
+        }
+
         
         return self::SUCCESS;
     }
@@ -98,6 +105,27 @@ class Check extends Command
             $control->client($req);
             $control->unavailable();
 
+        }
+        catch (\Exception $e){
+            $this->error($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+            return self::FAILURE;
+        }
+    }
+
+    function check_admin_controller(){
+        try{
+            $control = AdminController::instance();
+            $control->clients();
+            $control->torre();
+            $control->ventas();
+            $control->precios();
+            $control->quotations();
+            $client = Client::first();
+            $asesor = Asesor::first();
+            $req = Request::create('/', 'GET',['id'=>$client->id, 'asesor'=>$asesor->id]);
+            $control->profile($req);
+            $control->get_clients($req);
+            //$control->dashboard();
         }
         catch (\Exception $e){
             $this->error($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
