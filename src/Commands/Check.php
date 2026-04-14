@@ -10,6 +10,7 @@ use Ro749\FullListingTemplate\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Illuminate\Support\Facades\Config;
 
 class Check extends Command
 {
@@ -38,35 +39,13 @@ class Check extends Command
             $this->error('Falta el correo.');
             return self::FAILURE;
         }
-        $normal = [
-            '/'
-        ];
-        $asesor = [
-            'client-login',
-            'clients',
-            'cotizaciones',
-            'disponibilidad',
-            'listado',
-            'view-asesor',
-            'client-profile',
-            'reset-password',
-            'admin',
-            'client-view',
-            'unavailable',
-            'logout'
-        ];
-        $admin = [
-            'admin/clients',
-            'admin/unidades',
-            'admin/ventas',
-            'admin/actualizar-precios',
-            'admin/cotizaciones',
-            'admin/client-profile',
-            'admin/clients-asesor',
-            'admin/dashboard',
-            'admin/register-asesor',
-            'admin/asesors',
-        ];
+
+        $this->call('check');
+        $packageConfig = require __DIR__.'/../../config/full-listing-template.php';
+        $packageConfig = $packageConfig['overrides'];
+        $config = require config_path('overrides.php');
+        
+        Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
 
         Auth::guard('asesor')->loginUsingId(1);
         
@@ -80,8 +59,18 @@ class Check extends Command
             return self::FAILURE;
         }
 
-        $this->call('check');
+        
         return self::SUCCESS;
+    }
+
+    protected function mergeConfigs(array $package, array $project): array
+    {
+        foreach ($project as $key => $value) {
+            $package[$key] = (is_array($value) && isset($package[$key]) && is_array($package[$key]))
+                ? $this->mergeConfigs($package[$key], $value)
+                : $value;
+        }
+        return $package;
     }
 
     function check_asesor_controller(){
