@@ -72,7 +72,7 @@ body
         <div class="content">
             <div class="card">
                 <div class="card-header ">
-                    <h3 class="header text-center"><img class="login-logo" src=""  width="60%" height="auto"></h3>
+                    <h3 class="header text-center"><img class="login-logo" src="{{ $image }}"  width="60%" height="auto"></h3>
                 </div>
                 <div class=" card-body">
                     <p style="font-size:18px; text-align: center; ">Lamentamos informarle que la unidad en la que estaba interesado ya no está disponible. Le invitamos a ponerse en contacto con su asesor para conocer la disponibilidad actual o para cotizar otra unidad que se ajuste a sus necesidades.<br><br>Estamos a su disposición para cualquier consulta adicional.</p>
