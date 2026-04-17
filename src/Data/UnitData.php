@@ -3,6 +3,7 @@
 namespace Ro749\FullListingTemplate\Data;
 use Ro749\SharedUtils\Data\Data;
 use Illuminate\Support\Facades\DB;
+use Ro749\FullListingTemplate\Models\Unit;
 
 class UnitData extends Data
 {
@@ -15,6 +16,6 @@ class UnitData extends Data
     }
 
     public function init_data($request = null){
-        return DB::table('units')->where($this->column,$this->id)->first();
+        return Unit::instance()->where($this->column,$this->id)->first();
     }
 }

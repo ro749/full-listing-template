@@ -53,7 +53,7 @@ class Check extends Command
 
         $this->check_controllers();
         
-        //$this->check_tables();
+        $this->check_tables();
 
         return self::SUCCESS;
     }
@@ -75,7 +75,6 @@ class Check extends Command
             $control = $controller::instance();
             $reflection = new \ReflectionClass($control);
             foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                // Skip constructor and inherited methods (like from stdClass)
                 if ($method->isConstructor() || $method->getDeclaringClass()->getName() !== get_class($control) || str_contains($method->getName(), 'get_default_args')) {
                     continue;
                 }
@@ -90,8 +89,16 @@ class Check extends Command
     function check_tables(){
         $tables = config('overrides.tables');
         foreach($tables as $table){
-            $t = $table::instance();
-            $t->get();
+            try{
+                $t = $table::instance();
+                $args = $t->get_default_args();
+                call_user_func_array([$t, 'get'], $args);
+            }catch(\Exception $e){
+                $this->error('error in '.$table);
+                $this->error($e->getMessage());
+                return;
+            }
+            
         }
     }
 }

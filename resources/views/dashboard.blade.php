@@ -285,7 +285,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                         <div class="mt-32">
 
-                            @foreach($model_data as $model)
+                            @foreach($data->get('model_data') as $model)
                             <div class="d-flex align-items-center justify-content-between gap-3 mb-32">
                                 <div class="d-flex align-items-center">
                                     <img src="{{ $model_imgs_route }}{{ $model['name'] }}.{{ $imgs_type }}" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">

@@ -4,10 +4,8 @@ namespace Ro749\FullListingTemplate\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Ro749\SharedUtils\Controllers\Controller;
+use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Forms\RegisterClient;
 use Ro749\FullListingTemplate\Forms\SelectClient;
 use Ro749\FullListingTemplate\Forms\ClientComment;
@@ -42,7 +40,7 @@ class AsesorController extends Controller
     }
 
     public function profile(Request $request){
-        $client = DB::table('clients')->where('id', $request->input('id'))->first();
+        $client = Client::where('id', $request->input('id'))->first();
         $form = ClientComment::instanciate();
         $form->initial_data = ['long_comment'=>$client->long_comment];
         return view(config('overrides.views.client-profile'), [
@@ -52,18 +50,14 @@ class AsesorController extends Controller
         ]);
     }
 
-    public function update_profile(Request $request){
-        $file = $request->file('pfp');
-        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('uploads', $filename, 'public');
-        $asesor =  Auth::guard('asesor')->user();
-        if ($asesor->pfp != '') {
-            Storage::disk('public')->delete('uploads/' . $asesor->pfp);
+    public function get_default_args($function){
+        switch ($function) {
+            case 'profile':
+                return ['request' => Request::create('/asesor/profile', 'GET',['id'=>Client::first()->id])];
+            case 'update_profile':
+                return ['request' => Request::create('/asesor/update_profile', 'POST')];
+            default:
+                return [];
         }
-        DB::table('asesors')
-            ->where('id', $asesor->id)
-            ->update(values: [
-                'pfp'=>$filename
-            ]);
     }
 }

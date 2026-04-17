@@ -15,6 +15,7 @@ use Ro749\SharedUtils\Tables\View;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Client;
 class ClientProfileTable extends BaseTable
 {
     public function __construct(){
@@ -72,5 +73,11 @@ class ClientProfileTable extends BaseTable
                 ]
             )
         );
+    }
+
+    public function get_default_args(){
+        $quote = Quotation::first();
+        $client = Client::where('id', $quote->client)->first();
+        return ['filters' => ['id'=>$client->id]];
     }
 }

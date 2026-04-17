@@ -57,7 +57,7 @@ class Contact extends BaseForm
 
             ],
         );
-        $this->mail_to = config('listing.open.mail_to');
+        $this->mail_to = config('listing.open.mail_to', '');
     }
 
     public function prosses(Request $rawRequest): string

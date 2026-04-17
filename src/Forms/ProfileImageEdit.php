@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\ImageUploader;
 use Ro749\FullListingTemplate\Models\Asesor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class ProfileImageEdit extends BaseForm
 {
     public function __construct()
@@ -25,5 +28,21 @@ class ProfileImageEdit extends BaseForm
                 ),
             ],
         );
+    }
+
+    public function prosses(Request $rawRequest)
+    {
+        $file = $rawRequest->file('pfp');
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('uploads', $filename, 'public');
+        $asesor =  Auth::guard('asesor')->user();
+        if ($asesor->pfp != '') {
+            Storage::disk('public')->delete('uploads/' . $asesor->pfp);
+        }
+        DB::table('asesors')
+        ->where('id', $asesor->id)
+        ->update(values: [
+            'pfp'=>$filename
+        ]);
     }
 }

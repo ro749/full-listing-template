@@ -9,6 +9,7 @@ use Ro749\FullListingTemplate\Data\UnitData;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Tables\Torre;
 use Ro749\FullListingTemplate\Enums\QuotationStatus;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
@@ -134,6 +135,7 @@ class DispoController extends Controller
     }
 
     function open() {
+        if(!config()->has(config()->has('listing.open'))) return;
         $imp = config()->get('overrides.image_map_pro')::instance();
         $plans = config()->get('overrides.plans')::instance();
         $form = config('overrides.forms.Contact')::instanciate();
@@ -148,7 +150,8 @@ class DispoController extends Controller
         ]);
     }
 
-    function listado(Request $request){
+    function listado(){
+        if(!config()->has(config()->has('listing.open'))) return;
         $torre = Torre::instance();
         $torre->view->url = route('view');
         return view(config('overrides.views.torre'),[
@@ -159,6 +162,7 @@ class DispoController extends Controller
     }
 
     function view(Request $request){
+        if(!config()->has(config()->has('listing.open'))) return;
         $id = $request->input('id');
         $data_class = UnitData::get_class();
         $data = new $data_class('id', $id);
@@ -170,5 +174,18 @@ class DispoController extends Controller
             'dispo_btns'=>true,
             'is_open'=>true,
         ]);
+    }
+
+    public function get_default_args($function){
+        switch ($function) {
+            case 'client':
+                return ['request' => Request::create('/', 'GET',['id'=>Quotation::first()->id])];
+            case 'asesor':
+                return ['request' => Request::create('/', 'GET',['id'=>Unit::first()->id])];
+            case 'view':
+                return ['request' => Request::create('/', 'GET',['id'=>Unit::first()->id])];
+            default:
+                return [];
+        }
     }
 }

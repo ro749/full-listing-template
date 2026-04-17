@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Ro749\SharedUtils\Controllers\Controller;
+use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Forms\ClientComment;
 use Ro749\FullListingTemplate\Tables\ClientsAdmin;
 use Ro749\FullListingTemplate\Tables\QuotationsAdmin;
@@ -58,7 +60,7 @@ class AdminController extends Controller
     }
 
     public function profile(Request $request){
-        $client = DB::table('clients')->where('id', $request->input('id'))->first();
+        $client = Client::where('id', $request->input('id'))->first();
         $form = ClientComment::instanciate();
         $form->initial_data = ['long_comment'=>$client->long_comment];
         return view(config('overrides.views.client-profile-admin'), [
@@ -70,15 +72,14 @@ class AdminController extends Controller
 
     public function get_clients(Request $request){
         if($request->has('asesor')){
-            return DB::table('clients')->where('asesor', $request->input('asesor'))->get();
+            return Client::where('asesor', $request->input('asesor'))->get();
         }
-        $unit = DB::table('units')->where('id', $request->input('id'))->first();
-        return DB::table('clients')
-        ->select('id', 'name as value')
-        ->where('asesor', $unit->asesor)->get();
+        $unit = Unit::where('id', $request->input('id'))->first();
+        return Client::select('id', 'name as value')->where('asesor', $unit->asesor)->get();
     }
 
     public function dashboard(){
+        if(!config()->has('listing.dashboard')) return;
         $data = DashboardData::instance();
         $asesors_chart = new AsesorsChart();
         $clients_chart = new ClientsChart();
@@ -88,6 +89,7 @@ class AdminController extends Controller
         $sales_chart = new SalesChart();
         $asesores_table = AsesorsDashboard::instance();
         $asesors_quotes = new AsesorsQuotesChart();
+        
         return view('full-listing-template::dashboard', [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
@@ -102,5 +104,17 @@ class AdminController extends Controller
             'imgs_type'=>$this->imgs_type
         ]);
     }
+
+    public function get_default_args($function){
+        switch ($function) {
+            case 'profile':
+                return ['request' => Request::create('/', 'GET',['id'=>Client::first()->id])];
+            case 'get_clients':
+                return ['request' => Request::create('/', 'GET',['id'=>Client::first()->id])];
+            default:
+                return [];
+        }
+    }
 }
+
 

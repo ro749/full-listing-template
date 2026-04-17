@@ -34,8 +34,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/client-view', [$dispo_controller, 'client'])->name('client-view');
     Route::get('/unavailable', [$dispo_controller, 'unavailable'])->name('unavailable');
 
-    $hasOpen = config('listing.open');
-    if (!empty($hasOpen)) {
+    if (config()->has('listing.open')) {
         Route::get('/open', [$dispo_controller, 'open'])->name('open');
         Route::get('/open/listado', [$dispo_controller, 'listado'])->name('listado');
         Route::get('/open/view', [$dispo_controller, 'view'])->name('view');

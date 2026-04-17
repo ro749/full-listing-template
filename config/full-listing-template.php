@@ -23,8 +23,6 @@ return [
             'ClientProfileTable'=>\Ro749\FullListingTemplate\Tables\ClientProfileTable::class,
             'Clients'=>\Ro749\FullListingTemplate\Tables\Clients::class,
             'ClientsAdmin'=>\Ro749\FullListingTemplate\Tables\ClientsAdmin::class,
-            'Profile'=>\Ro749\FullListingTemplate\Tables\Profile::class,
-            'ProfileAdmin'=>\Ro749\FullListingTemplate\Tables\ProfileAdmin::class,
             'Quotations'=>\Ro749\FullListingTemplate\Tables\Quotations::class,
             'QuotationsAdmin'=>\Ro749\FullListingTemplate\Tables\QuotationsAdmin::class,
             'Torre'=>\Ro749\FullListingTemplate\Tables\Torre::class,
