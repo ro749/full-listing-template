@@ -2,6 +2,7 @@
 
 namespace Ro749\FullListingTemplate\Forms;
 
+use Illuminate\Http\Request;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
@@ -34,4 +35,13 @@ class VentaEdit extends BaseForm
             ],
         );
     }
+    public function get_default_args(){
+        $unit = Unit::first();
+        return ['request' => Request::create('/', 'POST',[
+            'final_price' => $unit->final_price,
+            'asesor' => $unit->asesor,
+            'client' => $unit->client,
+            'sale_date' => $unit->sale_date
+        ])];
+    } 
 }

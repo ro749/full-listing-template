@@ -7,6 +7,7 @@ use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\TextArea;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Client;
+use Illuminate\Support\Facades\Request;
 class ClientComment extends BaseForm
 {
     public function __construct()
@@ -24,5 +25,13 @@ class ClientComment extends BaseForm
                 ),
             ],
         );
+    }
+
+    public function get_default_args(){
+        
+        return ['request' => Request::create('/', 'POST',[
+            'long_comment' => 'test', 
+            'id' => Client::first()->id
+            ])];
     }
 }

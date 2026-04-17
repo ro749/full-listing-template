@@ -8,6 +8,7 @@ use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Models\Client;
+use Illuminate\Support\Facades\Request;
 class ClientEdit extends BaseForm
 {
     public function __construct()
@@ -41,5 +42,13 @@ class ClientEdit extends BaseForm
                 ),
             ],
         );
+    }
+
+    public function get_default_args(){
+        $client = Client::first();
+        return ['request' => Request::create('/', 'POST',[
+            'id' => $client->id,
+            'phone' => $client->phone
+        ])];
     }
 }

@@ -10,6 +10,7 @@ use Ro749\FullListingTemplate\Models\Asesor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 class ProfileImageEdit extends BaseForm
 {
     public function __construct()
@@ -30,9 +31,9 @@ class ProfileImageEdit extends BaseForm
         );
     }
 
-    public function prosses(Request $rawRequest)
+    public function prosses(Request $request)
     {
-        $file = $rawRequest->file('pfp');
+        $file = $request->file('pfp');
         $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('uploads', $filename, 'public');
         $asesor =  Auth::guard('asesor')->user();
@@ -45,4 +46,10 @@ class ProfileImageEdit extends BaseForm
             'pfp'=>$filename
         ]);
     }
+
+    public function get_default_args(){
+        $image = UploadedFile::fake()->image('avatar.jpg', 200, 200);
+        $request = Request::create('/', 'POST',[],[],['pfp' => $image]);
+        return ['request' => $request];
+    } 
 }

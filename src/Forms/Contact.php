@@ -10,6 +10,8 @@ use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\TextArea;
 use Ro749\FullListingTemplate\Mail\ContactMail;
+use Ro749\FullListingTemplate\Enums\UnitsStatus;
+use Ro749\FullListingTemplate\Models\Unit;
 
 class Contact extends BaseForm
 {
@@ -27,29 +29,29 @@ class Contact extends BaseForm
                 'name' => new Field(
                     type: InputType::TEXT,
                     label: 'Nombre',
-                    rules: ["required"]
+                    required: true,
                 ),
                 'email' => new Field(
                     type: InputType::EMAIL,
                     label: 'Correo electrónico',
-                    rules: ["required"]
+                    required: true,
                 ),
                 'phone' => new Field(
                     type: InputType::PHONE,
                     label: 'Teléfono',
-                    rules: ["required"]
+                    required: true,
                 ),
-                //'unit' => Selector::fromDB(
-                //    id: 'unitselector',
-                //    table: (new (config('overrides.models.Unit')))->getTable(),
-                //    label_column: $unit_column,
-                //    label: "Unidad de interés",
-                //    rules: ["required"],
-                //    query_modifier: function ($query) use ($status_column) {
-                //        $query->where($status_column, UnitsStatus::Disponible->value);
-                //    }
-//
-                //),
+                'unit' => Selector::fromDB(
+                    id: 'unitselector',
+                    table: (new (config('overrides.models.Unit')))->getTable(),
+                    label_column: $unit_column,
+                    label: "Unidad de interés",
+                    required: true,
+                    query_modifier: function ($query) use ($status_column) {
+                        $query->where($status_column, UnitsStatus::Disponible->value);
+                    }
+
+                ),
                 'message' => new TextArea(
                     label: 'Mensaje',
                     rows: 3
@@ -60,9 +62,9 @@ class Contact extends BaseForm
         $this->mail_to = config('listing.open.mail_to', '');
     }
 
-    public function prosses(Request $rawRequest): string
+    public function prosses(Request $request): string
     {
-        $data = $rawRequest->validate($this->rules($rawRequest));
+        $data = $request->validate($this->rules($request));
         $mail = new ContactMail(
             $data['name'],
             $data['phone'],
@@ -70,6 +72,7 @@ class Contact extends BaseForm
             $data['unit'],
             $data['message']??""
         );
+        if($this->mail_to == '') return $this->redirect;
         Mail::to($this->mail_to)->send($mail);
         return $this->redirect;
     }
@@ -79,5 +82,14 @@ class Contact extends BaseForm
         return view(config('overrides.views.contact-form'), [
             'form' => $this
         ]);
+    }
+
+    public function get_default_args(){
+        return ['request' => Request::create('/', 'POST',[
+            'name' => 'test',
+            'phone' => '3337811749',
+            'email' => 'a@a.com',
+            'unit' => Unit::first()->id
+        ])];
     }
 }

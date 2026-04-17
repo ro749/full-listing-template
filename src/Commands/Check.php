@@ -4,16 +4,10 @@ namespace Ro749\FullListingTemplate\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
-use Ro749\FullListingTemplate\Controllers\AsesorController;
-use Ro749\FullListingTemplate\Controllers\DispoController;
-use Ro749\FullListingTemplate\Controllers\AdminController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
-use Ro749\FullListingTemplate\Models\Quotation;
-use Ro749\FullListingTemplate\Models\Asesor;
-use Ro749\FullListingTemplate\Models\Client;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 class Check extends Command
 {
     /**
@@ -54,6 +48,8 @@ class Check extends Command
         $this->check_controllers();
         
         $this->check_tables();
+
+        $this->check_forms();
 
         return self::SUCCESS;
     }
@@ -100,5 +96,26 @@ class Check extends Command
             }
             
         }
+    }
+
+    function check_forms(){
+        DB::beginTransaction();
+        Storage::fake('public');
+        $forms = config('overrides.forms');
+        foreach($forms as $key => $form){
+            if($key == 'AdminLogin') continue;
+            try{
+                $this->info('check form '.$form);
+                $f = $form::instanciate();
+                $args = $f->get_default_args();
+                call_user_func_array([$f, 'prosses'], $args);
+            }catch(\Exception $e){
+                DB::rollBack();
+                $this->error('error in '.$form);
+                $this->error($e->getMessage());
+                return;
+            }
+        }
+        DB::rollBack();
     }
 }

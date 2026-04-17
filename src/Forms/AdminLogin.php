@@ -5,6 +5,7 @@ namespace Ro749\FullListingTemplate\Forms;
 use Ro749\SharedUtils\Forms\LoginForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
+use Illuminate\Support\Facades\Request;
 class AdminLogin extends LoginForm
 {
     public function __construct()
@@ -25,5 +26,9 @@ class AdminLogin extends LoginForm
                 ),
             ],
         );
+    }
+
+    public function get_default_args(){
+        return ['request' => Request::create('/', 'POST',['name' => 'admin', 'password' => 'eDWR5oUh2tzqxY1'])];
     }
 }

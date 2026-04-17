@@ -3,11 +3,13 @@
 namespace Ro749\FullListingTemplate\Forms;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\FullListingTemplate\Enums\Options;
 use Ro749\FullListingTemplate\Enums\AsesorStatus;
+use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\LoginTemplate\Forms\EditUser as EditUserBase;
 class EditUser extends EditUserBase
 {
@@ -67,5 +69,18 @@ class EditUser extends EditUserBase
             ->where('guard', 'asesor')
             ->delete();
         }
+    }
+
+    public function get_default_args(){
+        $asesor = Asesor::first();
+        return ['request' => Request::create('/', 'POST',[
+            'id' => $asesor->id,
+            'name' => $asesor->name,
+            'phone' => $asesor->phone,
+            'mail' => $asesor->mail,
+            'number' => $asesor->number,
+            'status' => $asesor->status,
+            'category' => $asesor->category
+        ])];
     }
 }

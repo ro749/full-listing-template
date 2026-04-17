@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Selector;
-use Illuminate\Support\Facades\Log;
+use Ro749\FullListingTemplate\Models\Client;
 
 class SelectClient extends BaseForm
 {
@@ -36,4 +36,10 @@ class SelectClient extends BaseForm
         session()->put('client_id', $request->input('client'));
         return $this->redirect;
     }
+
+    public function get_default_args(){
+        return ['request' => Request::create('/', 'POST',[
+            'client' => Client::first()->id
+        ])];
+    } 
 }

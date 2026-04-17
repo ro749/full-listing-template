@@ -2,6 +2,7 @@
 
 namespace Ro749\FullListingTemplate\Forms;
 
+use Illuminate\Http\Request;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
@@ -45,4 +46,12 @@ class RegisterClient extends BaseForm
     public function after_process($model){
         session()->put('client_id', $model->id);
     }
+
+    public function get_default_args(){
+        return ['request' => Request::create('/', 'POST',[
+            'name' => 'test',
+            'mail' => 'a@a.com',
+            'phone' => '3337811749'
+        ])];
+    } 
 }
