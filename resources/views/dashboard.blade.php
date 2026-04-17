@@ -2,7 +2,7 @@
 use Ro749\SharedUtils\Charts\TimeChartGetData;
 use Ro749\SharedUtils\Charts\BaseChartGetData;
 use Ro749\SharedUtils\Statistics\ChartTime;
-  $model_data = $model_data->toArray();
+  $model_data = $data->get('model_data')->toArray();
   $model_names = array_column($model_data, 'name');
   $model_disponibility_percents = array_column($model_data, 'modelo_percent');
   $model_colors = array_column($model_data, 'color');
@@ -253,7 +253,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                                 <div class="d-flex flex-wrap align-items-center mt-3">
                                     <ul class="flex-shrink-0">
-                                        @foreach($model_data as $model)
+                                        @foreach($data->get('model_data') as $model)
                                         <li class="d-flex align-items-center gap-2 mb-28">
                                             <span class="w-12-px h-12-px rounded-circle" style="background-color: {{ $model['color'] }}"></span>
                                             <span class="text-secondary-light text-sm fw-medium">{{ $model['name'] }}: {{ $model['modelo_percent'] }}</span>

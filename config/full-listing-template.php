@@ -73,7 +73,7 @@ return [
             'unavailable'=>'full-listing-template::unavailable',
             'footer'=>'full-listing-template::footer',
         ],
-        'data'=>[
+        'datas'=>[
             'Dashboard'=>\Ro749\FullListingTemplate\Data\Dashboard::class,
             'UnitData'=>\Ro749\FullListingTemplate\Data\UnitData::class,
         ],
