@@ -50,23 +50,11 @@ class Check extends Command
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
 
         Auth::guard('asesor')->loginUsingId(1);
+
+        $this->check_controllers();
         
-        if($this->check_asesor_controller() == self::FAILURE){
-            $this->error('Error en AsesorController');
-            return self::FAILURE;
-        }
+        //$this->check_tables();
 
-        if($this->check_dispo_controller() == self::FAILURE){
-            $this->error('Error en DispoController');
-            return self::FAILURE;
-        }
-
-        if($this->check_admin_controller() == self::FAILURE){
-            $this->error('Error en AdminController');
-            return self::FAILURE;
-        }
-
-        
         return self::SUCCESS;
     }
 
@@ -80,56 +68,30 @@ class Check extends Command
         return $package;
     }
 
-    function check_asesor_controller(){
-        try{
-            $control = AsesorController::instance();
-            $control->index();
-            $control->clients();
-            $control->quotations();
-            $req = Request::create('/asesor/profile', 'GET',['id'=>1]);
-            $control->profile($req);
-        }
-        catch (\Exception $e){
-            $this->error($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
-            return self::FAILURE;
+    function check_controllers(){
+        $controllers = config('overrides.controllers');
+
+        foreach($controllers as $controller){
+            $control = $controller::instance();
+            $reflection = new \ReflectionClass($control);
+            foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                // Skip constructor and inherited methods (like from stdClass)
+                if ($method->isConstructor() || $method->getDeclaringClass()->getName() !== get_class($control) || str_contains($method->getName(), 'get_default_args')) {
+                    continue;
+                }
+
+                $methodName = $method->getName();
+                $args = $control->get_default_args($methodName);
+                $method->invokeArgs($control, $args );
+            }
         }
     }
 
-    function check_dispo_controller(){
-        try{
-            $control = DispoController::instance();
-            $control->index();
-            $control->torre();
-            $quotation = Quotation::first();
-            $req = Request::create('/', 'GET',['id'=>$quotation->id]);
-            $control->client($req);
-            $control->unavailable();
-
-        }
-        catch (\Exception $e){
-            $this->error($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
-            return self::FAILURE;
-        }
-    }
-
-    function check_admin_controller(){
-        try{
-            $control = AdminController::instance();
-            $control->clients();
-            $control->torre();
-            $control->ventas();
-            $control->precios();
-            $control->quotations();
-            $client = Client::first();
-            $asesor = Asesor::first();
-            $req = Request::create('/', 'GET',['id'=>$client->id, 'asesor'=>$asesor->id]);
-            $control->profile($req);
-            $control->get_clients($req);
-            //$control->dashboard();
-        }
-        catch (\Exception $e){
-            $this->error($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
-            return self::FAILURE;
+    function check_tables(){
+        $tables = config('overrides.tables');
+        foreach($tables as $table){
+            $t = $table::instance();
+            $t->get();
         }
     }
 }
