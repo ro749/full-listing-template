@@ -22,7 +22,7 @@
     @if(!empty($user))
     <div style="display:flex; align-items: center; gap: 8px;">
         <p>{{ $user->name }}</p>
-        <x-smartForm :form="$form" />
+        <x-form :form="$form" />
     </div>
     @endif
     

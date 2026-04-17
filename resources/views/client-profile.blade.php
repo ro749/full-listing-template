@@ -12,7 +12,7 @@
         </div>
     </div>
     <div style="display:flex; flex-direction:row; justify-content:center;">
-        <x-smartForm :form="$form" />
+        <x-form :form="$form" />
     </div>
     <div style="padding: 1.5rem">
     @include('sharedutils::components.tables.smartTable', ['table' => $table])

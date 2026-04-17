@@ -50,11 +50,11 @@
             </div>
             
             <p class="title">Registrar Cliente</p>
-            <x-smartForm :form="$form_register" style="display: flex; flex-direction: column; align-items: center; gap: 6px;" />
+            <x-form :form="$form_register" style="display: flex; flex-direction: column; align-items: center; gap: 6px;" />
             <div style="height: 36px"></div>
             <p class="title">Seleccionar Cliente</p>
             <div style="height: 12px"></div>
-            <x-smartForm :form="$form_select" style="display: flex; flex-direction: column; align-items: center; gap: 6px;" />
+            <x-form :form="$form_select" style="display: flex; flex-direction: column; align-items: center; gap: 6px;" />
         </div>
     </div>
 </x-layout>
