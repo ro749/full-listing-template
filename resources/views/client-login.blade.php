@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout id="client-login">
     <style>
         #form-field-category{
             width: 100% !important;
@@ -23,10 +23,6 @@
         iconify-icon {
             font-size: 1rem;
         }
-        .btn{
-            background-color: var(--dark-color) !important;
-            color: white !important;
-        }
         .login-card{
             background-color: #f1f1f1;
         }
@@ -45,10 +41,11 @@
         </a>
         @endif
         <div class="card login-card" style="padding:1.5rem;">
+            @if(isset($image))
             <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 2rem;">
-                <img src="" style="width: 12rem">
+                <img src="{{ $image }}" style="width: 12rem">
             </div>
-            
+            @endif
             <p class="title">Registrar Cliente</p>
             <x-form :form="$form_register" style="display: flex; flex-direction: column; align-items: center; gap: 6px;" />
             <div style="height: 36px"></div>

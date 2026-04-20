@@ -1,5 +1,6 @@
 @include('listing-utils::head')
 @push('styles')
+<!--full-listing-template css-->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bootstrap">
 <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('css/swiper.css') }}" rel="stylesheet" type="text/css" >
@@ -10,7 +11,9 @@
 <link href="{{ asset('css/datepicker.css') }}" rel="stylesheet" type="text/css" >
 <!-- color scheme -->
 <link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css" >
-<link id="colors" href="vendor/full-listing-template/css/style.css" rel="stylesheet" type="text/css" >
+<link href="vendor/full-listing-template/css/style.css" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/listing-style.css') }}" rel="stylesheet" type="text/css">
+<!--end-full-listing-template css-->
 <style>
     /* correct head */
     .plan-div p, .plan-div span, .sender-popup p, .sender-popup h4, .sender-popup h5{
