@@ -106,6 +106,13 @@ class AdminController extends Controller
     }
 
     public function get_default_args($function){
+        if(Client::count() == 0){
+            Client::create([
+                'name'=>'Test Client',
+                'mail'=>'a@a.com',
+                'phone'=>'3337811700',
+            ]);
+        }
         switch ($function) {
             case 'profile':
                 return ['request' => Request::create('/', 'GET',['id'=>Client::first()->id])];

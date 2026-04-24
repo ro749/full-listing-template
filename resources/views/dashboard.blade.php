@@ -12,15 +12,24 @@ use Ro749\SharedUtils\Statistics\ChartTime;
   $null_data = new BaseChartGetData();
 @endphp
 <x-layout>
+<style>
+    .apexcharts-yaxis-label {
+        transform: translateX(12px);
+    }
+</style>
 <body>
     @include(config('overrides.views.header-admin'))
-    <div style="height: 60px">
-    </div>
+    <h3 style="color: #333; font-weight: 600;">Dashboard</h3>
+
+    
     <x-data :data="$data">
         <div class="row gy-4">
             <div class="row gy-4">
                 <div class="col-xxl-8">
                     <div class="row gy-4">
+
+                        <!-- Cards start here -->
+
                         <div class="col-xxl-4 col-sm-6">
                             <div class="card p-3 shadow-2 radius-8 border input-form-light h-100 bg-gradient-end-1">
                                 <div class="card-body p-0">
@@ -96,8 +105,6 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Add more cards here as needed -->
 
                         <div class="col-xxl-4 col-sm-6">
                             <div class="card p-3 shadow-2 radius-8 border input-form-light h-100 bg-gradient-end-5">
@@ -185,10 +192,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                                     <div class="d-flex align-items-center justify-content-between gap-3 mb-12">
                                         <div class="d-flex align-items-center">
-                                            <span class="text-xxl line-height-1 d-flex align-content-center flex-shrink-0 text-orange">
-                                                <iconify-icon icon="majesticons:mail" class="icon"></iconify-icon>
-                                            </span>
-                                            <span class="text-primary-light fw-medium text-sm ps-12">Disponibles</span>
+                                            <span class="text-primary-light fw-medium text-md ps-12">Disponibles</span>
                                         </div>
                                         <div class="d-flex align-items-center gap-2 w-100">
                                             <div class="w-100 max-w-66 ms-auto">
@@ -204,10 +208,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                                     <div class="d-flex align-items-center justify-content-between gap-3 mb-12">
                                         <div class="d-flex align-items-center">
-                                            <span class="text-xxl line-height-1 d-flex align-content-center flex-shrink-0 text-success-main">
-                                                <iconify-icon icon="eva:globe-2-fill" class="icon"></iconify-icon>
-                                            </span>
-                                            <span class="text-primary-light fw-medium text-sm ps-12">Apartadas</span>
+                                            <span class="text-primary-light fw-medium text-md ps-12">Apartadas</span>
                                         </div>
                                         <div class="d-flex align-items-center gap-2 w-100">
                                             <div class="w-100 max-w-66 ms-auto">
@@ -223,10 +224,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                                     <div class="d-flex align-items-center justify-content-between gap-3 mb-12">
                                         <div class="d-flex align-items-center">
-                                            <span class="text-xxl line-height-1 d-flex align-content-center flex-shrink-0 text-info-main">
-                                                <iconify-icon icon="fa6-brands:square-facebook" class="icon"></iconify-icon>
-                                            </span>
-                                            <span class="text-primary-light fw-medium text-sm ps-12">Vendidas</span>
+                                            <span class="text-primary-light fw-medium text-md ps-12">Vendidas</span>
                                         </div>
                                         <div class="d-flex align-items-center gap-2 w-100">
                                             <div class="w-100 max-w-66 ms-auto">
@@ -275,7 +273,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
             </div>
         </div>
         <div class="row gy-4">
-            <div class="col-xxl-4">
+            <div class="col-xxl-4" style="width: 33.3333%;">
                 <div class="card">
 
                     <div class="card-body">
@@ -303,7 +301,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-6">
+            <div class="col-xxl-6" style="width: 66.666%;">
                 <div class="card h-100">
                     <div class="card-header">
                         <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
