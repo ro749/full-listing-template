@@ -10,18 +10,9 @@
         <!-- page preloader close -->
 
         @include(config('overrides.views.header'))
-        
+        @if(view()->exists('pre-data'))
         @include('pre-data')
-
-        <div id="map-area">
-            @if(isset($imp))
-                <div id="image-map-pro"></div>
-            @else
-                <div style="display: flex; flex-direction: row; justify-content: center;">
-                    <x-f-image :unit="$unit" id="ubicacion" src="UbicacionTorre/" data="unit" ext=".jpg" ></x-f-image>
-                </div>
-            @endif
-        </div>
+        @endif
 
         @include('disponibilidad-data')
 
@@ -30,6 +21,8 @@
         @if(isset($asesor_area))
         @include(config('overrides.views.asesor-area'))
         @endif
+
+        @include(config('overrides.views.footer'))
     </div>
     @push('script-includes')
     <script src="js/vendors.js"></script>
@@ -48,4 +41,5 @@
         });
     </script>
     @endpush
+    @include(config('overrides.views.scripts'))
 </x-layout>

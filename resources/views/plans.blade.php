@@ -5,6 +5,6 @@
 @endif
 @if(isset($sender))
 <div style="padding-bottom: 2em; padding-top: 1em;">
-
 {!! $sender->render() !!}
+</div>
 @endif

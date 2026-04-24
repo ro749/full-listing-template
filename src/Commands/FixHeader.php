@@ -17,9 +17,9 @@ class FixHeader extends Command
         $content = File::get(base_path('resources\views\header.blade.php'));
         $content = str_replace('Iknaton Ortega', '{{ $asesor }}', $content);
         $content = str_replace('Test Sistema', '{{ $client }}', $content);
-        $content = str_replace('href="#section-contact"><span>Cerrar Sesión', 'href="{{ route(\'client-login\') }}"><span>Cambiar Cliente', $content);
-        $content = str_replace('href="#section-contact"><span>Disponibilidad', 'href="{{ route(\'disponibilidad\') }}"><span>Disponibilidad', $content);
-        $content = str_replace('#section-about', "{{ route('torre') }}", $content);
+        $content = preg_replace('/href="#section-contact"><span>(Cerrar Sesión|Volver a inicio)/', 'href="{{ route(\'client-login\') }}"><span>Cambiar Cliente', $content);
+        $content = preg_replace('/href="(#.*)"><span>Disponibilidad/', 'href="{{ route(\'disponibilidad\') }}"><span>Disponibilidad', $content);
+        $content = preg_replace('/href="(#.*)"><span>Listado/', 'href="{{ route(\'torre\') }}"><span>Listado', $content);
         File::put(base_path('resources\views\header.blade.php'), $content);
     }
 }

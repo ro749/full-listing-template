@@ -23,13 +23,13 @@
                 <div class="col-lg-8">
                     <div class="text-center">
                         <div id="footer-logos" class="responsive-row" style="">
-                            @foreach ($logos as $logo)
-                                <img src="{{ image($logo) }}" class="footer-logo" alt="">
+                            @foreach ($logos as $key => $logo)
+                                <img id="footer-logo-{{ $key }}" src="{{ $logo }}" class="footer-logo" alt="">
                             @endforeach
                         </div>
                         <div class="spacer-single"></div>
                         <div class="fs-16">
-                            {{ $location }}
+                            {!! $location !!}
                         </div>
                     </div>
                 </div>                
@@ -37,7 +37,8 @@
 
             <div class="spacer-double"></div>
 
-            <div class="row g-4">
+            <div class="row g-4" style="justify-content: center;">
+                @if(!empty($phone))
                 <div class="col-lg-4 col-md-6 mb-sm-30">
                     <div class="d-flex justify-content-center" style="align-items: center; gap: 1rem;">
                         <i class="fs-30 icon_phone" style="height: auto; color: {{ $icon_color }};"></i>
@@ -45,7 +46,8 @@
                     </div>
                     <p style="text-align: center">{{ $phone }}</p>
                 </div>
-                
+                @endif
+                @if(!empty($schedule))
                 <div class="col-lg-4 col-md-6 mb-sm-30">
                     <div class="d-flex justify-content-center" style="align-items: center; gap: 1rem;">
                         <i class="fs-30 icon_clock" style="height: auto; color: {{ $icon_color }};"></i>
@@ -53,14 +55,16 @@
                     </div>
                     <p style="text-align: center">{!! $schedule !!}</p>
                 </div>
-                    
+                @endif
+                @if(!empty($email))
                 <div class="col-lg-4 col-md-6 mb-sm-30">
                     <div class="d-flex justify-content-center" style="align-items: center; gap: 1rem;">
                         <i class="fs-30 icon_mail" style="height: auto; color: {{ $icon_color }};"></i>
                         <h4 class="mb-0">Email</h4>      
                     </div>
                     <p style="text-align: center">{{ $email }}</p>
-                </div>              
+                </div>  
+                @endif            
             </div>
 
         </div>
