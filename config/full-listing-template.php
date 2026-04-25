@@ -38,6 +38,8 @@ return [
             'Quotation'=>\Ro749\FullListingTemplate\Models\Quotation::class,
             'Unit'=>\Ro749\FullListingTemplate\Models\Unit::class,  
             'Model'=>\Ro749\FullListingTemplate\Models\Model::class,  
+            'Plan'=>\Ro749\FullListingTemplate\Models\Plan::class,
+            'PlanLine'=>\Ro749\FullListingTemplate\Models\PlanLine::class,
         ],
         'controllers'=>[
             'AdminController'=>\Ro749\FullListingTemplate\Controllers\AdminController::class,
