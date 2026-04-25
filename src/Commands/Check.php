@@ -77,7 +77,19 @@ class Check extends Command
 
                 $methodName = $method->getName();
                 $args = $control->get_default_args($methodName);
-                $method->invokeArgs($control, $args );
+                $this->info('check controller '.$controller.' method '.$methodName);
+                try{
+                    $view = $method->invokeArgs($control, $args);
+                    if(is_string($view) && str_contains($view, 'ErrorException')){
+                        $this->error('error in '.$controller.' method '.$methodName);
+                        $this->error($view);
+                    }
+                }
+                catch(\Exception $e){
+                    $this->error('error in '.$controller.' method '.$methodName);
+                    $this->error($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+                    $this->error($e->getTraceAsString());
+                }
             }
         }
     }
@@ -86,6 +98,7 @@ class Check extends Command
         $tables = config('overrides.tables');
         foreach($tables as $table){
             try{
+                $this->info('check table '.$table);
                 $t = $table::instance();
                 $args = $t->get_default_args();
                 call_user_func_array([$t, 'get'], $args);
