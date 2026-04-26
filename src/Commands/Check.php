@@ -97,7 +97,7 @@ class Check extends Command
                 $this->info('check controller '.$controller.' method '.$methodName);
                 try{
                     $view = $method->invokeArgs($control, $args);
-                    if(is_string($view) && str_contains($view, 'ErrorException')){
+                    if(is_string($view) && (str_contains($view, 'ErrorException') || str_contains($view, '<x-'))){
                         $this->error('error in '.$controller.' method '.$methodName);
                         $this->error($view);
                         $ans = false;
