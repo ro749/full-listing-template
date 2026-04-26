@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Ro749\FullListingTemplate\Models\Asesor;
 class Check extends Command
 {
     /**
@@ -42,16 +43,32 @@ class Check extends Command
         $config = require config_path('overrides.php');
         
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-
+        if(Asesor::instance()->count() == 0){
+            Asesor::instance()->create([
+                'name' => 'test',
+                'mail' => 'test@example.com',
+                'phone' => '3337811700',
+                'number' => '0000',
+                'password' => '1111'
+            ]);
+        }
         Auth::guard('asesor')->loginUsingId(1);
 
-        $this->check_controllers();
+        $ans = self::SUCCESS;
+
+        if(!$this->check_controllers()){
+            $ans = self::FAILURE;
+        }
         
-        $this->check_tables();
+        if(!$this->check_tables()){
+            $ans = self::FAILURE;
+        }
 
-        $this->check_forms();
+        if(!$this->check_forms()){
+            $ans = self::FAILURE;
+        }
 
-        return self::SUCCESS;
+        return $ans;
     }
 
     protected function mergeConfigs(array $package, array $project): array
@@ -66,7 +83,7 @@ class Check extends Command
 
     function check_controllers(){
         $controllers = config('overrides.controllers');
-
+        $ans = true;
         foreach($controllers as $controller){
             $control = $controller::instance();
             $reflection = new \ReflectionClass($control);
@@ -83,19 +100,23 @@ class Check extends Command
                     if(is_string($view) && str_contains($view, 'ErrorException')){
                         $this->error('error in '.$controller.' method '.$methodName);
                         $this->error($view);
+                        $ans = false;
                     }
                 }
                 catch(\Exception $e){
                     $this->error('error in '.$controller.' method '.$methodName);
                     $this->error($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
                     $this->error($e->getTraceAsString());
+                    $ans = false;
                 }
             }
         }
+        return $ans;
     }
 
     function check_tables(){
         $tables = config('overrides.tables');
+        $ans = true;
         foreach($tables as $table){
             try{
                 $this->info('check table '.$table);
@@ -105,16 +126,17 @@ class Check extends Command
             }catch(\Exception $e){
                 $this->error('error in '.$table);
                 $this->error($e->getMessage());
-                return;
+                $ans = false;
             }
-            
         }
+        return $ans;
     }
 
     function check_forms(){
         DB::beginTransaction();
         Storage::fake('public');
         $forms = config('overrides.forms');
+        $ans = true;
         foreach($forms as $key => $form){
             if($key == 'AdminLogin') continue;
             try{
@@ -123,12 +145,12 @@ class Check extends Command
                 $args = $f->get_default_args();
                 call_user_func_array([$f, 'prosses'], $args);
             }catch(\Exception $e){
-                DB::rollBack();
                 $this->error('error in '.$form);
                 $this->error($e->getMessage());
-                return;
+                $ans = false;
             }
         }
         DB::rollBack();
+        return $ans;
     }
 }
