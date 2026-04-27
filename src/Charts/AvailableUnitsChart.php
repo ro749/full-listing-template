@@ -48,7 +48,7 @@ class AvailableUnitsChart extends TimeChart
                             'status' => new BasicFilter(
                                 id:'status',
                                 filter: function ($query,$data) {
-                                    return $query->where('status', '=', UnitsStatus::Vendido->value);
+                                    return $query->where('status', '!=', UnitsStatus::Disponible->value);
                                 }
                             )
                         ],

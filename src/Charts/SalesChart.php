@@ -21,7 +21,7 @@ class SalesChart extends TimeChart{
             getter: new TimeGetter(
                 columns: [
                     'final_price'=>new Column(
-                        display:"Ganancias",
+                        display:"Ingresos",
                         logic_modifier: new ForeignKey(
                             table: 'sales_per_month',
                             column: 'final_price'

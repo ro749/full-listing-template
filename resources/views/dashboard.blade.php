@@ -141,6 +141,9 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                 </div>
                             </div>
                         </div>
+
+                        <!-- End of cards -->
+
                     </div>
                 </div>
                 <div class="col-xxl-4">
@@ -263,6 +266,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                         :names="$model_names" 
                                         :percents="$model_disponibility_percents" 
                                         :colors="$model_colors"
+                                        added_char=""
                                     > </x-donut-chart>
                                 </div>
 
