@@ -18,8 +18,8 @@ class SelectClient extends BaseForm
             fields: [
                 "client" => Selector::fromDB(
                     id: "client",
-                    table: "clients",
                     label_column: "name",
+                    model_class: Client::get_class(),
                     query_modifier: function ($query) {
                         return $query->where('asesor', Auth::guard('asesor')->user()->id)->orderBy('id', 'desc');
                     }
