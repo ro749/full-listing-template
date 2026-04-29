@@ -25,7 +25,7 @@ class DispoController extends Controller
         $client_id = session()->get('client_id');
         $client = null;
         if(!empty($client_id)){
-            $client = Client::where('id', $client_id)->value('name');
+            $client = Client::instance()->where('id', $client_id)->value('name');
         }
         $asesor = Auth::guard('asesor')->user();
         return view(config('overrides.views.disponibilidad'),[
@@ -91,7 +91,7 @@ class DispoController extends Controller
         $torre = Torre::instance();
         $client_id = session()->get('client_id');
         if(!$client_id) return redirect()->route('client-login');
-        $client = Client::where('id', $client_id)->first()->name;
+        $client = Client::instance()->where('id', $client_id)->value('name');
         return view(config('overrides.views.torre'),[
             'table'=>$torre,
             'client'=>$client,
