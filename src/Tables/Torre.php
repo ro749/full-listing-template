@@ -39,7 +39,6 @@ class Torre extends BaseTable
                         }
                     ),
                 ],
-                debug: true
             )
         );
     }
