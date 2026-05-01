@@ -17,6 +17,8 @@ use Ro749\SharedUtils\Tables\View;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Unit;
 class Quotations extends BaseTable
 {
     public function __construct(){
@@ -27,7 +29,7 @@ class Quotations extends BaseTable
                     'client'=>new Column(
                         display:"Cliente",
                         logic_modifier: new ForeignKey(
-                            table: 'clients',
+                            model_class: Client::get_class(),
                             column: 'name',
                         )
                     ),
@@ -46,7 +48,7 @@ class Quotations extends BaseTable
                     'unit'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'unit',
                         )
                     ),
@@ -58,7 +60,7 @@ class Quotations extends BaseTable
                         display:"Precio Actual",
                         modifier: Modifier::MONEY,
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'price',
                         )
                     ),

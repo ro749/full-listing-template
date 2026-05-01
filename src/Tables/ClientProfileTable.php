@@ -16,6 +16,8 @@ use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Unit;
+
 class ClientProfileTable extends BaseTable
 {
     public function __construct(){
@@ -32,7 +34,7 @@ class ClientProfileTable extends BaseTable
                     'unit'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'unit',
                         )
                     ),
@@ -44,7 +46,7 @@ class ClientProfileTable extends BaseTable
                         display:"Precio Actual",
                         modifier: Modifier::MONEY,
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'price',
                         )
                     ),

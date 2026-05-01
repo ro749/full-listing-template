@@ -8,6 +8,8 @@ use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\FullListingTemplate\Models\Client;
 class VentaEdit extends BaseForm
 {
     public function __construct()
@@ -20,12 +22,12 @@ class VentaEdit extends BaseForm
                 ),
                 'asesor' => Selector::fromDB(
                     id: 'asesor',
-                    table: 'asesors',
+                    model_class: Asesor::get_class(),
                     label_column: 'name',
                 ),
                 'client'=>Selector::fromDB(
                     id: 'client',
-                    table: 'clients',
+                    model_class: Client::get_class(),
                     label_column: 'name',
                     hot_reload: route('clients-asesor')
                 ),

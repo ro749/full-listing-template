@@ -48,7 +48,7 @@ class ProfileImageEdit extends BaseForm
     }
 
     public function get_default_args(){
-        $image = UploadedFile::fake()->image('avatar.jpg', 200, 200);
+        $image = UploadedFile::fake()->create('photo.jpg', 100, 'image/jpeg');
         $request = Request::create('/', 'POST',[],[],['pfp' => $image]);
         return ['request' => $request];
     } 
