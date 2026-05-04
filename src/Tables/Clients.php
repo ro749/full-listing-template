@@ -50,7 +50,7 @@ class Clients extends BaseTable
                 statistics: [
                     'quotation_stats'=>new Statistic(
                         model_class: Quotation::get_class(),
-                        group_column: 'client',
+                        group_column: 'client_id',
                         columns: [
                             'sent'=>new StatisticColumn(
                                 type: StatisticType::COUNT,
@@ -125,7 +125,7 @@ class Clients extends BaseTable
                 backend_filters: [
                     new UserFilter(
                         id: 'client',
-                        column: 'asesor',
+                        column: 'asesor_id',
                         guard: 'asesor'
                     ),
                     new BasicFilter(

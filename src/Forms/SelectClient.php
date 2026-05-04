@@ -21,7 +21,7 @@ class SelectClient extends BaseForm
                     label_column: "name",
                     model_class: Client::get_class(),
                     query_modifier: function ($query) {
-                        return $query->where('asesor', Auth::guard('asesor')->user()->id)->orderBy('id', 'desc');
+                        return $query->where('asesor_id', Auth::guard('asesor')->user()->id)->orderBy('id', 'desc');
                     }
                 )
             ],

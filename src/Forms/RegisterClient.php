@@ -15,7 +15,7 @@ class RegisterClient extends BaseForm
             model_class: Client::get_class(),
             submit_text: "Registrar",
             redirect: route('disponibilidad'),
-            user: 'asesor',
+            user: 'asesor_id',
             guard: 'asesor',
             fields: [
                 'name' => new Field(

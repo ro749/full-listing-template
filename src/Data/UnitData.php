@@ -1,6 +1,7 @@
 <?php
 
 namespace Ro749\FullListingTemplate\Data;
+use Illuminate\Support\Facades\Log;
 use Ro749\SharedUtils\Data\Data;
 use Illuminate\Support\Facades\DB;
 use Ro749\FullListingTemplate\Models\Unit;
@@ -16,6 +17,7 @@ class UnitData extends Data
     }
 
     public function init_data($request = null){
-        return Unit::instance()->where($this->column,$this->id)->first();
+        $query = Unit::instance()->where($this->column,$this->id);
+        return $query->first();
     }
 }

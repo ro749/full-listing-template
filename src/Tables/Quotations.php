@@ -26,7 +26,7 @@ class Quotations extends BaseTable
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
-                    'client'=>new Column(
+                    'client_id'=>new Column(
                         display:"Cliente",
                         logic_modifier: new ForeignKey(
                             model_class: Client::get_class(),
@@ -36,7 +36,7 @@ class Quotations extends BaseTable
                     'medium' => new Column(
                         display:"Medio",
                         logic_modifier: new MultiForeignKey (
-                            key_column: "client",
+                            key_column: "client_id",
                             table: "clients",
                             columns: [
                                 new ForeingKeyColumn("phone"),
@@ -45,7 +45,7 @@ class Quotations extends BaseTable
                             ],
                         ),
                     ),
-                    'unit'=>new Column(
+                    'unit_id'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
                             model_class: Unit::get_class(),
@@ -83,7 +83,7 @@ class Quotations extends BaseTable
                 backend_filters: [
                     new UserFilter(
                         id: 'client',
-                        column: 'quotations.asesor',
+                        column: 'quotations.asesor_id',
                         guard: 'asesor'
                     ),
                 ]

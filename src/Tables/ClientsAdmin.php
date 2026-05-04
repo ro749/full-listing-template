@@ -49,7 +49,7 @@ class ClientsAdmin extends BaseTable
                 statistics: [
                     'quotation_stats'=>new Statistic(
                         model_class: Quotation::get_class(),
-                        group_column: 'client',
+                        group_column: 'client_id',
                         columns: [
                             'sent'=>new StatisticColumn(
                                 type: StatisticType::COUNT,
@@ -108,7 +108,7 @@ class ClientsAdmin extends BaseTable
                             column: 'cancelled',
                         ),
                     ),
-                    'asesor'=>new Column(
+                    'asesor_id'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
                             model_class: Asesor::get_class(),

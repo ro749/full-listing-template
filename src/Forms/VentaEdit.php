@@ -20,12 +20,12 @@ class VentaEdit extends BaseForm
                 'final_price' => new Field(
                     type: InputType::NUMBER,
                 ),
-                'asesor' => Selector::fromDB(
+                'asesor_id' => Selector::fromDB(
                     id: 'asesor',
                     model_class: Asesor::get_class(),
                     label_column: 'name',
                 ),
-                'client'=>Selector::fromDB(
+                'client_id'=>Selector::fromDB(
                     id: 'client',
                     model_class: Client::get_class(),
                     label_column: 'name',
@@ -41,8 +41,8 @@ class VentaEdit extends BaseForm
         $unit = Unit::first();
         return ['request' => Request::create('/', 'POST',[
             'final_price' => $unit->final_price,
-            'asesor' => $unit->asesor,
-            'client' => $unit->client,
+            'asesor_id' => $unit->asesor_id,
+            'client_id' => $unit->client_id,
             'sale_date' => $unit->sale_date
         ])];
     } 

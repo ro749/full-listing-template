@@ -31,7 +31,7 @@ class ClientProfileTable extends BaseTable
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
-                    'unit'=>new Column(
+                    'unit_id'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
                             model_class: Unit::get_class(),
@@ -69,7 +69,7 @@ class ClientProfileTable extends BaseTable
                     new BasicFilter(
                         id: "id",
                         filter: function(Builder $query,array $data) {
-                            $query->where('quotations.client', $data['id']);
+                            $query->where('quotations.client_id', $data['id']);
                         }
                     )
                 ]
@@ -78,8 +78,6 @@ class ClientProfileTable extends BaseTable
     }
 
     public function get_default_args(){
-        $quote = Quotation::first();
-        $client = Client::where('id', $quote->client)->first();
-        return ['filters' => ['id'=>$client->id]];
+        return ['filters' => ['id'=>Quotation::first()->client_id]];
     }
 }

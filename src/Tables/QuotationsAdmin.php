@@ -27,7 +27,7 @@ class QuotationsAdmin extends BaseTable
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
-                    'client'=>new Column(
+                    'client_id'=>new Column(
                         display:"Cliente",
                         logic_modifier: new ForeignKey(
                             model_class: Client::get_class(),
@@ -46,14 +46,14 @@ class QuotationsAdmin extends BaseTable
                             ],
                         ),
                     ),
-                    'unit'=>new Column(
+                    'unit_id'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
                             model_class: Unit::get_class(),
                             column: 'unit',
                         )
                     ),
-                    'asesor'=>new Column(
+                    'asesor_id'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
                             model_class: Asesor::get_class(),

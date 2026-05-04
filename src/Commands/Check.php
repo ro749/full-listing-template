@@ -43,6 +43,12 @@ class Check extends Command
         $config = require config_path('overrides.php');
         
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
+        Log::info(json_encode(config('overrides.views'), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        $packageConfig = require __DIR__.'/../../../listing-utils/config/listing-utils.php';
+        $packageConfig = $packageConfig['overrides'];
+        $config = config('overrides');
+        Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
+
         if(Asesor::instance()->count() == 0){
             Asesor::instance()->create([
                 'name' => 'test',
@@ -84,6 +90,7 @@ class Check extends Command
     function check_controllers(){
         $controllers = config('overrides.controllers');
         $ans = true;
+        Log::info(json_encode(config('overrides.views'), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
         foreach($controllers as $controller){
             $control = $controller::instance();
             $reflection = new \ReflectionClass($control);
@@ -97,8 +104,12 @@ class Check extends Command
                 $this->info('check controller '.$controller.' method '.$methodName);
                 try{
                     $view = $method->invokeArgs($control, $args);
-                    if(is_string($view) && (str_contains($view, 'ErrorException') || str_contains($view, '<x-'))){
-                        $this->error('error in '.$controller.' method '.$methodName);
+                    if($view != null && $view::class == 'Illuminate\View\View'){
+                        $view = $view->render();
+                    }
+                    if(is_string($view) && (str_contains($view, 'Exception') || str_contains($view, '<x-'))){
+                    $this->info('showing error');    
+                    $this->error('error in '.$controller.' method '.$methodName);
                         $this->error($view);
                         $ans = false;
                     }

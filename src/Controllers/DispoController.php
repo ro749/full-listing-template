@@ -50,33 +50,30 @@ class DispoController extends Controller
             $quotation->save();
         }
         $data_class = UnitData::get_class();
-        $data = new $data_class('id', $quotation->unit);
+        $data = new $data_class('id', $quotation->unit_id);
         $unit = $data->get_data();
-        $asesor = Asesor::where('id', $quotation->asesor)->first();
         if(
             $unit->status != UnitsStatus::Disponible->value && (
             $quotation->status == QuotationStatus::Pendiente->value ||
             $quotation->status == QuotationStatus::Rechazado->value)
         ){
-            return view(config('overrides.views.unavailable'),['asesor'=>$asesor]);
+            return view(config('overrides.views.unavailable'),['asesor'=>$quotation->client->asesor]);
         }
-        $client = Client::where('id', $quotation->client)->first()->name;
+        $client = $quotation->client->name;
         $plans = config()->get('overrides.plans')::instance();
         $data = [
             'unit'=>$unit,
-            'asesor_area'=>$asesor,
-            'asesor'=>$asesor->name,
+            'asesor_area'=>$quotation->client->asesor,
+            'asesor'=>$quotation->client->asesor->name,
             'client'=>$client,
             'personal_plan'=>null,
         ];
         if(config()->has('listing.plans.personalized_plan')){
-            $personal = DB::table('personal_plans')->where('quotation', $quotation->id)->first();
-            if($personal){
-                $data['personal_plan'] = $personal;
+            if($quotation->personalPlan){
+                $data['personal_plan'] = $quotation->personalPlan;
                 $data['plans']=$plans;
             }
             else{
-                //$data['plans']=$plans->get(needs_personal: false);
                 $data['personal_plan'] = null;
                 $data['plans']=$plans;
             }
@@ -130,7 +127,7 @@ class DispoController extends Controller
 
     function unavailable(){
         return view(config('overrides.views.unavailable'),[
-            $asesor=Auth::guard('asesor')->user()
+            'asesor'=>Auth::guard('asesor')->user()
         ]);
     }
 
