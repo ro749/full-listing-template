@@ -88,7 +88,7 @@ class Dashboard extends Data
                 ),
                 'quote_stats' => new Statistic(
                     model_class: Quotation::get_class(),
-                    group_column: 'unit',
+                    group_column: 'unit_id',
                     columns: [
                         'quote_count'=>new StatisticColumn(
                             type: StatisticType::COUNT

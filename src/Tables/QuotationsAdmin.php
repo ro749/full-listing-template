@@ -17,6 +17,9 @@ use Ro749\SharedUtils\Models\LogicModifiers\Options;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Models\Asesor;
 class QuotationsAdmin extends BaseTable
 {
     public function __construct(){
@@ -24,10 +27,10 @@ class QuotationsAdmin extends BaseTable
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
-                    'client'=>new Column(
+                    'client_id'=>new Column(
                         display:"Cliente",
                         logic_modifier: new ForeignKey(
-                            table: 'clients',
+                            model_class: Client::get_class(),
                             column: 'name',
                         )
                     ),
@@ -43,17 +46,17 @@ class QuotationsAdmin extends BaseTable
                             ],
                         ),
                     ),
-                    'unit'=>new Column(
+                    'unit_id'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'unit',
                         )
                     ),
-                    'asesor'=>new Column(
+                    'asesor_id'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
-                            table: 'asesors',
+                            model_class: Asesor::get_class(),
                             column: 'name',
                         )
                     ),
@@ -74,7 +77,7 @@ class QuotationsAdmin extends BaseTable
                         display:"Precio Actual",
                         modifier: Modifier::MONEY,
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'price',
                         )
                     ),

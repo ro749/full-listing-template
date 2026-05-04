@@ -8,6 +8,8 @@ use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\FullListingTemplate\Models\Client;
 class VentaEdit extends BaseForm
 {
     public function __construct()
@@ -18,14 +20,14 @@ class VentaEdit extends BaseForm
                 'final_price' => new Field(
                     type: InputType::NUMBER,
                 ),
-                'asesor' => Selector::fromDB(
+                'asesor_id' => Selector::fromDB(
                     id: 'asesor',
-                    table: 'asesors',
+                    model_class: Asesor::get_class(),
                     label_column: 'name',
                 ),
-                'client'=>Selector::fromDB(
+                'client_id'=>Selector::fromDB(
                     id: 'client',
-                    table: 'clients',
+                    model_class: Client::get_class(),
                     label_column: 'name',
                     hot_reload: route('clients-asesor')
                 ),
@@ -39,8 +41,8 @@ class VentaEdit extends BaseForm
         $unit = Unit::first();
         return ['request' => Request::create('/', 'POST',[
             'final_price' => $unit->final_price,
-            'asesor' => $unit->asesor,
-            'client' => $unit->client,
+            'asesor_id' => $unit->asesor_id,
+            'client_id' => $unit->client_id,
             'sale_date' => $unit->sale_date
         ])];
     } 

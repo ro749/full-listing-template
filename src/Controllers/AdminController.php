@@ -72,10 +72,10 @@ class AdminController extends Controller
 
     public function get_clients(Request $request){
         if($request->has('asesor')){
-            return Client::instance()->where('asesor', $request->input('asesor'))->get();
+            return Client::instance()->where('asesor_id', $request->input('asesor'))->get();
         }
         $unit = Unit::where('id', $request->input('id'))->first();
-        return Client::instance()->select('id', 'name as value')->where('asesor', $unit->asesor)->get();
+        return Client::instance()->select('id', 'name as value')->where('asesor_id', $unit->asesor)->get();
     }
 
     public function dashboard(){

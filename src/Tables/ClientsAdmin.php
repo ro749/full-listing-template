@@ -18,6 +18,7 @@ use Ro749\FullListingTemplate\Enums\ClientCategories;
 use Ro749\FullListingTemplate\Forms\ClientEdit;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 class ClientsAdmin extends BaseTable
 {
@@ -48,7 +49,7 @@ class ClientsAdmin extends BaseTable
                 statistics: [
                     'quotation_stats'=>new Statistic(
                         model_class: Quotation::get_class(),
-                        group_column: 'client',
+                        group_column: 'client_id',
                         columns: [
                             'sent'=>new StatisticColumn(
                                 type: StatisticType::COUNT,
@@ -107,10 +108,10 @@ class ClientsAdmin extends BaseTable
                             column: 'cancelled',
                         ),
                     ),
-                    'asesor'=>new Column(
+                    'asesor_id'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
-                            table: 'asesors',
+                            model_class: Asesor::get_class(),
                             column: 'name',
                         )
                     ),

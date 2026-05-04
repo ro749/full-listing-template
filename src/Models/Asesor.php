@@ -3,6 +3,7 @@
 namespace Ro749\FullListingTemplate\Models;
 
 use Ro749\SharedUtils\Models\Authenticable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Asesor extends Authenticable
 {
     protected $fillable = [
@@ -22,4 +23,12 @@ class Asesor extends Authenticable
         'password',
         'remember_token',
     ];
+
+    public function clients(): HasMany {
+        return $this->hasMany(Client::get_class());
+    }
+
+    public function quotations(): HasMany{
+        return $this->hasMany(Quotation::get_class());
+    }
 }

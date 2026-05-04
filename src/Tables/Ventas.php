@@ -11,6 +11,8 @@ use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\FullListingTemplate\Forms\VentaEdit;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
 use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\FullListingTemplate\Models\Client;
 class Ventas extends BaseTable
 {
     public function __construct(){
@@ -26,17 +28,17 @@ class Ventas extends BaseTable
                         display:"Precio Final",
                         modifier: Modifier::MONEY,
                     ),
-                    'asesor'=>new Column(
+                    'asesor_id'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
-                            table: 'asesors',
+                            model_class: Asesor::get_class(),
                             column: 'name',
                         )
                     ),
-                    'client'=>new Column(
+                    'client_id'=>new Column(
                         display:"Cliente",
                         logic_modifier: new ForeignKey(
-                            table: 'clients',
+                            model_class: Client::get_class(),
                             column: 'name',
                         )
                     ),

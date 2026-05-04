@@ -43,7 +43,7 @@ class Contact extends BaseForm
                 ),
                 'unit' => Selector::fromDB(
                     id: 'unitselector',
-                    table: (new (config('overrides.models.Unit')))->getTable(),
+                    model_class: Unit::get_class(),
                     label_column: $unit_column,
                     label: "Unidad de interés",
                     required: true,

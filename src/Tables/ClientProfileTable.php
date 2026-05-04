@@ -16,6 +16,8 @@ use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Unit;
+
 class ClientProfileTable extends BaseTable
 {
     public function __construct(){
@@ -29,10 +31,10 @@ class ClientProfileTable extends BaseTable
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
-                    'unit'=>new Column(
+                    'unit_id'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'unit',
                         )
                     ),
@@ -44,7 +46,7 @@ class ClientProfileTable extends BaseTable
                         display:"Precio Actual",
                         modifier: Modifier::MONEY,
                         logic_modifier: new ForeignKey(
-                            table: 'units',
+                            model_class: Unit::get_class(),
                             column: 'price',
                         )
                     ),
@@ -67,7 +69,7 @@ class ClientProfileTable extends BaseTable
                     new BasicFilter(
                         id: "id",
                         filter: function(Builder $query,array $data) {
-                            $query->where('quotations.client', $data['id']);
+                            $query->where('quotations.client_id', $data['id']);
                         }
                     )
                 ]
@@ -76,8 +78,6 @@ class ClientProfileTable extends BaseTable
     }
 
     public function get_default_args(){
-        $quote = Quotation::first();
-        $client = Client::where('id', $quote->client)->first();
-        return ['filters' => ['id'=>$client->id]];
+        return ['filters' => ['id'=>Quotation::first()->client_id]];
     }
 }

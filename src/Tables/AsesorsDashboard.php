@@ -62,7 +62,7 @@ class AsesorsDashboard extends BaseTable
                 statistics: [
                     'clients_stats'=>new Statistic(
                         model_class: Client::get_class(),
-                        group_column: 'asesor',
+                        group_column: 'asesor_id',
                         columns: [
                             'clients_count'=>new StatisticColumn(
                                 type: StatisticType::COUNT
@@ -71,7 +71,7 @@ class AsesorsDashboard extends BaseTable
                     ),
                     'quotes_stats'=>new Statistic(
                         model_class: Quotation::get_class(),
-                        group_column: 'asesor',
+                        group_column: 'asesor_id',
                         columns: [
                             'quotes_count'=>new StatisticColumn(
                                 type: StatisticType::COUNT
