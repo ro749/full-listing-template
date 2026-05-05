@@ -31,7 +31,7 @@ class UnitEdit extends BaseForm
     }
 
     public function get_default_args(){
-        $unit = Unit::first();
+        $unit = Unit::instance()->first();
         return ['request' => Request::create('/', 'POST',[
             'id' => $unit->id,
             'price' => $unit->price,

@@ -74,7 +74,7 @@ class AdminController extends Controller
         if($request->has('asesor')){
             return Client::instance()->where('asesor_id', $request->input('asesor'))->get();
         }
-        $unit = Unit::where('id', $request->input('id'))->first();
+        $unit = Unit::instance()->where('id', $request->input('id'))->first();
         return Client::instance()->select('id', 'name as value')->where('asesor_id', $unit->asesor)->get();
     }
 

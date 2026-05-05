@@ -89,7 +89,7 @@ class Contact extends BaseForm
             'name' => 'test',
             'phone' => '3337811749',
             'email' => 'a@a.com',
-            'unit' => Unit::first()->id
+            'unit' => Unit::instance()->first()->id
         ])];
     }
 }
