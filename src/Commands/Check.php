@@ -113,7 +113,7 @@ class Check extends Command
                         $ans = false;
                     }
                 }
-                catch(\Exception $e){
+                catch(\Throwable $e){
                     $this->error('error in '.$controller.' method '.$methodName);
                     $this->error($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
                     $this->error($e->getTraceAsString());
@@ -133,7 +133,7 @@ class Check extends Command
                 $t = $table::instance();
                 $args = $t->get_default_args();
                 call_user_func_array([$t, 'get'], $args);
-            }catch(\Exception $e){
+            }catch(\Throwable $e){
                 $this->error('error in '.$table);
                 $this->error($e->getMessage());
                 $ans = false;
@@ -157,6 +157,11 @@ class Check extends Command
             }catch(\Exception $e){
                 $this->error('error in '.$form);
                 $this->error($e->getMessage());
+                $ans = false;
+            }
+            catch(\Error $er){
+                $this->error('fatal error in '.$form);
+                $this->error($er->getMessage());
                 $ans = false;
             }
         }
