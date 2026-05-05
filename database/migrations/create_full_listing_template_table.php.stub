@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone', 10);
             $table->string('mail')->default('');
-            $table->integer('asesor');
+            $table->integer('asesor_id');
             $table->integer('category')->default(0);
             $table->integer('priority')->default(0);
             $table->string('short_comment')->default('');
@@ -39,10 +39,10 @@ return new class extends Migration
 
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->integer('client');
+            $table->integer('client_id');
             $table->integer('medium');
-            $table->integer('asesor');
-            $table->integer('unit');
+            $table->integer('asesor_id');
+            $table->integer('unit_id');
             $table->integer('status')->default(0);
             $table->decimal('quoted_price', 12, 2);
             $table->integer('n_open')->default(0);
@@ -52,13 +52,15 @@ return new class extends Migration
 
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->integer('asesor')->nullable()->default(null);
-            $table->integer('client')->nullable()->default(null);
+            $table->integer('asesor_id')->nullable()->default(null);
+            $table->integer('client_id')->nullable()->default(null);
             $table->string('unit',32);
             $table->integer('status')->default(0);
             $table->decimal('price', 12, 2);
             $table->decimal('final_price', 12, 2)->default(0);
             $table->date('sale_date')->default(DB::raw('CURRENT_DATE'));
+            $table->decimal('new_price', 12, 2)->default(0);
+            $table->integer('new_status')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -77,9 +79,9 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
 
-        Schema::create('planlines', function (Blueprint $table) {
+        Schema::create('plan_lines', function (Blueprint $table) {
             $table->id();
-            $table->integer('plan');
+            $table->integer('plan_id');
             $table->string('description');
             $table->decimal('percent', 5, 2);
             $table->boolean('months')->default(false);

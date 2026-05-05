@@ -24,7 +24,7 @@ class PreviewTable extends BaseTable
                 zeroRecords: 'Ningun cambio detectado'
             ),
             getter: new BaseGetter(
-                model_class: Unit::class,
+                model_class: Unit::get_class(),
                 columns : [
                     'unit'=>new Column(
                         display:"Unidad",

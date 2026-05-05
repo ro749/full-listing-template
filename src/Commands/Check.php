@@ -98,11 +98,10 @@ class Check extends Command
                 if ($method->isConstructor() || $method->getDeclaringClass()->getName() !== get_class($control) || str_contains($method->getName(), 'get_default_args')) {
                     continue;
                 }
-
                 $methodName = $method->getName();
-                $args = $control->get_default_args($methodName);
                 $this->info('check controller '.$controller.' method '.$methodName);
                 try{
+                    $args = $control->get_default_args($methodName);
                     $view = $method->invokeArgs($control, $args);
                     if($view != null && $view::class == 'Illuminate\View\View'){
                         $view = $view->render();

@@ -41,7 +41,7 @@ class UpdatePrices extends BaseForm
     }
 
     public function get_default_args(){
-        $unit = Unit::first();
+        $unit = Unit::instance()->first();
         $csvContent = "unit,price,status\n".$unit->unit.",".$unit->price.",".$unit->status;
         $tmpFile = tmpfile();
         fwrite($tmpFile, $csvContent);

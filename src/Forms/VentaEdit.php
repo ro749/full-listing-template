@@ -38,7 +38,7 @@ class VentaEdit extends BaseForm
         );
     }
     public function get_default_args(){
-        $unit = Unit::first();
+        $unit = Unit::instance()->first();
         return ['request' => Request::create('/', 'POST',[
             'final_price' => $unit->final_price,
             'asesor_id' => $unit->asesor_id,

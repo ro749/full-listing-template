@@ -109,7 +109,7 @@ class DispoController extends Controller
         $client_id = session()->get('client_id');
         $client = null;
         if(!empty($client_id)){
-            $client = Client::where('id', $client_id)->value('name');
+            $client = Client::instance()->where('id', $client_id)->value('name');
         }
         $asesor = Auth::guard('asesor')->user();
         return view(config('overrides.views.disponibilidad'),[
@@ -176,11 +176,11 @@ class DispoController extends Controller
     public function get_default_args($function){
         switch ($function) {
             case 'client':
-                return ['request' => Request::create('/', 'GET',['id'=>Quotation::first()->id])];
+                return ['request' => Request::create('/', 'GET',['id'=>Quotation::instance()->first()->id])];
             case 'asesor':
-                return ['request' => Request::create('/', 'GET',['id'=>Unit::first()->id])];
+                return ['request' => Request::create('/', 'GET',['id'=>Unit::instance()->first()->id])];
             case 'view':
-                return ['request' => Request::create('/', 'GET',['id'=>Unit::first()->id])];
+                return ['request' => Request::create('/', 'GET',['id'=>Unit::instance()->first()->id])];
             default:
                 return [];
         }

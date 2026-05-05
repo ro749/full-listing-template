@@ -51,7 +51,7 @@ class Ventas extends BaseTable
                     new BasicFilter(
                         id:'status',
                         filter: function ($query,$data) {
-                            return $query->where('units.status', '=', UnitsStatus::Vendido->value);
+                            return $query->where(Unit::instance()->getTable().'.status', '=', UnitsStatus::Vendido->value);
                         }
                     ),
                 ]
