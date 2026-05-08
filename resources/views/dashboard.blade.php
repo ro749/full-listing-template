@@ -16,6 +16,24 @@ use Ro749\SharedUtils\Statistics\ChartTime;
     .apexcharts-yaxis-label {
         transform: translateX(12px);
     }
+    
+    .unit-row {
+        display: grid;
+        grid-template-columns: 1fr 66px 48px;
+        align-items: center;
+        column-gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .unit-percent {
+        width: 48px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .unit-bar {
+        width: 66px;
+    }
 </style>
 <body>
     @include(config('overrides.views.header-admin'))
@@ -193,53 +211,100 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                                 <div class="mt-3">
 
-                                    <div class="d-flex align-items-center justify-content-between gap-3 mb-12">
-                                        <div class="d-flex align-items-center">
-                                            <span class="text-primary-light fw-medium text-md ps-12">Disponibles</span>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2 w-100">
-                                            <div class="w-100 max-w-66 ms-auto">
-                                                <div class="progress progress-sm rounded-pill" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                    <x-f-div class="progress-bar bg-orange rounded-pill" style-data="width: percent_available;" :data="$data"></x-f-div>
-                                                </div>
+                                    <div class="unit-row">
+                                        <span class="text-primary-light fw-medium text-md ps-12">
+                                            Disponibles
+                                        </span>
+
+                                        <div class="unit-bar">
+                                            <div class="progress progress-sm rounded-pill"
+                                                 role="progressbar"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <x-f-div
+                                                    class="progress-bar bg-orange rounded-pill"
+                                                    style-data="width: percent_available;"
+                                                    :data="$data">
+                                                </x-f-div>
                                             </div>
-                                            <span class="text-secondary-light font-xs fw-semibold">
-                                                <x-f-text id="percent_available" :data="$data"></x-f-text>
-                                            </span>
                                         </div>
+
+                                        <span class="unit-percent text-secondary-light font-xs fw-semibold">
+                                            <x-f-text id="percent_available" :data="$data"></x-f-text>
+                                        </span>
                                     </div>
 
-                                    <div class="d-flex align-items-center justify-content-between gap-3 mb-12">
-                                        <div class="d-flex align-items-center">
-                                            <span class="text-primary-light fw-medium text-md ps-12">Apartadas</span>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2 w-100">
-                                            <div class="w-100 max-w-66 ms-auto">
-                                                <div class="progress progress-sm rounded-pill" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                    <x-f-div  class="progress-bar bg-success-main rounded-pill" style-data="width: percent_apartado;" :data="$data"></x-f-div>
-                                                </div>
+                                    <div class="unit-row">
+                                        <span class="text-primary-light fw-medium text-md ps-12">
+                                            Apartadas
+                                        </span>
+                                    
+                                        <div class="unit-bar">
+                                            <div class="progress progress-sm rounded-pill"
+                                                 role="progressbar"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <x-f-div
+                                                    class="progress-bar bg-success-main rounded-pill"
+                                                    style-data="width: percent_apartado;"
+                                                    :data="$data">
+                                                </x-f-div>
                                             </div>
-                                            <span class="text-secondary-light font-xs fw-semibold">
-                                                <x-f-text id="percent_apartado" :data="$data"></x-f-text>
-                                            </span>
                                         </div>
+                                    
+                                        <span class="unit-percent text-secondary-light font-xs fw-semibold">
+                                            <x-f-text id="percent_apartado" :data="$data"></x-f-text>
+                                        </span>
                                     </div>
 
-                                    <div class="d-flex align-items-center justify-content-between gap-3 mb-12">
-                                        <div class="d-flex align-items-center">
-                                            <span class="text-primary-light fw-medium text-md ps-12">Vendidas</span>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2 w-100">
-                                            <div class="w-100 max-w-66 ms-auto">
-                                                <div class="progress progress-sm rounded-pill" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                    <x-f-div class="progress-bar bg-info-main rounded-pill" style-data="width: percent_sold;" :data="$data"></x-f-div>
-                                                </div>
+                                    <div class="unit-row">
+                                        <span class="text-primary-light fw-medium text-md ps-12">
+                                            Vendidas
+                                        </span>
+                                    
+                                        <div class="unit-bar">
+                                            <div class="progress progress-sm rounded-pill"
+                                                 role="progressbar"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <x-f-div
+                                                    class="progress-bar bg-info-main rounded-pill"
+                                                    style-data="width: percent_sold;"
+                                                    :data="$data">
+                                                </x-f-div>
                                             </div>
-                                            <span class="text-secondary-light font-xs fw-semibold">
-                                                <x-f-text id="percent_sold" :data="$data" :></x-f-text>
-                                            </span>
                                         </div>
+                                    
+                                        <span class="unit-percent text-secondary-light font-xs fw-semibold">
+                                            <x-f-text id="percent_sold" :data="$data"></x-f-text>
+                                        </span>
                                     </div>
+
+                                    <!--
+                                    <div class="unit-row">
+                                        <span class="text-primary-light fw-medium text-md ps-12">
+                                            Bloqueadas
+                                        </span>
+                                    
+                                        <div class="unit-bar">
+                                            <div class="progress progress-sm rounded-pill"
+                                                 role="progressbar"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <x-f-div
+                                                    class="progress-bar bg-info-main rounded-pill"
+                                                    style-data="width: percent_blocked;"
+                                                    :data="$data">
+                                                </x-f-div>
+                                            </div>
+                                        </div>
+                                    
+                                        <span class="unit-percent text-secondary-light font-xs fw-semibold">
+                                            <x-f-text id="percent_blocked" :data="$data"></x-f-text>
+                                        </span>
+                                    </div>
+                                    -->
+                                    
                                 </div>
 
                             </div>

@@ -6,6 +6,7 @@ use Ro749\SharedUtils\Tables\BaseTable;
 use Ro749\SharedUtils\Getters\BaseGetter;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\SharedUtils\Tables\Column;
+use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\SharedUtils\Statistics\Statistic;
 use Ro749\SharedUtils\Statistics\StatisticColumn;
 use Ro749\SharedUtils\Statistics\StatisticType;
@@ -81,6 +82,14 @@ class AsesorsDashboard extends BaseTable
                             ),
                         ]
                     ),
+                ],
+                backend_filters: [
+                    new BasicFilter(
+                        id: 'orderByQuotes',
+                        filter: function ($query,$data) {
+                            $query->orderByDesc('quotes_count');
+                        }
+                    )
                 ]
             )
         );
