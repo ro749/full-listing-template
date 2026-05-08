@@ -6,6 +6,7 @@ use Ro749\SharedUtils\Tables\BaseTable;
 use Ro749\SharedUtils\Getters\BaseGetter;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\SharedUtils\Tables\Column;
+use Ro749\SharedUtils\Tables\ColumnOrder;
 use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\SharedUtils\Statistics\Statistic;
 use Ro749\SharedUtils\Statistics\StatisticColumn;
@@ -39,7 +40,8 @@ class AsesorsDashboard extends BaseTable
                         logic_modifier: new ForeignKey(
                             table: 'quotes_stats',
                             column: 'quotes_count'
-                        )
+                        ),
+                        order: ColumnOrder::DESC,
                     ),
                     'quoted_price'=>new Column(
                         display:"Promedio Cotizaciones",
@@ -82,14 +84,6 @@ class AsesorsDashboard extends BaseTable
                             ),
                         ]
                     ),
-                ],
-                backend_filters: [
-                    new BasicFilter(
-                        id: 'orderByQuotes',
-                        filter: function ($query,$data) {
-                            $query->orderByDesc('quotes_count');
-                        }
-                    )
                 ]
             )
         );
