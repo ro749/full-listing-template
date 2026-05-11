@@ -90,7 +90,7 @@ class AdminController extends Controller
         $asesores_table = AsesorsDashboard::instance();
         $asesors_quotes = new AsesorsQuotesChart();
         
-        return view('full-listing-template::dashboard', [
+        return view(config('overrides.views.dashboard'), [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
             'clients_chart'=>$clients_chart,

@@ -72,6 +72,7 @@ return [
             'torre'=>'full-listing-template::torre',
             'unavailable'=>'full-listing-template::unavailable',
             'footer'=>'full-listing-template::footer',
+            'dashboard'=>'full-listing-template::dashboard',
         ],
         'datas'=>[
             'Dashboard'=>\Ro749\FullListingTemplate\Data\Dashboard::class,
