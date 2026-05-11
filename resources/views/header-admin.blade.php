@@ -6,6 +6,7 @@
         ['label' => 'Asesores', 'url' => '/admin/asesors'],
         ['label' => 'Clientes', 'url' => '/admin/clients'],
         ['label' => 'Cotizaciones', 'url' => '/admin/cotizaciones'],
+        ...(!empty(config('listing.ulpoadcvs')) ? [['label' => 'Precios', 'url' => route('actualizar-precios')],] : []),
         ...(!empty(config('listing.dashboard')) ? [['label' => 'Dashboard', 'url' => '/admin/dashboard']] : []),
         ['label' => 'Logout', 'url' => '/logout'],
     ];
