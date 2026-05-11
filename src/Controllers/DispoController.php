@@ -132,7 +132,8 @@ class DispoController extends Controller
     }
 
     function open() {
-        if(!config()->has(config()->has('listing.open'))) return;
+        if(!config()->has('listing.open')) return;
+
         $imp = config()->get('overrides.image_map_pro')::instance();
         $plans = config()->get('overrides.plans')::instance();
         $form = config('overrides.forms.Contact')::instanciate();
@@ -148,9 +149,10 @@ class DispoController extends Controller
     }
 
     function listado(){
-        if(!config()->has(config()->has('listing.open'))) return;
+        if(!config()->has('listing.open')) return;
         $torre = Torre::instance();
         $torre->view->url = route('view');
+        Log::debug(json_encode($torre));
         return view(config('overrides.views.torre'),[
             'table'=>$torre,
             'dispo_btns'=>true,
@@ -159,7 +161,7 @@ class DispoController extends Controller
     }
 
     function view(Request $request){
-        if(!config()->has(config()->has('listing.open'))) return;
+        if(!config()->has('listing.open')) return;
         $id = $request->input('id');
         $data_class = UnitData::get_class();
         $data = new $data_class('id', $id);
