@@ -55,7 +55,7 @@ class AsesorsDashboard extends BaseTable
                         display:"Última Sesión",
                         modifier: Modifier::TIME_SINCE
                     ),
-                    'status'=>new Column(
+                    'category'=>new Column(
                         display:"Tipo",
                         logic_modifier: new Options(
                             options: OptionsEnum::AsesorCategories
