@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Quotation;
 class Check extends Command
 {
     /**
@@ -49,9 +51,9 @@ class Check extends Command
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-
+        DB::beginTransaction();
         if(Asesor::instance()->count() == 0){
-            Asesor::instance()->create([
+            $asesor_id = Asesor::instance()->insertGetId([
                 'name' => 'test',
                 'mail' => 'test@example.com',
                 'phone' => '3337811700',
@@ -59,6 +61,31 @@ class Check extends Command
                 'password' => '1111'
             ]);
         }
+        else{
+            $asesor_id = Asesor::instance()->first()->id;
+        }
+
+        if(Client::instance()->count() == 0){
+            $client_id = Client::instance()->insertGetId([
+                'name' => 'test',
+                'mail' => 'test@example.com',
+                'phone' => '3337811700',
+                'asesor_id' => $asesor_id
+            ]);
+        }
+        else{
+            $client_id = Client::instance()->first()->id;
+        }
+
+        if(Quotation::instance()->count() == 0){
+            $quotation_id = Quotation::instance()->insertGetId([
+                'asesor_id' => $asesor_id,
+                'client_id' => $asesor_id,
+                'unit_id' => 1,
+                'status' => 0,
+            ]);
+        }
+
         Auth::guard('asesor')->loginUsingId(1);
 
         $ans = self::SUCCESS;
@@ -81,6 +108,8 @@ class Check extends Command
             $this->error('The log file is not empty.');  
             $ans = self::FAILURE; 
         }
+
+        DB::rollBack();
 
         return $ans;
     }
@@ -140,9 +169,11 @@ class Check extends Command
                 $t = $table::instance();
                 $args = $t->get_default_args();
                 call_user_func_array([$t, 'get'], $args);
+                $t->get_selectors();
             }catch(\Throwable $e){
                 $this->error('error in '.$table);
                 $this->error($e->getMessage());
+                $this->error($e->getTraceAsString());
                 $ans = false;
             }
         }
@@ -150,7 +181,7 @@ class Check extends Command
     }
 
     function check_forms(){
-        DB::beginTransaction();
+        
         Storage::fake('public');
         $forms = config('overrides.forms');
         $ans = true;
@@ -160,19 +191,24 @@ class Check extends Command
                 $this->info('check form '.$form);
                 $f = $form::instanciate();
                 $args = $f->get_default_args();
+                if($form == 'App\Forms\Contact'){
+                    $this->info(json_encode($args));
+                }
                 call_user_func_array([$f, 'prosses'], $args);
-            }catch(\Exception $e){
+                
+            }catch(\Throwable $e){
                 $this->error('error in '.$form);
                 $this->error($e->getMessage());
-                $ans = false;
-            }
-            catch(\Error $er){
-                $this->error('fatal error in '.$form);
-                $this->error($er->getMessage());
+                $this->error($e->getTraceAsString());
                 $ans = false;
             }
         }
-        DB::rollBack();
+        
         return $ans;
     }
+
+    function check_listing_utils(){
+
+    }
+
 }

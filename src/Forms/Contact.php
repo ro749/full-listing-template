@@ -59,7 +59,7 @@ class Contact extends BaseForm
 
             ],
         );
-        $this->mail_to = config('listing.open.mail_to', '');
+        $this->mail_to = env('MAIL_TO', 'rorivera200@gmail.com');
     }
 
     public function prosses(Request $request): string
