@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Ro749\FullListingTemplate\Models\Asesor;
 class Check extends Command
 {
@@ -32,6 +33,7 @@ class Check extends Command
      */
     public function handle(): int
     {
+        File::put(storage_path('logs/laravel.log'), '');
         if (!file_exists(app_path('Mail/CotizationMail.php'))) {
             $this->error('Falta el correo.');
             return self::FAILURE;
@@ -43,7 +45,6 @@ class Check extends Command
         $config = require config_path('overrides.php');
         
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        Log::info(json_encode(config('overrides.views'), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
         $packageConfig = require __DIR__.'/../../../listing-utils/config/listing-utils.php';
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
@@ -74,6 +75,13 @@ class Check extends Command
             $ans = self::FAILURE;
         }
 
+        $logPath = storage_path('logs/laravel.log');
+
+        if (!(!file_exists($logPath) || filesize($logPath) === 0)) {
+            $this->error('The log file is not empty.');  
+            $ans = self::FAILURE; 
+        }
+
         return $ans;
     }
 
@@ -90,7 +98,6 @@ class Check extends Command
     function check_controllers(){
         $controllers = config('overrides.controllers');
         $ans = true;
-        Log::info(json_encode(config('overrides.views'), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
         foreach($controllers as $controller){
             $control = $controller::instance();
             $reflection = new \ReflectionClass($control);

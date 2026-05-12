@@ -152,7 +152,6 @@ class DispoController extends Controller
         if(!config()->has('listing.open')) return;
         $torre = Torre::instance();
         $torre->view->url = route('view');
-        Log::debug(json_encode($torre));
         return view(config('overrides.views.torre'),[
             'table'=>$torre,
             'dispo_btns'=>true,

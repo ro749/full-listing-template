@@ -34,7 +34,6 @@ class UpdatePrices extends BaseForm
                             'new_status' => null
                         ]);
                     }
-
                 ),
             ],
         );
