@@ -11,7 +11,8 @@
     </div>
     @push('scripts')
     <script>
-        $(document).on('change','#asesor',function(){
+        $(document).on('change','#asesor_id',function(){
+
             $.ajax({
                 url: "{{ route('clients-asesor') }}",
                 type: "GET",
@@ -20,11 +21,11 @@
                     asesor: $(this).val()
                 },
                 success: function (data) {
-                    $('#client').empty();
+                    $('#client_id').empty();
                     $.each(data, function (key, value) {
-                        $('#client').append(new Option(value.name, value.id));
+                        $('#client_id').append(new Option(value.name, value.id));
                     });
-                    $('#client').val(null).trigger('change');
+                    $('#client_id').val(null).trigger('change');
                 }
             })
         });
