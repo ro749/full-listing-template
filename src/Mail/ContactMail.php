@@ -44,7 +44,7 @@ class ContactMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail',
+            view: 'full-listing-template::mail.mail-open',
             with: [
                 'name'=>$this->m_name,
                 'phone'=>$this->m_phone,

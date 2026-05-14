@@ -52,7 +52,6 @@ class SalesChart extends TimeChart{
                         group_column:'sale_date'
                     ),
                 ]
-                //debug: true
             ),
         );
     }
