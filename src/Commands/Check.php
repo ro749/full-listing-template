@@ -55,6 +55,7 @@ class Check extends Command
         if(Asesor::instance()->count() == 0){
             $asesor_id = Asesor::instance()->insertGetId([
                 'name' => 'test',
+                'category' => '0',
                 'mail' => 'test@example.com',
                 'phone' => '3337811700',
                 'number' => '0000',
