@@ -53,6 +53,7 @@ class Check extends Command
         if(Asesor::instance()->count() == 0){
             Asesor::instance()->create([
                 'name' => 'test',
+                'category' => '0',
                 'mail' => 'test@example.com',
                 'phone' => '3337811700',
                 'number' => '0000',
