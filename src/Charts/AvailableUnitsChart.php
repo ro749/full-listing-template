@@ -20,7 +20,7 @@ class AvailableUnitsChart extends TimeChart
         parent::__construct(
             data_column: 'units',
             label_column: 'label_date',
-            inverted: Unit::count(),
+            inverted: Unit::instance()->count(),
             getter: new TimeGetter(
                 columns: [
                     'units'=>new Column(
