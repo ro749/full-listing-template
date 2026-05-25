@@ -40,7 +40,7 @@ class Check extends Command
             $this->error('Falta el correo.');
             return self::FAILURE;
         }
-
+        $this->info('checking');
         $this->call('check');
         $packageConfig = require __DIR__.'/../../config/full-listing-template.php';
         $packageConfig = $packageConfig['overrides'];
@@ -142,7 +142,11 @@ class Check extends Command
                     if($view != null && $view::class == 'Illuminate\View\View'){
                         $view = $view->render();
                     }
-                    if(is_string($view) && (str_contains($view, 'Exception') || str_contains($view, '<x-'))){
+                    if(is_string($view) && (
+                        str_contains($view, 'Exception') || 
+                        str_contains($view, '<x-') || 
+                        !str_contains($view, 'X-App-Version')
+                    )){
                     $this->info('showing error');    
                     $this->error('error in '.$controller.' method '.$methodName);
                         $this->error($view);
@@ -170,6 +174,10 @@ class Check extends Command
                 $args = $t->get_default_args();
                 call_user_func_array([$t, 'get'], $args);
                 $t->get_selectors();
+                if($t->delete != null){
+                    $id = ($t->getter->model_class)::instance()->value('id');
+                    $t->delete($id);
+                }
             }catch(\Throwable $e){
                 $this->error('error in '.$table);
                 $this->error($e->getMessage());

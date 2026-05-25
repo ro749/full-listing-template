@@ -7,6 +7,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ro749\FullListingTemplate\Commands\FullListingTemplateCommand;
 use Ro749\FullListingTemplate\Commands\FixHeader;
 use Ro749\FullListingTemplate\Commands\Check;
+use Ro749\FullListingTemplate\Commands\GeneratePersonalMigration;
 use Ro749\FullListingTemplate\Middleware\Admin;
 use Illuminate\Support\Facades\Log;
 
@@ -28,7 +29,8 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 FullListingTemplateCommand::class,
                 FixHeader::class,
-                Check::class
+                Check::class,
+                GeneratePersonalMigration::class
             ])
             ->hasRoutes('web');
     }

@@ -17,9 +17,12 @@ class FixHeader extends Command
         $content = File::get(base_path('resources\views\header.blade.php'));
         $content = str_replace('Iknaton Ortega', '{{ $asesor }}', $content);
         $content = str_replace('Test Sistema', '{{ $client }}', $content);
-        $content = preg_replace('/href="#section-contact"><span>(Cerrar Sesión|Volver a inicio)/', 'href="{{ route(\'client-login\') }}"><span>Cambiar Cliente', $content);
-        $content = preg_replace('/href="(#.*)"><span>Disponibilidad/', 'href="{{ route(\'disponibilidad\') }}"><span>Disponibilidad', $content);
-        $content = preg_replace('/href="(#.*)"><span>Listado/', 'href="{{ route(\'torre\') }}"><span>Listado', $content);
+        $content = preg_replace('/<a(.*)href="#section-contact"><span>(Cerrar Sesión|Volver a inicio)(.*)<\/a>/', '@if(!empty($menu))<a$1href="{{ route(\'client-login\') }}"><span>Cambiar Cliente$2</a>@endif', $content);
+        
+        $content = preg_replace('/<a(.*)href="(.*)"><span>Disponibilidad/', '@if(!empty($menu) || !empty($is_open))'.PHP_EOL.'<a$1href="{{ route(\'disponibilidad\') }}"><span>Disponibilidad', $content);
+        
+        $content = preg_replace('/href="(#.*)"><span>Listado<\/span><\/a>/', 'href="{{ route(\'torre\') }}"><span>Listado</span></a>'.PHP_EOL.'@endif', $content);
+        $content = preg_replace('/<ul(.*)>([\s\S]*)<\/ul>/', '<ul$1>@if(isset($asesor) && isset($client))$2@endif'.PHP_EOL.'</ul>', $content);
         File::put(base_path('resources\views\header.blade.php'), $content);
     }
 }
