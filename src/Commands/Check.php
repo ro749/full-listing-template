@@ -94,12 +94,12 @@ class Check extends Command
         if(!$this->check_controllers()){
             $ans = self::FAILURE;
         }
-        
-        if(!$this->check_tables()){
-            $ans = self::FAILURE;
-        }
 
         if(!$this->check_forms()){
+            $ans = self::FAILURE;
+        }
+        
+        if(!$this->check_tables()){
             $ans = self::FAILURE;
         }
 
