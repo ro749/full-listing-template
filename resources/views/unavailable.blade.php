@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    @include('listing-utils::head')
-    @stack('styles')
-</head>
+<x-layout>
+    
 <style>
 
 .container
@@ -66,8 +62,6 @@ body
     text-align: center;
 }
 </style>
-
-<body>
     <div class="wrapper wrapper-full-page ">
         <div class="content">
             <div class="card">
@@ -87,5 +81,4 @@ body
             </div>
         </div>
     </div>
-</body>
-</html>
+</x-layout>
