@@ -26,7 +26,7 @@ class Check extends Command
      *
      * @var string
      */
-    protected $description = 'Check if this project is ready to uplad, and autofixes what it can';
+    protected $description = 'Check if this project is ready to upload, and autofixes what it can';
 
     /**
      * Execute the console command.
@@ -38,7 +38,7 @@ class Check extends Command
         File::put(storage_path('logs/laravel.log'), '');
         if (!file_exists(app_path('Mail/CotizationMail.php'))) {
             $this->error('Falta el correo.');
-            $this->error('1 fatal error encountered, please fix it before uploading.');
+            $this->error('A fatal error encountered, please fix it before uploading.');
             return self::FAILURE;
         }
         $this->info('checking');
@@ -152,14 +152,19 @@ class Check extends Command
                     if($view != null && $view::class == 'Illuminate\View\View'){
                         $view = $view->render();
                     }
-                    if(is_string($view) && (
-                        str_contains($view, 'Exception') || 
-                        str_contains($view, '<x-') || 
-                        !str_contains($view, 'X-App-Version')
-                    )){
-                        $this->info('showing error');    
+                    if(is_string($view)){
                         $this->error('error in '.$controller.' method '.$methodName);
-                        $this->error($view);
+
+                        if (str_contains($view, 'Exception')) {
+                            $this->error('Exception found in view');
+                        }
+                        else if (str_contains($view, '<x-')) {
+                            $this->error('Unrendered component found in view');
+                        }
+                        else if (!str_contains($view, 'X-App-Version')) {
+                            $this->error('X-App-Version not found in view, this means the view was not rendered');
+                        }
+
                         $errorCount += 1;
                         $ans = false;
                     }
@@ -229,8 +234,19 @@ class Check extends Command
         return $ans;
     }
 
+    function check_img_map_pro(int& $errorCount){
+        $impClass = config('overrides.image_map_pro');
+
+        if($impClass != null){
+
+        }
+        else {
+            $this->info('No image map pro class found, skipping check');
+        }
+        return true;
+    }
+
     function check_listing_utils(int& $errorCount){
 
     }
-
 }
