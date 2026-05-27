@@ -38,6 +38,7 @@ class Check extends Command
         File::put(storage_path('logs/laravel.log'), '');
         if (!file_exists(app_path('Mail/CotizationMail.php'))) {
             $this->error('Falta el correo.');
+            $this->error('1 fatal error encountered, please fix it before uploading.');
             return self::FAILURE;
         }
         $this->info('checking');
@@ -89,17 +90,18 @@ class Check extends Command
 
         Auth::guard('asesor')->loginUsingId(1);
 
+        $errorCount = 0;
         $ans = self::SUCCESS;
 
-        if(!$this->check_controllers()){
+        if(!$this->check_controllers($errorCount)){
             $ans = self::FAILURE;
         }
 
-        if(!$this->check_forms()){
+        if(!$this->check_forms($errorCount)){
             $ans = self::FAILURE;
         }
         
-        if(!$this->check_tables()){
+        if(!$this->check_tables($errorCount)){
             $ans = self::FAILURE;
         }
 
@@ -107,7 +109,14 @@ class Check extends Command
 
         if (!(!file_exists($logPath) || filesize($logPath) === 0)) {
             $this->error('The log file is not empty.');  
+            $errorCount += 1;
             $ans = self::FAILURE; 
+        }
+
+        if ($errorCount > 0) {
+            $this->error($errorCount . ' error(s) found, please fix them before uploading.');
+        } else {
+            $this->info('No errors found, your project is ready to upload!');
         }
 
         DB::rollBack();
@@ -125,7 +134,7 @@ class Check extends Command
         return $package;
     }
 
-    function check_controllers(){
+    function check_controllers(int& $errorCount){
         $controllers = config('overrides.controllers');
         $ans = true;
         foreach($controllers as $controller){
@@ -148,9 +157,10 @@ class Check extends Command
                         str_contains($view, '<x-') || 
                         !str_contains($view, 'X-App-Version')
                     )){
-                    $this->info('showing error');    
-                    $this->error('error in '.$controller.' method '.$methodName);
+                        $this->info('showing error');    
+                        $this->error('error in '.$controller.' method '.$methodName);
                         $this->error($view);
+                        $errorCount += 1;
                         $ans = false;
                     }
                 }
@@ -158,6 +168,7 @@ class Check extends Command
                     $this->error('error in '.$controller.' method '.$methodName);
                     $this->error($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
                     $this->error($e->getTraceAsString());
+                    $errorCount += 1;
                     $ans = false;
                 }
             }
@@ -165,7 +176,7 @@ class Check extends Command
         return $ans;
     }
 
-    function check_tables(){
+    function check_tables(int& $errorCount){
         $tables = config('overrides.tables');
         $ans = true;
         foreach($tables as $table){
@@ -183,13 +194,14 @@ class Check extends Command
                 $this->error('error in '.$table);
                 $this->error($e->getMessage());
                 $this->error($e->getTraceAsString());
+                $errorCount += 1;
                 $ans = false;
             }
         }
         return $ans;
     }
 
-    function check_forms(){
+    function check_forms(int& $errorCount){
         
         Storage::fake('public');
         $forms = config('overrides.forms');
@@ -209,6 +221,7 @@ class Check extends Command
                 $this->error('error in '.$form);
                 $this->error($e->getMessage());
                 $this->error($e->getTraceAsString());
+                $errorCount += 1;
                 $ans = false;
             }
         }
@@ -216,7 +229,7 @@ class Check extends Command
         return $ans;
     }
 
-    function check_listing_utils(){
+    function check_listing_utils(int& $errorCount){
 
     }
 
