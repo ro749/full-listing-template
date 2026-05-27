@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\File;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\ListingUtils\Plans\PlansBase;
+use Illuminate\Support\Facades\Schema;
+
 class Check extends Command
 {
     /**
@@ -102,6 +105,10 @@ class Check extends Command
         }
         
         if(!$this->check_tables($errorCount)){
+            $ans = self::FAILURE;
+        }
+        
+        if(!$this->check_listing_utils($errorCount)){
             $ans = self::FAILURE;
         }
 
@@ -230,7 +237,19 @@ class Check extends Command
     }
 
     function check_listing_utils(int& $errorCount){
+        return $this->check_personal_plan_quotation($errorCount);
+    }
 
+    function check_personal_plan_quotation(int& $errorCount){
+        $PlansBase = PlansBase::instance();
+        foreach($PlansBase->form->fields as $key => $field){
+            if(!Schema::hasColumn('personal_plans', $key)){
+                $this->error('error in personalized quotations, execute "php artisan generate:personal-migration" to fix it.');
+                $errorCount += 1;
+                return false;
+            }
+        }
+        return true;
     }
 
 }
