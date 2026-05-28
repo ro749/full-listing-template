@@ -169,7 +169,10 @@ class Check extends Command
                             $this->error('Unrendered component found in view');
                         }
                         else if (!str_contains($view, 'X-App-Version')) {
-                            $this->error('X-App-Version not found in view, this means the view was not rendered');
+                            $this->error('this view is not using x-layout, make sure to extend x-layout in all your views');
+                        }
+                        else if (!str_contains($view, 'console.log')) {
+                            $this->error('console.log not found in view, remove all console logs before uploading');
                         }
 
                         $errorCount += 1;
