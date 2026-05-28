@@ -160,20 +160,26 @@ class Check extends Command
                         $view = $view->render();
                     }
                     if(is_string($view)){
-                        $this->error('error in '.$controller.' method '.$methodName);
 
                         if (str_contains($view, 'Exception')) {
+                            $this->error('error in '.$controller.' method '.$methodName);
                             $this->error('Exception found in view');
+                            $errorCount += 1;
+                            $ans = false;
                         }
                         else if (str_contains($view, '<x-')) {
+                            $this->error('error in '.$controller.' method '.$methodName);
                             $this->error('Unrendered component found in view');
+                            $errorCount += 1;
+                            $ans = false;
                         }
                         else if (!str_contains($view, 'X-App-Version')) {
+                            $this->error('error in '.$controller.' method '.$methodName);
                             $this->error('X-App-Version not found in view, this means the view was not rendered');
+                            $errorCount += 1;
+                            $ans = false;
                         }
 
-                        $errorCount += 1;
-                        $ans = false;
                     }
                 }
                 catch(\Throwable $e){
