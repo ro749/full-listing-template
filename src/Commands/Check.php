@@ -180,8 +180,9 @@ class Check extends Command
                             $errorCount += 1;
                             $ans = false;
                         }
-                        else if (!str_contains($view, 'console.log')) {
-                            $this->error('console.log not found in view, remove all console logs before uploading');
+                        else if (str_contains($view, 'console.log')) {
+                            $this->error('error in '.$controller.' method '.$methodName);
+                            $this->error('console.log found in view, remove all console logs before uploading');
                             $errorCount += 1;
                             $ans = false;
                         }
