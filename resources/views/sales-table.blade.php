@@ -14,7 +14,7 @@
         $(document).on('change','#asesor_id',function(){
 
             $.ajax({
-                url: "{{ route('clients-asesor') }}",
+                url: "{{ route(name:'clients-asesor',absolute:false) }}",
                 type: "GET",
                 dataType: "json",
                 data: {

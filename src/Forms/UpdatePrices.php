@@ -9,6 +9,7 @@ use Ro749\SharedUtils\Readers\DbUpdater;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Tables\PreviewTable;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 class UpdatePrices extends BaseForm
 {
     public function __construct()
@@ -28,7 +29,7 @@ class UpdatePrices extends BaseForm
                     ),
                     preview_table: PreviewTable::instance(),
                     cancel: function(){
-                        $unit_class =Unit::get_class();
+                        $unit_class = Unit::get_class();
                         $unit_class::query()->update([
                             'new_price' => null,
                             'new_status' => null

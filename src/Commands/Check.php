@@ -14,7 +14,8 @@ use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\ListingUtils\Plans\PlansBase;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 class Check extends Command
 {
     /**
@@ -69,7 +70,7 @@ class Check extends Command
         else{
             $asesor_id = Asesor::instance()->first()->id;
         }
-
+        Auth::guard('asesor')->loginUsingId($asesor_id);
         if(Client::instance()->count() == 0){
             $client_id = Client::instance()->insertGetId([
                 'name' => 'test',
@@ -85,13 +86,13 @@ class Check extends Command
         if(Quotation::instance()->count() == 0){
             $quotation_id = Quotation::instance()->insertGetId([
                 'asesor_id' => $asesor_id,
-                'client_id' => $asesor_id,
+                'client_id' => $client_id,
                 'unit_id' => 1,
                 'status' => 0,
             ]);
         }
 
-        Auth::guard('asesor')->loginUsingId(1);
+        
 
         $errorCount = 0;
         $ans = self::SUCCESS;
@@ -186,7 +187,18 @@ class Check extends Command
                             $errorCount += 1;
                             $ans = false;
                         }
+                        //checks all urls
+                        $pattern = '/url\s*:\s*[\'"`]([^\'"`]+)[\'"`]/';
+                        preg_match_all($pattern, $view, $matches);
 
+                        foreach($matches[1] as $url){
+                            if(!$this->isValidProjectUrl($url)){
+                                $this->error('error in '.$controller.' method '.$methodName);
+                                $this->error('Invalid URL found: '.$url);
+                                $errorCount += 1;
+                                $ans = false;
+                            }
+                        }
                     }
                 }
                 catch(\Throwable $e){
@@ -280,5 +292,24 @@ class Check extends Command
             }
         }
         return true;
+    }
+
+    function isValidProjectUrl(string $url): bool
+    {
+        $methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+
+        foreach ($methods as $method) {
+            try {
+                $request = Request::create($url, $method);
+                Route::getRoutes()->match($request);
+                return true; // matched!
+            } catch (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $e) {
+                return true; // route exists, wrong method — still valid
+            } catch (\Exception $e) {
+                continue; // try next method
+            }
+        }
+
+        return false;
     }
 }
