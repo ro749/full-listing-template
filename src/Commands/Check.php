@@ -188,8 +188,9 @@ class Check extends Command
                             $ans = false;
                         }
                         //checks all urls
-                        $pattern = '/url\s*:\s*[\'"`]([^\'"`]+)[\'"`]/';
-                        preg_match_all($pattern, $view, $matches);
+                        //$pattern = '/url\s*:\s*[\'"`]([^\'"`]+)[\'"`]/';
+                        $static_pattern = '/url\s*:\s*[\'"`]([^\'"`]+)[\'"`](?!\s*\+)/';
+                        preg_match_all($static_pattern, $view, $matches);
 
                         foreach($matches[1] as $url){
                             if(!$this->isValidProjectUrl($url)){
@@ -199,6 +200,19 @@ class Check extends Command
                                 $ans = false;
                             }
                         }
+
+                        $dynamic_pattern = '/url\s*:\s*[\'"`]\s*\+\s*([^\'"`\s]+)\s*\+\s*[\'"`]/';
+                        preg_match_all($dynamic_pattern, $view, $matches);
+
+                        foreach($matches[1] as $url){
+                            if(!$this->isValidProjectUrl($url.'1')){
+                                $this->error('error in '.$controller.' method '.$methodName);
+                                $this->error('Invalid URL found: '.$url);
+                                $errorCount += 1;
+                                $ans = false;
+                            }
+                        }
+
                     }
                 }
                 catch(\Throwable $e){
