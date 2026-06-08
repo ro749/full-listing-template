@@ -8,6 +8,7 @@ use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
 use Ro749\SharedUtils\Forms\InputType;
+use Ro749\SharedUtils\Forms\SelectorDB;
 use Ro749\SharedUtils\Forms\TextArea;
 use Ro749\FullListingTemplate\Mail\ContactMail;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
@@ -41,7 +42,7 @@ class Contact extends BaseForm
                     label: 'Teléfono',
                     required: true,
                 ),
-                'unit' => Selector::fromDB(
+                'unit' => new SelectorDB(
                     id: 'unitselector',
                     model_class: Unit::get_class(),
                     label_column: $unit_column,

@@ -7,6 +7,7 @@ return [
             'AdminLogin'=>\Ro749\FullListingTemplate\Forms\AdminLogin::class,
             'ClientComment'=>\Ro749\FullListingTemplate\Forms\ClientComment::class,
             'ClientEdit'=>\Ro749\FullListingTemplate\Forms\ClientEdit::class,
+            'ClientEditAdmin'=>\Ro749\FullListingTemplate\Forms\ClientEditAdmin::class,
             'EditUser'=>\Ro749\FullListingTemplate\Forms\EditUser::class,
             'LoginForm'=>\Ro749\FullListingTemplate\Forms\LoginForm::class,
             'ProfileImageEdit'=>\Ro749\FullListingTemplate\Forms\ProfileImageEdit::class,
@@ -18,6 +19,8 @@ return [
             'VentaEdit'=>\Ro749\FullListingTemplate\Forms\VentaEdit::class,
             'UpdatePrices'=>\Ro749\FullListingTemplate\Forms\UpdatePrices::class,
             'Contact'=>\Ro749\FullListingTemplate\Forms\Contact::class,
+            'RegisterClientAdmin'=>\Ro749\FullListingTemplate\Forms\RegisterClientAdmin::class,
+            'UploadClients'=>\Ro749\FullListingTemplate\Forms\UploadClients::class,
         ],
         'tables'=>[
             'ClientProfileTable'=>\Ro749\FullListingTemplate\Tables\ClientProfileTable::class,
@@ -30,6 +33,7 @@ return [
             'Users'=>\Ro749\FullListingTemplate\Tables\Users::class,
             'Ventas'=>\Ro749\FullListingTemplate\Tables\Ventas::class,
             'PreviewTable'=>\Ro749\FullListingTemplate\Tables\PreviewTable::class,
+            'ClientPreviewTable'=>\Ro749\FullListingTemplate\Tables\ClientPreviewTable::class,
             'AsesorsDashboard'=>\Ro749\FullListingTemplate\Tables\AsesorsDashboard::class
         ],
         'models'=>[
@@ -61,6 +65,7 @@ return [
             'pfp'=>'full-listing-template::pfp',
             'popup-reseted'=>'full-listing-template::popup-reseted',
             'register-asesor'=>'full-listing-template::register-asesor',
+            'register-client'=>'full-listing-template::register-client',
             'reset-password'=>'full-listing-template::reset-password',
             'sales-table'=>'full-listing-template::sales-table',
             'scripts'=>'full-listing-template::scripts',
@@ -73,6 +78,7 @@ return [
             'unavailable'=>'full-listing-template::unavailable',
             'footer'=>'full-listing-template::footer',
             'dashboard'=>'full-listing-template::dashboard',
+            'cargar-clientes'=>'full-listing-template::cargar-clientes',
         ],
         'datas'=>[
             'Dashboard'=>\Ro749\FullListingTemplate\Data\Dashboard::class,

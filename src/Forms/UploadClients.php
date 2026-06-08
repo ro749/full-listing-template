@@ -5,35 +5,30 @@ namespace Ro749\FullListingTemplate\Forms;
 use Illuminate\Http\Request;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\FileUploader;
-use Ro749\SharedUtils\Readers\DbUpdater;
-use Ro749\FullListingTemplate\Models\Unit;
-use Ro749\FullListingTemplate\Tables\PreviewTable;
+use Ro749\SharedUtils\Readers\DbReader;
+use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Tables\ClientPreviewTable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
-class UpdatePrices extends BaseForm
+class UploadClients extends BaseForm
 {
     public function __construct()
     {
         parent::__construct(
             submit_text: "Guardar",
             reload: false,
-            success_msg: "Datos actualizados correctamente",
+            success_msg: "Clientes cargados correctamente",
             fields: [
                 'file' => new FileUploader(
                     accept: '.csv',
                     autosave: false,
-                    reader: new DbUpdater(
-                        model_class: Unit::get_class(),
-                        public_id: 'unit',
-                        required_columns: ['unit','price','status']
+                    reader: new DbReader(
+                        model_class: Client::get_class(),
+                        required_columns: ['name','mail','phone']
                     ),
-                    preview_table: PreviewTable::instance(),
+                    preview_table: ClientPreviewTable::instance(),
                     cancel: function(){
-                        $unit_class = Unit::get_class();
-                        $unit_class::query()->update([
-                            'new_price' => null,
-                            'new_status' => null
-                        ]);
+                        Client::where('new', true)->delete();
                     }
                 ),
             ],
@@ -41,8 +36,8 @@ class UpdatePrices extends BaseForm
     }
 
     public function get_default_args(){
-        $unit = Unit::instance()->first();
-        $csvContent = "unit,price,status\n".$unit->unit.",".$unit->price.",".$unit->status;
+        $client = Client::instance()->first();
+        $csvContent = "name,mail,phone\n".$client->name.",".$client->mail.",".$client->phone."\n";
         $tmpFile = tmpfile();
         fwrite($tmpFile, $csvContent);
         $tmpPath = stream_get_meta_data($tmpFile)['uri'];

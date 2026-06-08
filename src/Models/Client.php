@@ -16,6 +16,7 @@ class Client extends Model
         'priority',
         'short_comment',
         'long_comment',
+        'new'
     ];
 
     public function asesor(): BelongsTo{

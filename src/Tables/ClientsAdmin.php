@@ -5,6 +5,7 @@ namespace Ro749\FullListingTemplate\Tables;
 use Ro749\SharedUtils\Tables\BaseTable;
 use Ro749\SharedUtils\Getters\BaseGetter;
 use Ro749\SharedUtils\Tables\Column;
+use Ro749\SharedUtils\Models\Modifier;
 use Ro749\SharedUtils\Models\LogicModifiers\Options;
 use Ro749\SharedUtils\Models\LogicModifiers\ForeignKey;
 use Ro749\SharedUtils\Tables\View;
@@ -15,7 +16,7 @@ use Ro749\SharedUtils\Filters\Filters;
 use Ro749\SharedUtils\Filters\Filter;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Enums\ClientCategories;
-use Ro749\FullListingTemplate\Forms\ClientEdit;
+use Ro749\FullListingTemplate\Forms\ClientEditAdmin;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Asesor;
@@ -29,7 +30,7 @@ class ClientsAdmin extends BaseTable
                 param: 'id',
                 name: 'id'
             ),
-            form: ClientEdit::instanciate(),
+            form: ClientEditAdmin::instanciate(),
             filters: [
                 'cartera'=>new Filters(
                     id: 'cartera',
@@ -51,21 +52,8 @@ class ClientsAdmin extends BaseTable
                         model_class: Quotation::get_class(),
                         group_column: 'client_id',
                         columns: [
-                            'sent'=>new StatisticColumn(
-                                type: StatisticType::COUNT,
-                                filter: 'status = 0'
-                            ),
-                            'pending'=>new StatisticColumn(
-                                type: StatisticType::COUNT,
-                                filter: 'status = 1'
-                            ),
-                            'accepted'=>new StatisticColumn(
-                                type: StatisticType::COUNT,
-                                filter: 'status = 2'
-                            ),
-                            'cancelled'=>new StatisticColumn(
-                                type: StatisticType::COUNT,
-                                filter: 'status = 3'
+                            'quotes_count'=>new StatisticColumn(
+                                type: StatisticType::COUNT
                             ),
                         ]
                     )
@@ -77,35 +65,15 @@ class ClientsAdmin extends BaseTable
                     'phone'=>new Column(
                         display:"Teléfono",
                     ),
-                    'mail'=>new Column(
-                        display:"Email",
+                    'created_at'=>new Column(
+                        display:"Fecha de Registro",
+                        modifier: Modifier::DATE
                     ),
-                    'sent'=>new Column(
-                        display:"Enviadas",
+                    'quotes_count'=>new Column(
+                        display:"Cotizaciones Enviadas",
                         logic_modifier: new ForeignKey(
                             table: 'quotation_stats',
-                            column: 'sent',
-                        ),
-                    ),
-                    'pending'=>new Column(
-                        display:"Pendientes",
-                        logic_modifier: new ForeignKey(
-                            table: 'quotation_stats',
-                            column: 'pending',
-                        ),
-                    ),
-                    'accepted'=>new Column(
-                        display:"Aceptadas",
-                        logic_modifier: new ForeignKey(
-                            table: 'quotation_stats',
-                            column: 'accepted',
-                        ),
-                    ),
-                    'cancelled'=>new Column(
-                        display:"Canceladas",
-                        logic_modifier: new ForeignKey(
-                            table: 'quotation_stats',
-                            column: 'cancelled',
+                            column: 'quotes_count',
                         ),
                     ),
                     'asesor_id'=>new Column(
@@ -113,6 +81,7 @@ class ClientsAdmin extends BaseTable
                         logic_modifier: new ForeignKey(
                             model_class: Asesor::get_class(),
                             column: 'name',
+                            text_on_null: 'No asignado'
                         )
                     ),
                     'short_comment'=>new Column(
@@ -140,7 +109,8 @@ class ClientsAdmin extends BaseTable
                             }
                         }
                     )
-                ]
+                ],
+                //debug: true
             )
         );
     }

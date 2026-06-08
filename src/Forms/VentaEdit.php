@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\Selector;
+use Ro749\SharedUtils\Forms\SelectorDB;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Models\Asesor;
@@ -20,12 +21,12 @@ class VentaEdit extends BaseForm
                 'final_price' => new Field(
                     type: InputType::NUMBER,
                 ),
-                'asesor_id' => Selector::fromDB(
+                'asesor_id' => new SelectorDB(
                     id: 'asesor',
                     model_class: Asesor::get_class(),
                     label_column: 'name',
                 ),
-                'client_id'=>Selector::fromDB(
+                'client_id'=> new SelectorDB(
                     id: 'client',
                     model_class: Client::get_class(),
                     label_column: 'name',

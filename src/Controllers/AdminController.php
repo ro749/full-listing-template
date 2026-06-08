@@ -16,6 +16,9 @@ use Ro749\FullListingTemplate\Tables\TorreAdmin;
 use Ro749\FullListingTemplate\Tables\ClientProfileTable;
 use Ro749\FullListingTemplate\Forms\UpdatePrices;
 use Ro749\FullListingTemplate\Tables\PreviewTable;
+use Ro749\FullListingTemplate\Forms\UploadClients;
+
+
 use Ro749\FullListingTemplate\Data\Dashboard as DashboardData;
 use Ro749\FullListingTemplate\Charts\AsesorsChart;
 use Ro749\FullListingTemplate\Charts\ClientsChart;
@@ -24,6 +27,7 @@ use Ro749\FullListingTemplate\Charts\AvailableUnitsChart;
 use Ro749\FullListingTemplate\Charts\QuotesChart;
 use Ro749\FullListingTemplate\Charts\SalesChart;
 use Ro749\FullListingTemplate\Charts\AsesorsQuotesChart;
+use Ro749\FullListingTemplate\Forms\RegisterClientAdmin;
 
 
 use Ro749\FullListingTemplate\Tables\AsesorsDashboard;
@@ -57,6 +61,11 @@ class AdminController extends Controller
         $form = UpdatePrices::instanciate();
         $table = PreviewTable::instance();
         return view(config('overrides.views.actualizar-precios'),['form'=>$form, 'table'=>$table]);
+    }
+
+    public function cargar_clientes() {
+        $form = UploadClients::instanciate();
+        return view(config('overrides.views.cargar-clientes'),['form'=>$form]);
     }
 
     public function profile(Request $request){
@@ -103,6 +112,11 @@ class AdminController extends Controller
             'model_imgs_route'=>$this->model_imgs_route,
             'imgs_type'=>$this->imgs_type
         ]);
+    }
+
+    public function register_client(){
+        $form = RegisterClientAdmin::instanciate();
+        return view(config('overrides.views.register-client'), ['form'=>$form]);
     }
 
     public function get_default_args($function){

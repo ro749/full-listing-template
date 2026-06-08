@@ -5,7 +5,7 @@ namespace Ro749\FullListingTemplate\Forms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ro749\SharedUtils\Forms\BaseForm;
-use Ro749\SharedUtils\Forms\Selector;
+use Ro749\SharedUtils\Forms\SelectorDB;
 use Ro749\FullListingTemplate\Models\Client;
 
 class SelectClient extends BaseForm
@@ -16,7 +16,7 @@ class SelectClient extends BaseForm
             submit_text: "Entrar",
             redirect: route('disponibilidad'),
             fields: [
-                "client" => Selector::fromDB(
+                "client" => new SelectorDB(
                     id: "client",
                     label_column: "name",
                     model_class: Client::get_class(),

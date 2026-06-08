@@ -9,7 +9,9 @@ use Ro749\SharedUtils\Forms\Selector;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Models\Client;
 use Illuminate\Support\Facades\Request;
-class ClientEdit extends BaseForm
+use Ro749\SharedUtils\Forms\SelectorDB;
+use Ro749\FullListingTemplate\Models\Asesor;
+class ClientEditAdmin extends BaseForm
 {
     public function __construct()
     {
@@ -22,9 +24,6 @@ class ClientEdit extends BaseForm
                 ),
                 'name' => new Field(
                     type: InputType::TEXT,
-                ),
-                'mail' => new Field(
-                    type: InputType::EMAIL,
                 ),
                 'phone' => new Field(
                     type: InputType::PHONE,
@@ -39,6 +38,12 @@ class ClientEdit extends BaseForm
                 ),
                 'priority' => new Selector(
                     options: OptionsEnum::ClientPriorities
+                ),
+                'asesor_id' => new SelectorDB(
+                    label:"Asesor",
+                    id:'asesor_id',
+                    model_class: Asesor::get_class(), 
+                    label_column: 'name'
                 ),
             ],
         );

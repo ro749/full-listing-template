@@ -16,6 +16,8 @@ use Ro749\ListingUtils\Plans\PlansBase;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+Use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 class Check extends Command
 {
     /**
@@ -39,6 +41,11 @@ class Check extends Command
      */
     public function handle(): int
     {
+        $this->info('Checking if the project is ready to upload...');
+        config('database.connections.mysql.database', 'test');
+        DB::purge('mysql');
+        DB::reconnect('mysql');
+        Artisan::call('migrate:fresh', ['--force' => true]);
         File::put(storage_path('logs/laravel.log'), '');
         if (!file_exists(app_path('Mail/CotizationMail.php'))) {
             $this->error('Falta el correo.');
@@ -56,15 +63,17 @@ class Check extends Command
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        DB::beginTransaction();
+        config('database.connections.mysql.database', 'test');
+        DB::purge('mysql');
+        DB::reconnect('mysql');
         if(Asesor::instance()->count() == 0){
             $asesor_id = Asesor::instance()->insertGetId([
                 'name' => 'test',
                 'category' => '0',
                 'mail' => 'test@example.com',
                 'phone' => '3337811700',
-                'number' => '0000',
-                'password' => '1111'
+                'number' => '1111',
+                'password' => Hash::make('1111')
             ]);
         }
         else{
@@ -126,8 +135,6 @@ class Check extends Command
         } else {
             $this->info('No errors found, your project is ready to upload!');
         }
-
-        DB::rollBack();
 
         return $ans;
     }
@@ -253,7 +260,6 @@ class Check extends Command
     }
 
     function check_forms(int& $errorCount){
-        
         Storage::fake('public');
         $forms = config('overrides.forms');
         $ans = true;
