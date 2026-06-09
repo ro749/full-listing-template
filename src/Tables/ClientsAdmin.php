@@ -70,7 +70,7 @@ class ClientsAdmin extends BaseTable
                         modifier: Modifier::DATE
                     ),
                     'quotes_count'=>new Column(
-                        display:"Cotizaciones Enviadas",
+                        display:"Cotizaciones",
                         logic_modifier: new ForeignKey(
                             table: 'quotation_stats',
                             column: 'quotes_count',
