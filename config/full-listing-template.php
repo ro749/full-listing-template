@@ -79,6 +79,7 @@ return [
             'footer'=>'full-listing-template::footer',
             'dashboard'=>'full-listing-template::dashboard',
             'cargar-clientes'=>'full-listing-template::cargar-clientes',
+            'contact-form'=>'full-listing-template::contact-form',
         ],
         'datas'=>[
             'Dashboard'=>\Ro749\FullListingTemplate\Data\Dashboard::class,

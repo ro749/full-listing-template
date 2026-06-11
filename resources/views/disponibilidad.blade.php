@@ -21,7 +21,9 @@
         @if(isset($asesor_area))
         @include(config('overrides.views.asesor-area'))
         @endif
-
+        @if(!empty($is_open))
+        @include(config('overrides.views.contact-form'),['form'=>$form])
+        @endif
         @include(config('overrides.views.footer'))
     </div>
     @push('script-includes')

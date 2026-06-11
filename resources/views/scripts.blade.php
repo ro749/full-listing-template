@@ -27,6 +27,9 @@
     });
     @endif
     function fill_data(){
+        @if(!empty($is_open))
+        $('#unit').val(data["id"]).trigger('change');
+        @endif
         @stack('before_fill') 
         @stack('fill')
         @stack('after_fill')

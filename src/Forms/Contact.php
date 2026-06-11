@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
-use Ro749\SharedUtils\Forms\Selector;
-use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\SelectorDB;
+use Ro749\SharedUtils\Forms\SelectorType;
+use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\TextArea;
 use Ro749\FullListingTemplate\Mail\ContactMail;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
@@ -49,8 +49,9 @@ class Contact extends BaseForm
                     label: "Unidad de interés",
                     required: true,
                     query_modifier: function ($query) use ($status_column) {
-                        $query->where($status_column, UnitsStatus::Disponible->value);
-                    }
+                        return $query->where($status_column, UnitsStatus::Disponible->value);
+                    },
+                    selector_type: SelectorType::Static
 
                 ),
                 'message' => new TextArea(
@@ -66,11 +67,12 @@ class Contact extends BaseForm
     public function prosses(Request $request): string
     {
         $data = $request->validate($this->rules($request));
+        $unit = Unit::instance()->where('id', $data['unit'])->value('unit');
         $mail = new ContactMail(
             $data['name'],
             $data['phone'],
             $data['email'],
-            $data['unit'],
+            $unit,
             $data['message']??""
         );
         if($this->mail_to == '') return $this->redirect;

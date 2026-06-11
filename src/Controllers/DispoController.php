@@ -166,11 +166,13 @@ class DispoController extends Controller
         $data = new $data_class('id', $id);
         $unit = $data->get_data();
         $plans = config()->get('overrides.plans')::instance();
+        $form = config('overrides.forms.Contact')::instanciate();
         return view(config('overrides.views.disponibilidad'),[
             'plans'=>$plans,
             'unit'=>$unit,
             'dispo_btns'=>true,
             'is_open'=>true,
+            'form'=>$form
         ]);
     }
 
