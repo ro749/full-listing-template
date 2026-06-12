@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout class="{{ config('listing.class') ?? '' }}">
     <div id="wrapper">
         <div class="float-text show-on-scroll">
             <span><a href="#">Scroll to top</a></span>
