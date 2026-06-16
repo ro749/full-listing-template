@@ -11,6 +11,7 @@ use Ro749\FullListingTemplate\Models\Client;
 use Illuminate\Support\Facades\Request;
 use Ro749\SharedUtils\Forms\SelectorDB;
 use Ro749\FullListingTemplate\Models\Asesor;
+use Illuminate\Support\Facades\Log;
 class ClientEditAdmin extends BaseForm
 {
     public function __construct()
@@ -39,7 +40,7 @@ class ClientEditAdmin extends BaseForm
                 'priority' => new Selector(
                     options: OptionsEnum::ClientPriorities
                 ),
-                'asesor_id' => new SelectorDB(
+                'asesor' => new SelectorDB(
                     label:"Asesor",
                     id:'asesor_id',
                     model_class: Asesor::get_class(), 

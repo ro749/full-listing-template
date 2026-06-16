@@ -194,6 +194,12 @@ class Check extends Command
                             $errorCount += 1;
                             $ans = false;
                         }
+                        else if (str_contains($view, 'smartTable()')) {
+                            $this->error('error in '.$controller.' method '.$methodName);
+                            $this->error('a smart table is empty');
+                            $errorCount += 1;
+                            $ans = false;
+                        }
                         //checks all urls
                         //$pattern = '/url\s*:\s*[\'"`]([^\'"`]+)[\'"`]/';
                         $static_pattern = '/url\s*:\s*[\'"`]([^\'"`]+)[\'"`](?!\s*\+)/';

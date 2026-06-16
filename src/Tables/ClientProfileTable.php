@@ -31,7 +31,7 @@ class ClientProfileTable extends BaseTable
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
-                    'unit_id'=>new Column(
+                    'unit'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
                             model_class: Unit::get_class(),

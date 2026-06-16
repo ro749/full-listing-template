@@ -28,14 +28,14 @@ class Ventas extends BaseTable
                         display:"Precio Final",
                         modifier: Modifier::MONEY,
                     ),
-                    'asesor_id'=>new Column(
+                    'asesor'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
                             model_class: Asesor::get_class(),
                             column: 'name',
                         )
                     ),
-                    'client_id'=>new Column(
+                    'client'=>new Column(
                         display:"Cliente",
                         logic_modifier: new ForeignKey(
                             model_class: Client::get_class(),

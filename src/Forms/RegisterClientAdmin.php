@@ -40,7 +40,7 @@ class RegisterClientAdmin extends BaseForm
                     unique: true,
                     icon: "solar:phone-calling-linear"
                 ),
-                'asesor_id' => new SelectorDB(
+                'asesor' => new SelectorDB(
                     label:"Asesor",
                     id:'asesor_id',
                     model_class: Asesor::get_class(), 

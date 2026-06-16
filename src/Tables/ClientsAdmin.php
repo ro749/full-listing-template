@@ -76,7 +76,7 @@ class ClientsAdmin extends BaseTable
                             column: 'quotes_count',
                         ),
                     ),
-                    'asesor_id'=>new Column(
+                    'asesor'=>new Column(
                         display:"Asesor",
                         logic_modifier: new ForeignKey(
                             model_class: Asesor::get_class(),
