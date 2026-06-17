@@ -30,6 +30,11 @@ class ClientEdit extends BaseForm
                     type: InputType::PHONE,
                     required: true,
                     unique: true,
+                    error_messages: [
+                        'unique' => 'El teléfono tiene que ser unico',
+                        'required' => 'El teléfono es obligatorio',
+                        'phone' => 'El teléfono tiene que un numero valido'
+                    ]
                 ),
                 'short_comment' => new Field(
                     type: InputType::TEXT,

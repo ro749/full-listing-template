@@ -6,12 +6,13 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Models\User;
 use Ro749\ListingUtils\Plans\PlansBase;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Route;
@@ -96,11 +97,11 @@ class Check extends Command
             $quotation_id = Quotation::instance()->insertGetId([
                 'asesor_id' => $asesor_id,
                 'client_id' => $client_id,
-                'unit_id' => 1,
+                'unit_id' => Unit::instance()->where('status', '0')->first()->id,
                 'status' => 0,
             ]);
         }
-
+        DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
         
 
         $errorCount = 0;

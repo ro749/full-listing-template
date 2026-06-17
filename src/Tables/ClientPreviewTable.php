@@ -40,25 +40,11 @@ class ClientPreviewTable extends BaseTable
                     new BasicFilter(
                         id: "id",
                         filter: function(Builder $query,array $data) {
-                            $query->where('new', true);
+                            $query->withoutGlobalScope('client')->where('new', true);
                         }
                     )
                 ]
             )
         );
-    }
-
-    public function get($start = 0, $length = 10, $search = '',$order = [],$filters = [],$start_date = null, $end_date = null): mixed
-    {
-        $data = $this->getter->get($start, $length, $search,$order,$filters);
-        foreach($data['data'] as $key => &$value){
-            if($value->new_price === null ){
-                $value->price = null;
-            }
-            if($value->new_status === null){
-                $value->status = null;
-            }
-        }
-        return $data;
     }
 }

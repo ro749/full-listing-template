@@ -28,7 +28,10 @@ class UploadClients extends BaseForm
                     ),
                     preview_table: ClientPreviewTable::instance(),
                     cancel: function(){
-                        Client::where('new', true)->delete();
+                        Client::withoutGlobalScope('client')->where('new', true)->delete();
+                    },
+                    save: function(){
+                        Client::withoutGlobalScope('client')->where('new', true)->update(['new' => false]);
                     }
                 ),
             ],
