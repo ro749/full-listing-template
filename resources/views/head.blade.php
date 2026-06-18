@@ -12,6 +12,5 @@
 <!-- color scheme -->
 <link id="colors" href="{{ asset('css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css" >
 <link href="vendor/full-listing-template/css/style.css" rel="stylesheet" type="text/css" >
-<link href="{{ asset('css/listing-style.css') }}" rel="stylesheet" type="text/css">
 <!--end-full-listing-template css-->
 @endpush
