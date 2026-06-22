@@ -108,47 +108,27 @@ class Check extends Command
         
 
         $errorCount = 0;
-        $ans = self::SUCCESS;
-
-        if(!$this->check_controllers($errorCount)){
-            $ans = self::FAILURE;
-        }
-
-        if(!$this->check_forms($errorCount)){
-            $ans = self::FAILURE;
-        }
-
-        if(!$this->check_tables($errorCount)){
-            $ans = self::FAILURE;
-        }
-
-        if(!$this->check_db($errorCount)){
-            $ans = self::FAILURE;
-        }
-        
-        
-        if(!$this->check_listing_utils($errorCount)){
-            $ans = self::FAILURE;
-        }
-
-
+        $this->check_controllers($errorCount);
+        $this->check_forms($errorCount);
+        $this->check_tables($errorCount);
+        $this->check_db($errorCount);
+        $this->check_listing_utils($errorCount);
 
         $logPath = storage_path('logs/laravel.log');
 
         if (!(!file_exists($logPath) || filesize($logPath) === 0)) {
             $this->error('The log file is not empty.');  
-            $this->error(file_get_contents($logPath));
             $errorCount += 1;
-            $ans = self::FAILURE; 
+             
         }
 
         if ($errorCount > 0) {
             $this->error($errorCount . ' error(s) found, please fix them before uploading.');
+            return self::FAILURE;
         } else {
             $this->info('No errors found, your project is ready to upload!');
+            return self::SUCCESS;
         }
-
-        return $ans;
     }
 
     protected function mergeConfigs(array $package, array $project): array
