@@ -61,12 +61,12 @@ class Check extends Command
         }
         $this->info('checking');
         $this->call('check');
-        $packageConfig = require __DIR__.'/../../config/full-listing-template.php';
+        $packageConfig = require base_path('vendor/ro749/full-listing-template/config/full-listing-template.php');
         $packageConfig = $packageConfig['overrides'];
         $config = require config_path('overrides.php');
         
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        $packageConfig = require __DIR__.'/../../../listing-utils/config/listing-utils.php';
+        $packageConfig = require base_path('vendor/ro749/listing-utils/config/listing-utils.php');
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
