@@ -137,6 +137,7 @@ class Check extends Command
 
         if (!(!file_exists($logPath) || filesize($logPath) === 0)) {
             $this->error('The log file is not empty.');  
+            $this->error(file_get_contents($logPath));
             $errorCount += 1;
             $ans = self::FAILURE; 
         }
