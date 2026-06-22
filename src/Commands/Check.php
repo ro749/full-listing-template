@@ -70,7 +70,7 @@ class Check extends Command
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        $this->info(jsnon_encode(config('overrides'), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $this->info(json_encode(config('overrides'), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         if(Asesor::instance()->count() == 0){
             $asesor_id = Asesor::instance()->insertGetId([
                 'name' => 'test',
