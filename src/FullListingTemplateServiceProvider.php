@@ -43,7 +43,7 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
     public function register()
     {
         parent::register();
-        $packageConfig = require __DIR__.'/../config/full-listing-template.php';
+        $packageConfig = require base_path('vendor/ro749/full-listing-template/config/full-listing-template.php');
         config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
         config(['login' => $this->mergeConfigs($packageConfig['login'], config('login', []))]);
         config(['options' => $this->mergeConfigs($packageConfig['options'], config('options', []))]);
