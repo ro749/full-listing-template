@@ -70,7 +70,6 @@ class Check extends Command
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        $this->info(json_encode(config('overrides'), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         if(Asesor::instance()->count() == 0){
             $asesor_id = Asesor::instance()->insertGetId([
                 'name' => 'test',
@@ -168,7 +167,7 @@ class Check extends Command
             $control = $controller::instance();
             $reflection = new \ReflectionClass($control);
             foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                if ($method->isConstructor() || $method->getDeclaringClass()->getName() !== get_class($control) || str_contains($method->getName(), 'get_default_args')) {
+                if ($method->isConstructor() || str_contains($method->getName(), 'get_default_args')) {
                     continue;
                 }
                 $methodName = $method->getName();
@@ -180,13 +179,13 @@ class Check extends Command
                         $view = $view->render();
                     }
                     if(is_string($view)){
-
                         if (str_contains($view, 'Exception')) {
                             $this->error('error in '.$controller.' method '.$methodName);
                             $this->error('Exception found in view');
                             $errorCount += 1;
                             $ans = false;
                         }
+                        
                         else if (str_contains($view, '<x-')) {
                             $this->error('error in '.$controller.' method '.$methodName);
                             $this->error('Unrendered component found in view');

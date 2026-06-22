@@ -92,7 +92,7 @@ class Dashboard extends Data
             statistics:[
                 'model_stats' => new Statistic(
                     model_class: Unit::get_class(),
-                    group_column: 'modelo',
+                    group_column: 'modelo_id',
                     columns: [
                         'modelo_percent'=>new StatisticColumn(
                             type: StatisticType::COUNT
@@ -112,7 +112,7 @@ class Dashboard extends Data
                     ],
                     links: [new StatisticLink(
                         model_class: Unit::get_class(),
-                        column: 'modelo',
+                        column: 'modelo_id',
                     )]
                 )
             ]
