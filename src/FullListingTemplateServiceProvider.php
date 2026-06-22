@@ -40,9 +40,9 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
         app('router')->pushMiddlewareToGroup('admin', Admin::class);
     }
 
-    public function register()
+    public function boot()
     {
-        parent::register();
+        parent::boot();
         $packageConfig = require __DIR__.'/../config/full-listing-template.php';
         config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
         config(['login' => $this->mergeConfigs($packageConfig['login'], config('login', []))]);
