@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone', 10);
             $table->string('mail')->default('');
-            $table->integer('asesor_id');
+            $table->unsignedBigInteger('asesor_id');
             $table->integer('category')->default(0);
             $table->integer('priority')->default(0);
             $table->string('short_comment')->default('');
@@ -40,10 +40,10 @@ return new class extends Migration
 
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->integer('client_id');
+            $table->unsignedBigInteger('client_id');
             $table->integer('medium');
-            $table->integer('asesor_id');
-            $table->integer('unit_id');
+            $table->unsignedBigInteger('asesor_id');
+            $table->unsignedBigInteger('unit_id');
             $table->integer('status')->default(0);
             $table->decimal('quoted_price', 12, 2);
             $table->integer('n_open')->default(0);
@@ -53,8 +53,8 @@ return new class extends Migration
 
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->integer('asesor_id')->nullable()->default(null);
-            $table->integer('client_id')->nullable()->default(null);
+            $table->unsignedBigInteger('asesor_id')->nullable()->default(null);
+            $table->unsignedBigInteger('client_id')->nullable()->default(null);
             $table->string('unit',32);
             $table->integer('status')->default(0);
             $table->decimal('price', 12, 2);
@@ -82,7 +82,7 @@ return new class extends Migration
 
         Schema::create('plan_lines', function (Blueprint $table) {
             $table->id();
-            $table->integer('plan_id');
+            $table->unsignedBigInteger('plan_id');
             $table->string('description');
             $table->decimal('percent', 5, 2);
             $table->boolean('months')->default(false);

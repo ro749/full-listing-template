@@ -8,17 +8,23 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Ro749\FullListingTemplate\Models\Asesor;
-use Ro749\FullListingTemplate\Models\Client;
-use Ro749\FullListingTemplate\Models\Quotation;
-use Ro749\FullListingTemplate\Models\Unit;
-use Ro749\FullListingTemplate\Models\User;
-use Ro749\ListingUtils\Plans\PlansBase;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 Use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+
+use Laravel\Dusk\Browser;
+use Laravel\Dusk\Chrome\ChromeProcess;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+
+use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\FullListingTemplate\Models\Client;
+use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\ListingUtils\Plans\PlansBase;
+
 class Check extends Command
 {
     /**
@@ -114,14 +120,21 @@ class Check extends Command
         if(!$this->check_forms($errorCount)){
             $ans = self::FAILURE;
         }
-        
+
         if(!$this->check_tables($errorCount)){
             $ans = self::FAILURE;
         }
+
+        if(!$this->check_db($errorCount)){
+            $ans = self::FAILURE;
+        }
+        
         
         if(!$this->check_listing_utils($errorCount)){
             $ans = self::FAILURE;
         }
+
+
 
         $logPath = storage_path('logs/laravel.log');
 
@@ -266,6 +279,13 @@ class Check extends Command
         return $ans;
     }
 
+    function mock_form_data($form){
+        $form = $form::instanciate();
+        foreach($form->fields as $field){
+            
+        }
+    }
+
     function check_forms(int& $errorCount){
         Storage::fake('public');
         $forms = config('overrides.forms');
@@ -338,5 +358,39 @@ class Check extends Command
         }
 
         return false;
+    }
+
+    function check_db(int& $errorCount){
+        $tables = Schema::getTables();
+
+        foreach ($tables as $table) {
+            $tableName = $table['name'];
+            if($tableName == 'job_batches') continue;
+            $columns = Schema::getColumns($tableName);
+
+            foreach ($columns as $column) {
+                if(str_contains($column['name'], '_id') && !(str_contains($column['type'], 'bigint') && str_contains($column['type'], 'unsigned'))) {
+                    $this->error('error in '.$tableName.', column '.$column['name'].' must be bigint unsigned, it is '.$column['type']);
+                    $errorCount += 1;
+                    return false;
+                }
+            }
+        }
+        
+    }
+
+    function check_in_browser(){
+
+        //$process = (new ChromeProcess(9515))->toProcess();
+        //$process->start();
+        Browser::$baseUrl = 'http://127.0.0.1:8000';
+        $driver = RemoteWebDriver::create('http://localhost:50727', DesiredCapabilities::chrome());
+        $browser = new Browser($driver);
+        $browser->visit('/');
+        $logs = $driver->manage()->getLog('browser');
+        $browser->quit();
+        $this->info(json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        //$process->stop();
     }
 }
