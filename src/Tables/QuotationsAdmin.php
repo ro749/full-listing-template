@@ -24,6 +24,21 @@ class QuotationsAdmin extends BaseTable
 {
     public function __construct(){
         parent::__construct(
+            filters: [
+                'filtro'=>new Filters(
+                    id: 'filtro',
+                    display: 'Filtro',
+                    filters: [
+                        'disponibles'=>new Filter(
+                            display: 'Disponibles'
+                        ),
+                        'todas'=>new Filter(
+                            display: 'Todas'
+                        ),
+                    ],
+                    default: 'disponibles'
+                )
+            ],
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
                 columns : [
@@ -77,6 +92,17 @@ class QuotationsAdmin extends BaseTable
                     'last_viewed_at'=>new Column(
                         display:"Ultima vez visto",
                         modifier: Modifier::TIME_SINCE
+                    )
+                ],
+                backend_filters: [
+                    new BasicFilter(
+                        id: 'cartera',
+                        filter: function ($query,$data) {
+                            if(!isset($data['filtro'])) return;
+                            if($data['filtro'] == 'disponibles'){
+                                $query->where(Unit::instance()->getTable().'.status', UnitsStatus::Disponible->value);
+                            }
+                        }
                     )
                 ]
             ),
