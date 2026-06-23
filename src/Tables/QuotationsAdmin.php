@@ -20,6 +20,8 @@ use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Models\Asesor;
+use Ro749\SharedUtils\Filters\Filters;
+use Ro749\SharedUtils\Filters\Filter;
 class QuotationsAdmin extends BaseTable
 {
     public function __construct(){
