@@ -34,18 +34,6 @@ class QuotationsAdmin extends BaseTable
                             column: 'name',
                         )
                     ),
-                    'medium' => new Column(
-                        display:"Medio",
-                        logic_modifier: new MultiForeignKey (
-                            key_column: "client",
-                            table: "clients",
-                            columns: [
-                                new ForeingKeyColumn("phone"),
-                                new ForeingKeyColumn("mail"),
-                                new ForeingKeyValue("Link")
-                            ],
-                        ),
-                    ),
                     'unit'=>new Column(
                         display:"Unidad",
                         logic_modifier: new ForeignKey(
@@ -86,6 +74,10 @@ class QuotationsAdmin extends BaseTable
                         modifier: Modifier::DATE,
                         order: ColumnOrder::DESC
                     ),
+                    'last_viewed_at'=>new Column(
+                        display:"Ultima vez visto",
+                        modifier: Modifier::TIME_SINCE
+                    )
                 ]
             ),
             view: new View(

@@ -8,23 +8,40 @@ use Ro749\SharedUtils\Tables\Column;
 use Ro749\SharedUtils\Filters\BackendFilters\UserFilter;
 use Ro749\SharedUtils\Models\Modifier;
 use Ro749\SharedUtils\Models\LogicModifiers\ForeignKey;
-use Ro749\SharedUtils\Models\LogicModifiers\MultiForeignKey;
-use Ro749\SharedUtils\Models\LogicModifiers\ForeingKeyColumn;
-use Ro749\SharedUtils\Models\LogicModifiers\ForeingKeyValue;
+use Ro749\SharedUtils\Filters\Filters;
+use Ro749\SharedUtils\Filters\Filter;
 use Ro749\SharedUtils\Models\LogicModifiers\Options;
 use Ro749\SharedUtils\Tables\ColumnOrder;
 use Ro749\SharedUtils\Tables\View;
+use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Unit;
+use Ro749\FullListingTemplate\Enums\UnitsStatus;
 class Quotations extends BaseTable
 {
     public function __construct(){
         parent::__construct(
+            filters: [
+                'filtro'=>new Filters(
+                    id: 'filtro',
+                    display: 'Filtro',
+                    filters: [
+                        'disponibles'=>new Filter(
+                            display: 'Disponibles'
+                        ),
+                        'todas'=>new Filter(
+                            display: 'Todas'
+                        ),
+                    ],
+                    default: 'disponibles'
+                )
+            ],
             getter: new BaseGetter(
                 model_class: Quotation::get_class(),
+                
                 columns : [
                     'client'=>new Column(
                         display:"Cliente",
@@ -32,18 +49,6 @@ class Quotations extends BaseTable
                             model_class: Client::get_class(),
                             column: 'name',
                         )
-                    ),
-                    'medium' => new Column(
-                        display:"Medio",
-                        logic_modifier: new MultiForeignKey (
-                            key_column: "client_id",
-                            table: "clients",
-                            columns: [
-                                new ForeingKeyColumn("phone"),
-                                new ForeingKeyValue("Correo"),
-                                new ForeingKeyValue("Link")
-                            ],
-                        ),
                     ),
                     'unit'=>new Column(
                         display:"Unidad",
@@ -77,6 +82,10 @@ class Quotations extends BaseTable
                     ),
                     'n_open'=>new Column(
                         display:"Vistas",
+                    ),
+                    'last_viewed_at'=>new Column(
+                        display:"Ultima vez visto",
+                        modifier: Modifier::TIME_SINCE
                     )
 
                 ],
@@ -86,6 +95,15 @@ class Quotations extends BaseTable
                         column: 'quotations.asesor_id',
                         guard: 'asesor'
                     ),
+                    new BasicFilter(
+                        id: 'cartera',
+                        filter: function ($query,$data) {
+                            if(!isset($data['filtro'])) return;
+                            if($data['filtro'] == 'disponibles'){
+                                $query->where(Unit::instance()->getTable().'.status', UnitsStatus::Disponible->value);
+                            }
+                        }
+                    )
                 ]
             ),
             view: new View(
