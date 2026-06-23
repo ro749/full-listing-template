@@ -22,6 +22,8 @@ use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\SharedUtils\Filters\Filters;
 use Ro749\SharedUtils\Filters\Filter;
+use Ro749\SharedUtils\Filters\BackendFilters\BasicFilter;
+
 class QuotationsAdmin extends BaseTable
 {
     public function __construct(){
