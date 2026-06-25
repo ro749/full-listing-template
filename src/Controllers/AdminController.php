@@ -34,8 +34,6 @@ use Ro749\FullListingTemplate\Tables\AsesorsDashboard;
 
 class AdminController extends Controller
 {
-    protected $model_imgs_route = "https://propstudios.mx/img/Soho/Modelos/ISO/";
-    protected $imgs_type = "png";
 
     public function clients() {
         $table = ClientsAdmin::instance();
@@ -108,9 +106,7 @@ class AdminController extends Controller
             'quotes_chart'=>$quotes_chart,
             'sales_chart'=>$sales_chart,
             'asesores_table'=>$asesores_table,
-            'asesors_quotes'=>$asesors_quotes,
-            'model_imgs_route'=>$this->model_imgs_route,
-            'imgs_type'=>$this->imgs_type
+            'asesors_quotes'=>$asesors_quotes
         ]);
     }
 
