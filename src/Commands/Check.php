@@ -25,6 +25,7 @@ use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Unit;
 use Ro749\ListingUtils\Plans\PlansBase;
 
+
 class Check extends Command
 {
     /**
@@ -48,6 +49,8 @@ class Check extends Command
      */
     public function handle(): int
     {
+        //$this->check_in_browser();
+        //return self::SUCCESS;
         $this->info('Checking if the project is ready to upload...');
         config('database.connections.mysql.database', 'test');
         DB::purge('mysql');
@@ -64,46 +67,13 @@ class Check extends Command
         $packageConfig = require base_path('vendor/ro749/full-listing-template/config/full-listing-template.php');
         $packageConfig = $packageConfig['overrides'];
         $config = require config_path('overrides.php');
-        
+        $this->seed();
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
         $packageConfig = require base_path('vendor/ro749/listing-utils/config/listing-utils.php');
         $packageConfig = $packageConfig['overrides'];
         $config = config('overrides');
         Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        if(Asesor::instance()->count() == 0){
-            $asesor_id = Asesor::instance()->insertGetId([
-                'name' => 'test',
-                'category' => '0',
-                'mail' => 'test@example.com',
-                'phone' => '3337811700',
-                'number' => '1111',
-                'password' => Hash::make('1111')
-            ]);
-        }
-        else{
-            $asesor_id = Asesor::instance()->first()->id;
-        }
-        Auth::guard('asesor')->loginUsingId($asesor_id);
-        if(Client::instance()->count() == 0){
-            $client_id = Client::instance()->insertGetId([
-                'name' => 'test',
-                'mail' => 'test@example.com',
-                'phone' => '3337811700',
-                'asesor_id' => $asesor_id
-            ]);
-        }
-        else{
-            $client_id = Client::instance()->first()->id;
-        }
-
-        if(Quotation::instance()->count() == 0){
-            $quotation_id = Quotation::instance()->insertGetId([
-                'asesor_id' => $asesor_id,
-                'client_id' => $client_id,
-                'unit_id' => Unit::instance()->where('status', '0')->first()->id,
-                'status' => 0,
-            ]);
-        }
+        
         DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
         
 
@@ -127,7 +97,47 @@ class Check extends Command
             return self::FAILURE;
         } else {
             $this->info('No errors found, your project is ready to upload!');
+            //$this->check_in_browser();
             return self::SUCCESS;
+        }
+    }
+
+    public static function seed(){
+        if(Asesor::instance()->count() == 0){
+            $asesor_id = Asesor::instance()->create([
+                'name' => 'test',
+                'category' => '0',
+                'mail' => 'test@example.com',
+                'phone' => '3337811700',
+                'number' => '1111',
+                'password' => Hash::make('1111')
+            ])->id;
+        }
+        else{
+            $asesor_id = Asesor::instance()->first()->id;
+        }
+        Auth::guard('asesor')->loginUsingId($asesor_id);
+        if(Client::instance()->count() == 0){
+            $client_id = Client::instance()->create([
+                'name' => 'test',
+                'mail' => 'test@example.com',
+                'phone' => '3337811700',
+                'asesor_id' => $asesor_id
+            ])->id;
+        }
+        else{
+            $client_id = Client::instance()->first()->id;
+        }
+
+        if(Quotation::instance()->count() == 0){
+            DB::enableQueryLog();
+            $quotation_id = Quotation::instance()->create([
+                'asesor_id' => $asesor_id,
+                'client_id' => $client_id,
+                'unit_id' => Unit::instance()->where('status', '0')->first()->id,
+                'status' => 0,
+            ])->id;
+            DB::disableQueryLog();
         }
     }
 
@@ -361,14 +371,19 @@ class Check extends Command
 
         //$process = (new ChromeProcess(9515))->toProcess();
         //$process->start();
+        $chromeProcess = new \Symfony\Component\Process\Process(
+            ['C:\tools\chromedriver.exe', '--port=9515']
+        );
+        $chromeProcess->start();
+        sleep(1);
         Browser::$baseUrl = 'http://127.0.0.1:8000';
-        $driver = RemoteWebDriver::create('http://localhost:50727', DesiredCapabilities::chrome());
+        $driver = RemoteWebDriver::create('http://localhost:9515', DesiredCapabilities::chrome());
         $browser = new Browser($driver);
         $browser->visit('/');
         $logs = $driver->manage()->getLog('browser');
         $browser->quit();
         $this->info(json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
+        $chromeProcess->stop();
         //$process->stop();
     }
 }
