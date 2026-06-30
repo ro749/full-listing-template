@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 Use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
-
-use Laravel\Dusk\Browser;
-use Laravel\Dusk\Chrome\ChromeProcess;
-use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Illuminate\Support\Facades\Log;
 
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Client;
@@ -28,33 +24,13 @@ use Ro749\ListingUtils\Plans\PlansBase;
 
 class Check extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'check:listing';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Check if this project is ready to upload, and autofixes what it can';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle(): int
     {
-        //$this->check_in_browser();
-        //return self::SUCCESS;
         $this->info('Checking if the project is ready to upload...');
-        config('database.connections.mysql.database', 'test');
-        DB::purge('mysql');
-        DB::reconnect('mysql');
         Artisan::call('migrate:fresh', ['--force' => true]);
         File::put(storage_path('logs/laravel.log'), '');
         if (!file_exists(app_path('Mail/CotizationMail.php'))) {
@@ -64,18 +40,8 @@ class Check extends Command
         }
         $this->info('checking');
         $this->call('check');
-        $packageConfig = require base_path('vendor/ro749/full-listing-template/config/full-listing-template.php');
-        $packageConfig = $packageConfig['overrides'];
-        $config = require config_path('overrides.php');
+        $this->set_configs();
         $this->seed();
-        Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        $packageConfig = require base_path('vendor/ro749/listing-utils/config/listing-utils.php');
-        $packageConfig = $packageConfig['overrides'];
-        $config = config('overrides');
-        Config::set('overrides', $this->mergeConfigs($packageConfig, $config));
-        
-        DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
-        
 
         $errorCount = 0;
         $this->check_controllers($errorCount);
@@ -101,8 +67,19 @@ class Check extends Command
             return self::SUCCESS;
         }
     }
-
+    public static function set_configs(){
+        $packageConfig = require base_path('vendor/ro749/full-listing-template/config/full-listing-template.php');
+        $packageConfig = $packageConfig['overrides'];
+        $config = require config_path('overrides.php');
+        
+        Config::set('overrides', static::mergeConfigs($packageConfig, $config));
+        $packageConfig = require base_path('vendor/ro749/listing-utils/config/listing-utils.php');
+        $packageConfig = $packageConfig['overrides'];
+        $config = config('overrides');
+        Config::set('overrides', static::mergeConfigs($packageConfig, $config));
+    }
     public static function seed(){
+        DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
         if(Asesor::instance()->count() == 0){
             $asesor_id = Asesor::instance()->create([
                 'name' => 'test',
@@ -141,11 +118,11 @@ class Check extends Command
         }
     }
 
-    protected function mergeConfigs(array $package, array $project): array
+    protected static function mergeConfigs(array $package, array $project): array
     {
         foreach ($project as $key => $value) {
             $package[$key] = (is_array($value) && isset($package[$key]) && is_array($package[$key]))
-                ? $this->mergeConfigs($package[$key], $value)
+                ? static::mergeConfigs($package[$key], $value)
                 : $value;
         }
         return $package;
@@ -365,25 +342,5 @@ class Check extends Command
             }
         }
         
-    }
-
-    function check_in_browser(){
-
-        //$process = (new ChromeProcess(9515))->toProcess();
-        //$process->start();
-        $chromeProcess = new \Symfony\Component\Process\Process(
-            ['C:\tools\chromedriver.exe', '--port=9515']
-        );
-        $chromeProcess->start();
-        sleep(1);
-        Browser::$baseUrl = 'http://127.0.0.1:8000';
-        $driver = RemoteWebDriver::create('http://localhost:9515', DesiredCapabilities::chrome());
-        $browser = new Browser($driver);
-        $browser->visit('/');
-        $logs = $driver->manage()->getLog('browser');
-        $browser->quit();
-        $this->info(json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-        $chromeProcess->stop();
-        //$process->stop();
     }
 }

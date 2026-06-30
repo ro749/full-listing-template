@@ -8,6 +8,7 @@ use Ro749\FullListingTemplate\Commands\FullListingTemplateCommand;
 use Ro749\FullListingTemplate\Commands\FixHeader;
 use Ro749\FullListingTemplate\Commands\Check;
 use Ro749\FullListingTemplate\Commands\GeneratePersonalMigration;
+use Ro749\FullListingTemplate\Commands\FullTest;
 use Ro749\FullListingTemplate\Middleware\Admin;
 use Illuminate\Support\Facades\Log;
 
@@ -30,7 +31,8 @@ class FullListingTemplateServiceProvider extends PackageServiceProvider
                 FullListingTemplateCommand::class,
                 FixHeader::class,
                 Check::class,
-                GeneratePersonalMigration::class
+                GeneratePersonalMigration::class,
+                FullTest::class
             ])
             ->hasRoutes('web');
     }
