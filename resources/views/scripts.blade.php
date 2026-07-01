@@ -36,6 +36,6 @@
     }
 </script>
 @endpush
-@if(isset($imp))
+@if(isset($imp) && get_class($imp) == 'Ro749\ListingUtils\ImageMapPro\SingleImageMapPro')
 @include('listing-utils::ImageMapPro.image-map-pro',['imp'=>$imp])
 @endif
