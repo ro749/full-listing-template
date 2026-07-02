@@ -17,9 +17,6 @@ class ClientEdit extends BaseForm
             model_class: Client::get_class(),
             submit_text: "",
             fields: [
-                'id'=>new Field(
-                    type: InputType::HIDDEN,
-                ),
                 'name' => new Field(
                     type: InputType::TEXT,
                 ),

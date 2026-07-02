@@ -47,6 +47,7 @@ class VentaEdit extends BaseForm
     public function get_default_args(){
         $unit = Unit::instance()->first();
         return ['request' => Request::create('/', 'POST',[
+            'id' => $unit->id,
             'final_price' => $unit->final_price,
             'asesor' => $unit->asesor_id,
             'client' => $unit->client_id,

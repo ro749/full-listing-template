@@ -25,8 +25,9 @@ use Ro749\ListingUtils\Plans\PlansBase;
 class Check extends Command
 {
     protected $signature = 'check:listing';
-
     protected $description = 'Check if this project is ready to upload, and autofixes what it can';
+
+    protected $table_forms = [];
 
     public function handle(): int
     {
@@ -45,8 +46,12 @@ class Check extends Command
 
         $errorCount = 0;
         $this->check_controllers($errorCount);
+        
+        $this->check_which_forms($errorCount);
         $this->check_forms($errorCount);
+        $this->check_table_forms($errorCount);
         $this->check_tables($errorCount);
+        
         $this->check_db($errorCount);
         $this->check_listing_utils($errorCount);
 
@@ -219,7 +224,17 @@ class Check extends Command
         return $ans;
     }
 
-    function check_tables(int& $errorCount){
+    public function check_which_forms(int& $errorCount){
+        $tables = config('overrides.tables');
+        foreach($tables as $table){
+            $t = $table::instance();
+            if($t->form != null){
+                $this->table_forms[get_class($t->form)] = $table;
+            }
+        }
+    }
+
+    public function check_tables(int& $errorCount){
         $tables = config('overrides.tables');
         $ans = true;
         foreach($tables as $table){
@@ -244,19 +259,15 @@ class Check extends Command
         return $ans;
     }
 
-    function mock_form_data($form){
-        $form = $form::instanciate();
-        foreach($form->fields as $field){
-            
-        }
-    }
-
     function check_forms(int& $errorCount){
         Storage::fake('public');
         $forms = config('overrides.forms');
         $ans = true;
         foreach($forms as $key => $form){
             if($key == 'AdminLogin') continue;
+            if(!empty($this->table_forms) && array_key_exists($form, $this->table_forms)){
+                continue;
+            }
             try{
                 $this->info('check form '.$form);
                 $f = $form::instanciate();
@@ -275,6 +286,25 @@ class Check extends Command
             }
         }
         
+        return $ans;
+    }
+
+    public function check_table_forms(int& $errorCount){
+        $ans = true;
+        foreach($this->table_forms as $form => $table){
+            try{
+                $this->info('check table form '.$form);
+                $t = $table::instance();
+                $args = $t->form->get_default_args();
+                call_user_func_array([$t, 'save'], $args);
+            }catch(\Throwable $e){
+                $this->error('error in '.$form);
+                $this->error($e->getMessage());
+                $this->error($e->getTraceAsString());
+                $errorCount += 1;
+                $ans = false;
+            }
+        }
         return $ans;
     }
 
@@ -338,6 +368,21 @@ class Check extends Command
                     $this->error('error in '.$tableName.', column '.$column['name'].' must be bigint unsigned, it is '.$column['type']);
                     $errorCount += 1;
                     return false;
+                }
+                if(str_contains($column['name'], '_id')){
+                    $indexes = Schema::getIndexes($tableName); 
+                    $is_indexed = false;
+                    foreach ($indexes as $index) {
+                        if(array_search($column['name'], $index["columns"]) !== false){
+                            $is_indexed = true;
+                            break;
+                        }
+                    }
+                    if(!$is_indexed){
+                        $this->error('error in '.$tableName.', column '.$column['name'].' must be indexed');
+                        $errorCount += 1;
+                        return false;
+                    }
                 }
             }
         }
