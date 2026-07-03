@@ -50,12 +50,23 @@ class FullTest extends Command
         $browser->script('$("#password").set_value("1111");');
         $browser->click('#LoginForm-button > .btn')->waitForLocation('/client-login');
         $logs = array_merge($logs, $driver->manage()->getLog('browser'));
+        $browser->pause(1000);
         $browser->script('$("#client").set_value($("#client")[0].options[1].value);');
-        $browser->click('#SelectClient-button > .btn')->waitForLocation('/disponibilidad');
+        $browser->click('#SelectClient-button > .btn')->waitForLocation('/disponibilidad',216);
         $logs = array_merge($logs, $driver->manage()->getLog('browser'));
         $browser->scrollTo('#image-map-pro');
-        $browser->waitFor('[data-title="B-103"]', 5)->pause(1000);
-        $browser->click('[data-title="B-103"]');
+        $imp_select = config('checker.imp_select');
+        $browser->waitFor($imp_select, 5)->pause(1000);
+        $browser->click($imp_select);
+        $browser->pause(1000);
+        $browser->waitFor('#get-link-btn', 5);
+        $browser->script('$("#get-link-btn")[0].scrollIntoView({
+            behavior: "instant",
+            block: "center",
+            inline: "center"
+        })');
+        $browser->pause(1000);
+        $browser->click('#get-link-btn');
         $browser->pause(1000);
         $browser->quit();
         $this->info(json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
