@@ -84,7 +84,7 @@ class Quotations extends BaseTable
                         display:"Vistas",
                     ),
                     'last_viewed_at'=>new Column(
-                        display:"Ultima vez visto",
+                        display:"Última vez visto",
                         modifier: Modifier::TIME_SINCE
                     )
 
