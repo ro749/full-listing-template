@@ -47,9 +47,9 @@ class FullTest extends Command
         $browser->driver->manage()->window()->maximize();
         $browser->visit('/');
         $logs = $driver->manage()->getLog('browser');
-        $browser->script('$("#number").set_value("1111");');
-        $browser->script('$("#password").set_value("1111");');
-        $browser->click('#LoginForm-button > .btn')->waitForLocation('/client-login');
+        $browser->type('#number', '1111');
+        $browser->type('#password', '1111');
+        $browser->click('#LoginForm-button > .btn')->waitForLocation('/client-login',1000);
         $logs = array_merge($logs, $driver->manage()->getLog('browser'));
         $browser->pause(1000);
         $browser->scrollTo('#client');
@@ -59,9 +59,9 @@ class FullTest extends Command
         $logs = array_merge($logs, $driver->manage()->getLog('browser'));
         $browser->scrollTo('#image-map-pro');
         $imp_select = config('checker.imp_select');
-        $browser->waitFor($imp_select, 5)->pause(1000);
-        $browser->click($imp_select);
         $browser->pause(6000);
+        $browser->click($imp_select);
+        $browser->pause(1000);
         if(config()->get('checker.personal_plan')){
             $this->test_personal_plan($browser);
         }
@@ -73,7 +73,9 @@ class FullTest extends Command
         })');
         $browser->pause(1000);
         $browser->click('#get-link-btn');
-        $browser->pause(6000);
+        $browser->pause(1000);
+        $browser->click('#confirm-link');
+        $browser->pause(1000);
         $browser->quit();
         $this->info(json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         $chromeProcess->stop();
