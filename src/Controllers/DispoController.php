@@ -45,6 +45,7 @@ class DispoController extends Controller
     function client(Request $request) {
         $id = $request->input('id');
         $quotation = Quotation::where('id', $id)->first();
+        if(empty($quotation)) abort(404);
         if(!Auth::guard('asesor')->check() && !Auth::guard('web')->check()){
             $quotation->n_open += 1;
             $quotation->last_viewed_at = now();
