@@ -35,4 +35,13 @@ class Client extends Model
     public function quotations(): HasMany{
         return $this->hasMany(Quotation::get_class());
     }
+
+    public function get_default_model(){
+        return [
+                'name' => 'test',
+                'mail' => 'test@example.com',
+                'phone' => '3337811700',
+                'asesor_id' => Asesor::instance()->value('id'),
+            ];
+    }
 }

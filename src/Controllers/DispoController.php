@@ -52,7 +52,7 @@ class DispoController extends Controller
             $quotation->save();
         }
         $data_class = UnitData::get_class();
-        $data = new $data_class('id', $quotation->unit_id);
+        $data = new $data_class('id', $quotation[config('listing.quote_unit_column', 'unit_id')]);
         $unit = $data->get_data();
         if(
             $unit->status != UnitsStatus::Disponible->value && (

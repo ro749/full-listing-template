@@ -86,40 +86,20 @@ class Check extends Command
     public static function seed(){
         DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
         if(Asesor::instance()->count() == 0){
-            $asesor_id = Asesor::instance()->create([
-                'name' => 'test',
-                'category' => '0',
-                'mail' => 'test@example.com',
-                'phone' => '3337811700',
-                'number' => '1111',
-                'password' => Hash::make('1111')
-            ])->id;
+            $asesor_id = Asesor::instance()->create(Asesor::instance()->get_default_model())->id;
         }
         else{
             $asesor_id = Asesor::instance()->first()->id;
         }
         Auth::guard('asesor')->loginUsingId($asesor_id);
         if(Client::instance()->count() == 0){
-            $client_id = Client::instance()->create([
-                'name' => 'test',
-                'mail' => 'test@example.com',
-                'phone' => '3337811700',
-                'asesor_id' => $asesor_id
-            ])->id;
+            Client::instance()->create(Client::instance()->get_default_model());
         }
         else{
             $client_id = Client::instance()->first()->id;
         }
-
         if(Quotation::instance()->count() == 0){
-            DB::enableQueryLog();
-            $quotation_id = Quotation::instance()->create([
-                'asesor_id' => $asesor_id,
-                'client_id' => $client_id,
-                'unit_id' => Unit::instance()->where('status', '0')->first()->id,
-                'status' => 0,
-            ])->id;
-            DB::disableQueryLog();
+            Quotation::instance()->create(Quotation::instance()->get_default_model());
         }
     }
 
@@ -381,7 +361,6 @@ class Check extends Command
                     if(!$is_indexed){
                         $this->error('error in '.$tableName.', column '.$column['name'].' must be indexed');
                         $errorCount += 1;
-                        return false;
                     }
                 }
             }

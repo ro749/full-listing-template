@@ -7,6 +7,8 @@ use Ro749\SharedUtils\Models\HasRandomId;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
+
 class Quotation extends Model
 {
     use HasRandomId;
@@ -34,4 +36,12 @@ class Quotation extends Model
         return $this->belongsTo(Asesor::get_class());
     }
     
+    public function get_default_model(){
+        return [
+                'asesor_id' => Asesor::instance()->value('id'),
+                'client_id' => Client::instance()->value('id'),
+                'unit_id' => Unit::instance()->where('status', '0')->first()->id,
+                'status' => 0,
+            ];
+    }
 }
