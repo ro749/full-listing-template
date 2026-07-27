@@ -145,7 +145,7 @@ class Check extends Command
                             $errorCount += 1;
                             $ans = false;
                         }
-                        else if (!str_contains($view, 'X-App-Version')) {
+                        else if (!str_contains($view, 'app-version')) {
                             $this->error('error in '.$controller.' method '.$methodName);
                             $this->error('X-App-Version not found in view, this means the view was not rendered');
                             $this->error('this view is not using x-layout, make sure to extend x-layout in all your views');
@@ -306,6 +306,9 @@ class Check extends Command
 
     function check_personal_plan_quotation(int& $errorCount){
         $PlansBase = PlansBase::instance();
+        if(empty($PlansBase->form->fields)){
+            return true;
+        }
         foreach($PlansBase->form->fields as $key => $field){
             if(!Schema::hasColumn('personal_plans', $key)){
                 $this->error('error in personalized quotations, execute "php artisan generate:personal-migration" to fix it.');

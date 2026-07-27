@@ -38,19 +38,6 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
 
-        Schema::create('quotations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')->constrained();
-            $table->integer('medium');
-            $table->foreignId('asesor_id')->constrained();
-            $table->foreignId('unit_id')->constrained();
-            $table->integer('status')->default(0);
-            $table->decimal('quoted_price', 12, 2);
-            $table->integer('n_open')->default(0);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
-        });
-
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->foreignId('asesor_id')->nullable()->default(null)->constrained();
@@ -65,6 +52,21 @@ return new class extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
+
+        Schema::create('quotations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('client_id')->constrained();
+            $table->integer('medium');
+            $table->foreignId('asesor_id')->constrained();
+            $table->foreignId('unit_id')->constrained();
+            $table->integer('status')->default(0);
+            $table->decimal('quoted_price', 12, 2);
+            $table->integer('n_open')->default(0);
+            $table->dateTime('last_viewed_at')->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        });
+
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->boolean('loocked');
@@ -76,8 +78,6 @@ return new class extends Migration
             $table->string('title');
             $table->decimal('discount', 5, 2)->default(0);
             $table->date('final_date')->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
 
         Schema::create('plan_lines', function (Blueprint $table) {
@@ -86,8 +86,6 @@ return new class extends Migration
             $table->string('description');
             $table->decimal('percent', 5, 2);
             $table->boolean('months')->default(false);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
 
         Schema::table('sessions', function (Blueprint $table) {

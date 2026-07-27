@@ -13,8 +13,10 @@
 
 @push('scripts')
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     $('#{{ $name }}-button').on('click',function () {
         $('#{{ $name }}').click();
     });
+});
 </script>
 @endpush

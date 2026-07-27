@@ -17,7 +17,7 @@ use Ro749\FullListingTemplate\Forms\QuotationEdit;
 use Ro749\FullListingTemplate\Models\Quotation;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Unit;
-
+use Ro749\FullListingTemplate\Enums\Attributes\QuotationAttr;
 class ClientProfileTable extends BaseTable
 {
     public function __construct(){

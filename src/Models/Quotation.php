@@ -42,6 +42,7 @@ class Quotation extends Model
                 'client_id' => Client::instance()->value('id'),
                 'unit_id' => Unit::instance()->where('status', '0')->first()->id,
                 'status' => 0,
+                'medium' => 0,
             ];
     }
 }

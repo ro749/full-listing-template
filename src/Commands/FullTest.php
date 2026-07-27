@@ -57,8 +57,10 @@ class FullTest extends Command
         $browser->script('$("#client").set_value($("#client")[0].options[1].value);');
         $browser->click('#SelectClient-button > .btn')->waitForLocation('/disponibilidad',216);
         $logs = array_merge($logs, $driver->manage()->getLog('browser'));
-        $browser->scrollTo('#image-map-pro');
-        $imp_select = config('checker.imp_select');
+        $browser->pause(6000);
+        $imp_div = config('checker.imp.div');
+        $browser->scrollTo('#'.$imp_div);
+        $imp_select = config('checker.imp.select');
         $browser->pause(6000);
         $browser->click($imp_select);
         $browser->pause(1000);

@@ -20,6 +20,7 @@ use Ro749\FullListingTemplate\Forms\ClientEdit;
 use Ro749\FullListingTemplate\Enums\ClientCategories;
 use Ro749\FullListingTemplate\Models\Client;
 use Ro749\FullListingTemplate\Models\Quotation;
+use Ro749\FullListingTemplate\Enums\Attributes\ClientAttr;
 class Clients extends BaseTable
 {
     public function __construct(){
@@ -72,13 +73,13 @@ class Clients extends BaseTable
                     )
                 ],
                 columns : [
-                    'name'=>new Column(
+                    ClientAttr::NAME->value => new Column(
                         display:"Nombre",
                     ),
-                    'phone'=>new Column(
+                    ClientAttr::PHONE->value =>new Column(
                         display:"Teléfono",
                     ),
-                    'mail'=>new Column(
+                    ClientAttr::MAIL->value =>new Column(
                         display:"Email",
                     ),
                     'sent'=>new Column(
@@ -109,14 +110,14 @@ class Clients extends BaseTable
                             column: 'cancelled',
                         ),
                     ),
-                    'short_comment'=>new Column(
+                    ClientAttr::SHORT_COMMENT->value => new Column(
                         display:"Comentario"
                     ),
-                    'category'=>new Column(
+                    ClientAttr::CATEGORY->value =>new Column(
                         display:"Categoría",
                         logic_modifier: new Options (options: OptionsEnum::ClientCategories),
                     ),
-                    'priority'=>new Column(
+                    ClientAttr::PRIORITY->value =>new Column(
                         display:"Prioridad",
                         logic_modifier: new Options (options: OptionsEnum::ClientPriorities),
                     ),
@@ -133,10 +134,17 @@ class Clients extends BaseTable
                         filter: function ($query,$data) {
                             if(!isset($data['cartera'])) return;
                             if($data['cartera'] == 'abierta'){
-                                $query->where('clients.category','!=', ClientCategories::Cerrado->value);
+                                $query->where(
+                                    Client::get_table().'.'.ClientAttr::CATEGORY->value,
+                                    '!=', 
+                                    ClientCategories::Cerrado->value
+                                );
                             }
                             else if($data['cartera'] == 'cerrada'){
-                                $query->where('clients.category',ClientCategories::Cerrado->value);
+                                $query->where(
+                                    Client::get_table().'.'.ClientAttr::CATEGORY->value,
+                                    ClientCategories::Cerrado->value
+                                );
                             }
                         }
                     )

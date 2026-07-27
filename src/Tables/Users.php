@@ -5,28 +5,29 @@ use Ro749\SharedUtils\Tables\Column;
 use Ro749\SharedUtils\Models\LogicModifiers\Options;
 use Ro749\FullListingTemplate\Enums\Options as OptionsEnum;
 use Ro749\LoginTemplate\Tables\Users as UsersBase;
+use Ro749\FullListingTemplate\Enums\Attributes\AsesorAttr;
 class Users extends UsersBase
 {
     public function __construct(){
         parent::__construct();
         $this->getter->columns = [
-            'name'=>new Column(
+            AsesorAttr::NAME->value =>new Column(
                 display:"Nombre",
             ),
-            'mail'=>new Column(
+            AsesorAttr::MAIL->value =>new Column(
                 display:"Email",
             ),
-            'phone'=>new Column(
+            AsesorAttr::PHONE->value =>new Column(
                 display:"Teléfono",
             ),
-            'number'=>new Column(
+            AsesorAttr::NUMBER->value =>new Column(
                 display:"Numero",
             ),
-            'category'=>new Column(
+            AsesorAttr::CATEGORY->value =>new Column(
                 display:"Categoría",
                 logic_modifier: new Options(options: OptionsEnum::AsesorCategories),
             ),
-            'status'=>new Column(
+            AsesorAttr::STATUS->value =>new Column(
                 display:"Status",
                 logic_modifier: new Options(options: OptionsEnum::AsesorStatus),
             ),

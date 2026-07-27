@@ -15,13 +15,21 @@ class FixHeader extends Command
     {
         $this->call('fix:view',['view'=>'header']);
         $content = File::get(base_path('resources\views\header.blade.php'));
+        $content = str_replace('Ikhnaton Ortega Franco', '{{ $asesor }}', $content);
         $content = str_replace('Iknaton Ortega', '{{ $asesor }}', $content);
+        $content = str_replace('Nombre del Cliente', '{{ $client }}', $content);
         $content = str_replace('Test Sistema', '{{ $client }}', $content);
         $content = preg_replace(
             '/<a(.*)href="#section-contact"><span>(Cerrar Sesión|Volver a inicio)<\/span><\/a>/', 
             '@if(!empty($menu))'.PHP_EOL.'<a$1href="{{ route(\'client-login\') }}"><span>Cambiar Cliente</span></a>'.PHP_EOL.'@endif'
             , $content);
-        
+        $content = preg_replace(
+            '/<button(.*)>Cambiar Cliente<\/button>/', 
+            '@if(!empty($menu))'.PHP_EOL.'<a href="{{ route(\'client-login\') }}"><button$1>Cambiar Cliente</button></a>'.PHP_EOL.'@endif', 
+            $content);
+
+
+
         $content = preg_replace(
             '/<a(.*)href="(.*)"><span>Disponibilidad/', 
             '@if(!empty($menu) || !empty($is_open))'.PHP_EOL.'<a$1href="{{ empty($is_open) ? route(\'disponibilidad\') : route(\'open\') }}"><span>Disponibilidad'
@@ -32,6 +40,8 @@ class FixHeader extends Command
             'href="{{ empty($is_open) ? route(\'torre\') : route(\'listado\') }}"><span>Listado</span></a>'.PHP_EOL.'@endif', 
             $content);
         $content = preg_replace('/<ul(.*)>([\s\S]*)<\/ul>/', '<ul$1>@if(isset($asesor) && isset($client))$2@endif'.PHP_EOL.'</ul>', $content);
+        
+        
         File::put(base_path('resources\views\header.blade.php'), $content);
     }
 }

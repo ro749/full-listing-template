@@ -13,6 +13,7 @@ use Ro749\SharedUtils\Tables\Texts\TableTexts;
 use Ro749\FullListingTemplate\Enums\UnitsStatus;
 use Ro749\FullListingTemplate\Models\Unit;
 use Illuminate\Support\Facades\Log;
+
 class Torre extends BaseTable
 {
     public function __construct(){
