@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\SelectorDB;
 use Ro749\FullListingTemplate\Models\Client;
-
+use Illuminate\Support\Facades\Session;
 class SelectClient extends BaseForm
 {
     public function __construct()
@@ -33,7 +33,7 @@ class SelectClient extends BaseForm
         if(empty($request->input('client'))){
             return '';
         }
-        session()->put('client_id', $request->input('client'));
+        Session::put('client_id', $request->input('client'));
         return $this->redirect;
     }
 

@@ -12,7 +12,7 @@ use Ro749\FullListingTemplate\Forms\ClientComment;
 use Ro749\FullListingTemplate\Tables\Clients;
 use Ro749\FullListingTemplate\Tables\Quotations;
 use Ro749\FullListingTemplate\Tables\ClientProfileTable;
-
+use Illuminate\Support\Facades\Session;
 class AsesorController extends Controller
 {
     public function index() {
@@ -21,6 +21,7 @@ class AsesorController extends Controller
             ->update([
                 'guard' => 'asesor',
             ]);
+        Session::forget('client_id');
         $form_register = RegisterClient::instanciate();
         $form_select = SelectClient::instanciate();
         return view(config('overrides.views.client-login'), [
