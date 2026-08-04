@@ -28,13 +28,6 @@
         @endif
         @include(config('overrides.views.footer'))
     </div>
-    @push('script-includes')
-    <script src="js/vendors.js"></script>
-    <script src="js/designesia.js"></script>
-    <script src="js/validation-booking.js"></script>
-    <script src="js/swiper.js"></script>
-    <script src="js/custom-swiper-2.js"></script>
-    @endpush
     @push('scripts')
     <script>
         window.addEventListener('resize', function() {

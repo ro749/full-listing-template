@@ -28,7 +28,13 @@ class GeneratePersonalMigration extends Command
             }
         }
         $this->info("New columns to add: ".json_encode($new_columns));
-        $data = MigrationHelper::generate_migration_for_add_rows('personal_plans', $new_columns);
+        $data = [];
+        if(Schema::hasTable('personal_plans')) {
+            $data = MigrationHelper::generate_migration_for_add_rows('personal_plans', $new_columns);
+        }
+        else{
+            $data = MigrationHelper::generate_migration_for_table('personal_plans', $new_columns);
+        }
         MigrationHelper::create_migration_file('add_columns_to_personal_plans', $data);
     }
 }

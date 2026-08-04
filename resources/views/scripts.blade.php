@@ -1,22 +1,7 @@
-@push('script-includes')
-<script src="{{ asset('js/vendors.js') }}"></script>
-<script src="{{ asset('js/designesia.js') }}"></script>
-<script src="{{ asset('js/validation-booking.js') }}"></script>
-<script src="{{ asset('js/swiper.js') }}"></script>
-<script src="{{ asset('js/custom-swiper-2.js') }}"></script>
-@endpush
-
 @push('scripts')
 <script>
-
     var data = @json($unit);
     document.addEventListener('DOMContentLoaded', function() {
-        $(function () {
-          $("#date").datepicker({ 
-                autoclose: true, 
-                todayHighlight: true
-          }).datepicker('update', new Date());
-        });
         @if(empty($unit))
         $(document).on('selected-unit', function(e, raw_data) {
             data = raw_data["unit"];
@@ -28,16 +13,16 @@
             fill_data();    
         });
         @endif
-        function fill_data(){
-            @if(!empty($is_open))
-            $('#unit').val(data["id"]).trigger('change');
-            @endif
-            @stack('before_fill') 
-            @stack('fill')
-            @stack('after_fill')
-        }
+        
     });
-    
+    function fill_data(){
+        @if(!empty($is_open))
+        $('#unit').val(data["id"]).trigger('change');
+        @endif
+        @stack('before_fill') 
+        @stack('fill')
+        @stack('after_fill')
+    }
 </script>
 @endpush
 @if(isset($imp) && get_class($imp) == 'Ro749\ListingUtils\ImageMapPro\SingleImageMapPro')

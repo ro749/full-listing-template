@@ -35,4 +35,11 @@ class Unit extends Model
         'final_price',
         'sale_date'
     ];
+
+    public function model()
+    {
+        return $this->belongsTo(Model::class);
+    }
+
+
 }
