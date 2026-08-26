@@ -8,7 +8,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/admin/clients', [$admin_controller, 'clients']);
         Route::get('/admin/unidades', [$admin_controller, 'torre'])->name('admin-torre');
         Route::get('/admin/ventas', [$admin_controller, 'ventas']);
+        if (empty(config('listing.dynamic_prices'))){
         Route::get('/admin/actualizar-precios', [$admin_controller, 'precios'])->name('actualizar-precios');
+        }
         Route::get('/admin/cargar-clientes', [$admin_controller, 'cargar_clientes'])->name('cargar-clientes');
         Route::get('/admin/cotizaciones', [$admin_controller, 'quotations']);
         Route::get('/admin/client-profile', [$admin_controller, 'profile'])->name('admin-client-profile');

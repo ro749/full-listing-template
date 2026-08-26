@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Request;
 Use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
+
 
 use Ro749\FullListingTemplate\Models\Asesor;
 use Ro749\FullListingTemplate\Models\Client;
@@ -32,7 +34,7 @@ class Check extends Command
     public function handle(): int
     {
         $this->info('Checking if the project is ready to upload...');
-        Artisan::call('migrate:fresh', ['--force' => true]);
+        Artisan::call('db:reset');
         File::put(storage_path('logs/laravel.log'), '');
         if (!file_exists(app_path('Mail/CotizationMail.php'))) {
             $this->error('Falta el correo.');
@@ -65,9 +67,21 @@ class Check extends Command
 
         if ($errorCount > 0) {
             $this->error($errorCount . ' error(s) found, please fix them before uploading.');
+            $process = new Process([
+                'powershell.exe',
+                '-Command',
+                'New-BurntToastNotification -Text "'.$errorCount . ' error(s) found, please fix them before uploading."'
+            ]);
+            $process->run();
             return self::FAILURE;
         } else {
             $this->info('No errors found, your project is ready to upload!');
+            $process = new Process([
+                'powershell.exe',
+                '-Command',
+                'New-BurntToastNotification -Text "No errors found, your project is ready to upload!"'
+            ]);
+            $process->run();
             //$this->check_in_browser();
             return self::SUCCESS;
         }
@@ -84,7 +98,9 @@ class Check extends Command
         Config::set('overrides', static::mergeConfigs($packageConfig, $config));
     }
     public static function seed(){
-        DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
+        if(DB::table('users')->count() == 0){
+            DB::table('users')->insert(['name' => 'admin', 'email' => 'admin@example.com', 'password' => Hash::make('admin'), ]);
+        }
         if(Asesor::instance()->count() == 0){
             $asesor_id = Asesor::instance()->create(Asesor::instance()->get_default_model())->id;
         }
@@ -120,7 +136,9 @@ class Check extends Command
             $control = $controller::instance();
             $reflection = new \ReflectionClass($control);
             foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                if ($method->isConstructor() || str_contains($method->getName(), 'get_default_args')) {
+                if ($method->isConstructor()
+                    || str_contains($method->getName(), 'get_default_args') 
+                    || (!empty('listing.dynamic_prices') && str_contains($method->getName(), 'precios'))) {
                     continue;
                 }
                 $methodName = $method->getName();
@@ -217,7 +235,7 @@ class Check extends Command
     public function check_tables(int& $errorCount){
         $tables = config('overrides.tables');
         $ans = true;
-        foreach($tables as $table){
+        foreach($tables as $key => $table){
             try{
                 $this->info('check table '.$table);
                 $t = $table::instance();
@@ -245,7 +263,11 @@ class Check extends Command
         $ans = true;
         foreach($forms as $key => $form){
             if($key == 'AdminLogin') continue;
-            if(!empty($this->table_forms) && array_key_exists($form, $this->table_forms)){
+            if(
+                !empty($this->table_forms) && array_key_exists($form, $this->table_forms) ||
+                (!empty('listing.dynamic_prices') && 
+                ($key == 'PriceEdit' || $key == 'UpdatePrices'))
+            ) {
                 continue;
             }
             try{
@@ -272,6 +294,7 @@ class Check extends Command
     public function check_table_forms(int& $errorCount){
         $ans = true;
         foreach($this->table_forms as $form => $table){
+            if(!empty(config('listing.dynamic_prices')) && str_contains($form, 'PriceEdit')) continue;
             try{
                 $this->info('check table form '.$form);
                 $t = $table::instance();

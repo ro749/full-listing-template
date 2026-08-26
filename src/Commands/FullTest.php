@@ -21,11 +21,11 @@ class FullTest extends Command
     public function handle()
     {
         $this->info('Simulating a full test...');
-        Artisan::call('migrate:fresh', ['--force' => true]);
+        Artisan::call('db:reset');
         Check::set_configs();
         Check::seed();
         $chromeProcess = new \Symfony\Component\Process\Process(
-            ['C:\tools\chromedriver.exe', '--port=9515']
+            ['C:\tools\chromedriver2.exe', '--port=9515']
         );
         $chromeProcess->start();
         sleep(1);
