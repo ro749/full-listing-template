@@ -16,14 +16,14 @@ class LoginForm extends LoginFormBase
         parent::__construct();
         $this->fields = [
             "number" => new Field(
-                type: InputType::TEXT,
+                type: InputType::NUMBER,
                 placeholder:"Número de asesor", 
                 icon: "bx bx-user",
                 max: 4
             ),
             "password" => new Field(
                 placeholder:"Nip",
-                type: InputType::PASSWORD,
+                type: InputType::PIN,
                 icon: "bx bx-lock-alt",
                 max: 4
             ),

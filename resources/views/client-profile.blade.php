@@ -12,9 +12,9 @@
         </div>
     </div>
     <div style="display:flex; flex-direction:row; justify-content:center;">
-        <x-form :form="$form" />
+        <div data-widget="form" data-config='@json($form->get_info())'></div>
     </div>
     <div style="padding: 1.5rem">
-    @include('sharedutils::components.tables.smartTable', ['table' => $table])
+        <div data-widget="table" data-config='@json($table->get_info())'></div>
     </div>
 </x-layout>

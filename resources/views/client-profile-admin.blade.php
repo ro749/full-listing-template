@@ -15,6 +15,6 @@
         <p style="text-align: center;">{{ $client->long_comment }}</p>
     </div>
     <div style="padding: 1.5rem">
-    @include('sharedutils::components.tables.smartTable', ['table' => $table])
+        <div data-widget="table" data-config='@json($table->get_info())'></div>
     </div>
 </x-layout>

@@ -15,6 +15,7 @@ class ProfileImageEdit extends BaseForm
 {
     public function __construct()
     {
+        $user = auth()->guard('asesor')->user();
         parent::__construct(
             model_class: Asesor::get_class(),
             submit_text: "",
@@ -23,8 +24,7 @@ class ProfileImageEdit extends BaseForm
             fields: [
                 'pfp' => new ImageUploader(
                     route: 'uploads/',
-                    view: config('overrides.views.pfp'),
-                    view_data: ['user' => DB::table('asesors')->where('id', auth()->guard('asesor')->user()->id)->first()],
+                    imageUrl: !empty($user->pfp) ? asset('storage/uploads/' . $user->pfp) : 'https://propstudios.mx/img/default_user.jpeg',
                     autosave: true
                 ),
             ],

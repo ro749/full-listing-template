@@ -26,17 +26,5 @@
         @if(!empty($is_open))
         @include(config('overrides.views.contact-form'),['form'=>$form])
         @endif
-        @include(config('overrides.views.footer'))
     </div>
-    @push('scripts')
-    <script>
-        window.addEventListener('resize', function() {
-            $('body').css({
-              width: '100%',
-              height: '100%'
-            });
-        });
-    </script>
-    @endpush
-    @include(config('overrides.views.scripts'))
 </x-layout>

@@ -404,7 +404,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive scroll-sm">
-                            @include('sharedutils::components.tables.smartTable', ['table' => $asesores_table])
+                            <div data-widget="table" data-config='@json($table->get_info())'></div>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
             </div>
             @endif
             <p class="title">Registrar Cliente</p>
-            <x-form :form="$form" style="display: flex; flex-direction: column; align-items: center; gap: 6px;" />
+            <div data-widget="form" data-config='@json($form->get_info())'></div>
         </div>
     </div>
 </x-layout>
