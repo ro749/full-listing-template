@@ -29,6 +29,10 @@ use Ro749\FullListingTemplate\Charts\SalesChart;
 use Ro749\FullListingTemplate\Charts\AsesorsQuotesChart;
 use Ro749\FullListingTemplate\Forms\RegisterClientAdmin;
 
+use Ro749\SharedUtils\Charts\TimeChartGetData;
+use Ro749\SharedUtils\Charts\BaseChartGetData;
+use Ro749\SharedUtils\Statistics\ChartTime;
+
 
 use Ro749\FullListingTemplate\Tables\AsesorsDashboard;
 
@@ -96,15 +100,15 @@ class AdminController extends Controller
         $sales_chart = new SalesChart();
         $asesores_table = AsesorsDashboard::instance();
         $asesors_quotes = new AsesorsQuotesChart();
-        
+
         return view(config('overrides.views.dashboard'), [
-            'data'=>$data,
-            'asesors_chart'=>$asesors_chart,
-            'clients_chart'=>$clients_chart,
-            'sold_units_chart'=>$sold_units_chart,
-            'available_units_chart'=>$available_units_chart,
-            'quotes_chart'=>$quotes_chart,
-            'sales_chart'=>$sales_chart,
+            'data'=>$data->get_data(),
+            'asesors_chart'=>$asesors_chart->get(),
+            'clients_chart'=>$clients_chart->get(),
+            'sold_units_chart'=>$sold_units_chart->get(),
+            'available_units_chart'=>$available_units_chart->get(),
+            'quotes_chart'=>$quotes_chart->get(),
+            'sales_chart'=>$sales_chart->get(),
             'asesores_table'=>$asesores_table,
             'asesors_quotes'=>$asesors_quotes
         ]);
@@ -133,5 +137,3 @@ class AdminController extends Controller
         }
     }
 }
-
-

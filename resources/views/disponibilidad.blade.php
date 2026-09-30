@@ -1,4 +1,11 @@
 <x-layout class="{{ config('listing.class') ?? '' }}">
+    <style>
+        .dialog-footer {
+            display: flex;
+            justify-content: center !important  ;
+            gap: 6px;
+        }
+    </style>
     <div id="wrapper">
         @if(config('listing.show_scrollbar', false))
         <div class="float-text show-on-scroll">

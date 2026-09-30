@@ -29,13 +29,6 @@
         #RegisterClient .btn{
             margin-top: 1rem !important;
         }
-        .image-preview{
-            border-radius: 50%;
-            height: 4rem;
-        }
-        #ProfileImageEdit{
-            gap: 0 !important;
-        }
     </style>
     @include(config('overrides.views.header-asesor'))
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem; flex-direction: column;">

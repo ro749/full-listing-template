@@ -13,7 +13,15 @@
     'items' => $items,
     'logo' => ''
 ])
-
+<style>
+    .image-preview{
+        border-radius: 50%;
+        height: 4rem;
+    }
+    #ProfileImageEdit{
+        gap: 0 !important;
+    }
+</style>
 
 <div class="navbar-header" style="display:flex; align-items: center; justify-content: space-between;">
     <button type="button" class="sidebar-mobile-toggle">
