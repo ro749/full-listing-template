@@ -28,10 +28,10 @@ class UploadClients extends BaseForm
                     ),
                     preview_table: ClientPreviewTable::instance(),
                     cancel: function(){
-                        Client::withoutGlobalScope('client')->where('new', true)->delete();
+                        Client::instance()->withoutGlobalScope('client')->where('new', true)->delete();
                     },
                     save: function(){
-                        Client::withoutGlobalScope('client')->where('new', true)->update(['new' => false]);
+                        Client::instance()->withoutGlobalScope('client')->where('new', true)->update(['new' => false]);
                     }
                 ),
             ],
@@ -51,5 +51,5 @@ class UploadClients extends BaseForm
             error: null
         );
         return ['request' => Request::create('/', 'POST',[],[],['file' => $csv])];
-    } 
+    }
 }
