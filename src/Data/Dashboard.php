@@ -34,10 +34,10 @@ class Dashboard extends Data
 
         $sold_units = Unit::get_class()::where('status', '=', UnitsStatus::Vendido);
         $sold_units_count = $sold_units->count();
-        
+
         $saved_units = Unit::get_class()::where('status', '=', UnitsStatus::Apartado);
         $saved_units_count = $saved_units->count();
-        
+
         $blocked_units = Unit::get_class()::where('status', '=', UnitsStatus::Bloqueado);
         $blocked_units_count = $blocked_units->count();
 
@@ -118,55 +118,18 @@ class Dashboard extends Data
             ]
         );
         //$asesors_quotes = new BaseGetter(
-        //    
+        //
         //)
         $model_data = $models_getter->get()['data'];
-        foreach($model_data as $index => $model){
-            $model_data[$index]->color = generate_color($index+1);
-        }
         $total = 0;
         foreach($model_data as $index => $model){
             $total += $model_data[$index]->quote_count;
         }
         foreach($model_data as $index => $model){
             $model_data[$index]->quote_percent = $total > 0 ? round(($model_data[$index]->quote_count / $total) * 100, 2) : 0;
+            $model_data[$index]->image = image(config('listing.dashboard.img_path').$model['name'].'.'.config('listing.dashboard.img_extension'));
         }
         $ans->model_data = $model_data;
         return $ans;
     }
 }
-
-function generate_color(int $seed){
-    $goldenAngle = 137.5;
-
-    $hue = ($seed * $goldenAngle) % 360;
-    $saturation = 60 + (($seed * 23) % 35);
-    $lightness = 50 + (($seed * 17) % 15); 
-    return hslToHex($hue, $saturation, $lightness);
-}
-
-function hslToHex($h, $s, $l) {
-    $s /= 100;
-    $l /= 100;
-    $c = (1 - abs(2 * $l - 1)) * $s;
-    $x = $c * (1 - abs(fmod($h / 60, 2) - 1));
-    $m = $l - $c / 2;
-    if ($h < 60) {
-        $r = $c; $g = $x; $b = 0;
-    } elseif ($h < 120) {
-        $r = $x; $g = $c; $b = 0;
-    } elseif ($h < 180) {
-        $r = 0; $g = $c; $b = $x;
-    } elseif ($h < 240) {
-        $r = 0; $g = $x; $b = $c;
-    } elseif ($h < 300) {
-        $r = $x; $g = 0; $b = $c;
-    } else {
-        $r = $c; $g = 0; $b = $x;
-    }
-    $r = round(($r + $m) * 255);
-    $g = round(($g + $m) * 255);
-    $b = round(($b + $m) * 255);
-    return sprintf("#%02x%02x%02x", $r, $g, $b);
-}
-

@@ -100,6 +100,11 @@ class AdminController extends Controller
         $sales_chart = new SalesChart();
         $asesores_table = AsesorsDashboard::instance();
         $asesors_quotes = new AsesorsQuotesChart();
+        $models_chart = [
+            'data'=>$data->get('model_data'),
+            'label_column'=>'name',
+            'data_column'=>'modelo_percent'
+        ];
 
         return view(config('overrides.views.dashboard'), [
             'data'=>$data->get_data(),
@@ -110,7 +115,8 @@ class AdminController extends Controller
             'quotes_chart'=>$quotes_chart->get(),
             'sales_chart'=>$sales_chart->get(),
             'asesores_table'=>$asesores_table,
-            'asesors_quotes'=>$asesors_quotes
+            'asesors_quotes'=>$asesors_quotes,
+            'models_chart'=>$models_chart
         ]);
     }
 

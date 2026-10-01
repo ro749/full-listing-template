@@ -9,7 +9,8 @@
                 'soldUnitsChart' => $sold_units_chart,
                 'availableUnitsChart' => $available_units_chart,
                 'quotesChart' => $quotes_chart,
-                'salesChart' => $sales_chart
+                'salesChart' => $sales_chart,
+                'modelsChart'=>$models_chart
             ];
         @endphp
         <div
