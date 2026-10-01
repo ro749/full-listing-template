@@ -67,7 +67,7 @@ class AdminController extends Controller
     }
 
     public function profile(Request $request){
-        $client = Client::where('id', $request->input('id'))->first();
+        $client = Client::instance()->where('id', $request->input('id'))->first();
         $form = ClientComment::instanciate();
         $form->initial_data = ['long_comment'=>$client->long_comment];
         return view(config('overrides.views.client-profile-admin'), [
@@ -96,7 +96,7 @@ class AdminController extends Controller
         $sales_chart = new SalesChart();
         $asesores_table = AsesorsDashboard::instance();
         $asesors_quotes = new AsesorsQuotesChart();
-        
+
         return view(config('overrides.views.dashboard'), [
             'data'=>$data,
             'asesors_chart'=>$asesors_chart,
@@ -133,5 +133,3 @@ class AdminController extends Controller
         }
     }
 }
-
-
