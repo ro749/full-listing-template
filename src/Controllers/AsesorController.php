@@ -25,7 +25,7 @@ class AsesorController extends Controller
         $form_register = RegisterClient::instanciate();
         $form_select = SelectClient::instanciate();
         return view(config('overrides.views.client-login'), [
-            'form_register'=>$form_register, 
+            'form_register'=>$form_register,
             'form_select'=>$form_select
         ]);
     }
@@ -41,7 +41,7 @@ class AsesorController extends Controller
     }
 
     public function profile(Request $request){
-        $client = Client::where('id', $request->input('id'))->first();
+        $client = Client::instance()->where('id', $request->input('id'))->first();
         $form = ClientComment::instanciate();
         $form->initial_data = ['long_comment'=>$client->long_comment];
         return view(config('overrides.views.client-profile'), [
