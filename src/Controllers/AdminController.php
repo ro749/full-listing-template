@@ -105,6 +105,11 @@ class AdminController extends Controller
             'label_column'=>'name',
             'data_column'=>'modelo_percent'
         ];
+        $models_quotes_chart = [
+            'data'=>$data->get('model_data'),
+            'label_column'=>'name',
+            'data_column'=>'quote_percent'
+        ];
 
         return view(config('overrides.views.dashboard'), [
             'data'=>$data->get_data(),
@@ -116,7 +121,9 @@ class AdminController extends Controller
             'sales_chart'=>$sales_chart->get(),
             'asesores_table'=>$asesores_table,
             'asesors_quotes'=>$asesors_quotes,
-            'models_chart'=>$models_chart
+            'models_chart'=>$models_chart,
+            'models_quotes_chart'=>$models_quotes_chart,
+            ''
         ]);
     }
 
