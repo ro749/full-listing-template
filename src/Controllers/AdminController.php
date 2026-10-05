@@ -119,7 +119,7 @@ class AdminController extends Controller
             'available_units_chart'=>$available_units_chart->get(),
             'quotes_chart'=>$quotes_chart->get(),
             'sales_chart'=>$sales_chart->get(),
-            'asesores_table'=>$asesores_table,
+            'asesores_table'=>$asesores_table->get_info(),
             'asesors_quotes'=>$asesors_quotes,
             'models_chart'=>$models_chart,
             'models_quotes_chart'=>$models_quotes_chart,
