@@ -99,7 +99,7 @@ class AdminController extends Controller
         $quotes_chart = new QuotesChart();
         $sales_chart = new SalesChart();
         $asesores_table = AsesorsDashboard::instance();
-        $asesors_quotes = new AsesorsQuotesChart();
+        $asesors_quotes_chart = new AsesorsQuotesChart();
         $models_chart = [
             'data'=>$data->get('model_data'),
             'label_column'=>'name',
@@ -120,10 +120,9 @@ class AdminController extends Controller
             'quotes_chart'=>$quotes_chart->get(),
             'sales_chart'=>$sales_chart->get(),
             'asesores_table'=>$asesores_table->get_info(),
-            'asesors_quotes'=>$asesors_quotes,
+            'asesors_quotes_chart'=>$asesors_quotes_chart->get(),
             'models_chart'=>$models_chart,
             'models_quotes_chart'=>$models_quotes_chart,
-            ''
         ]);
     }
 
