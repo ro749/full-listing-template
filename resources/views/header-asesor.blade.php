@@ -17,6 +17,9 @@
     .image-preview{
         border-radius: 50%;
         height: 4rem;
+        width: 4rem;
+        object-fit: cover;
+        object-position: center;
     }
     #ProfileImageEdit{
         gap: 0 !important;
@@ -33,5 +36,5 @@
         <div data-widget="form" data-config='@json($form->get_info())'></div>
     </div>
     @endif
-    
+
 </div>

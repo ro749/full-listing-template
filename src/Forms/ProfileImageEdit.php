@@ -19,7 +19,7 @@ class ProfileImageEdit extends BaseForm
         parent::__construct(
             model_class: Asesor::get_class(),
             submit_text: "",
-            reload: true,
+            success_msg: "",
             db_id: Auth::guard('asesor')->user()->id,
             fields: [
                 'pfp' => new ImageUploader(
@@ -51,5 +51,5 @@ class ProfileImageEdit extends BaseForm
         $image = UploadedFile::fake()->create('photo.jpg', 100, 'image/jpeg');
         $request = Request::create('/', 'POST',[],[],['pfp' => $image]);
         return ['request' => $request];
-    } 
+    }
 }
