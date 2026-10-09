@@ -26,7 +26,7 @@ class Torre extends BaseTable
                 full_row: true
             ),
             texts: new TableTexts(
-                lengthMenu: '_MENU_  &nbsp;Departamentos por página',
+                lengthMenu: '_MENU_ Departamentos por página',
                 info: 'Mostrando _START_ a _END_ de _TOTAL_ Departamentos Disponibles',
             ),
             getter: new BaseGetter(
