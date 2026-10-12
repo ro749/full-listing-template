@@ -16,7 +16,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
     .apexcharts-yaxis-label {
         transform: translateX(12px);
     }
-    
+
     .unit-row {
         display: grid;
         grid-template-columns: 1fr 66px 48px;
@@ -39,7 +39,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
     @include(config('overrides.views.header-admin'))
     <h3 style="color: #333; font-weight: 600;">Dashboard</h3>
 
-    
+    @json($asesores_table)
     <x-data :data="$data">
         <div class="row gy-4">
             <div class="row gy-4">
@@ -54,7 +54,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
                                         <div class="d-flex align-items-center gap-2">
                                             <span style="align-items: end !important" class="mb-0 w-48-px h-48-px bg-primary-600 flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
-                                                <iconify-icon icon="mingcute:user-follow-fill" class="icon"></iconify-icon>  
+                                                <iconify-icon icon="mingcute:user-follow-fill" class="icon"></iconify-icon>
                                             </span>
                                             <div>
                                                 <span class="mb-2 fw-medium text-secondary-light text-sm">Asesores</span>
@@ -73,7 +73,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
                                         <div class="d-flex align-items-center gap-2">
                                             <span style="align-items: end !important" class="mb-0 w-48-px h-48-px bg-success-main flex-shrink-0 text-white d-flex justify-content-center align-items-center rounded-circle h6 mb-0">
-                                                <iconify-icon icon="mingcute:user-follow-fill" class="icon"></iconify-icon>  
+                                                <iconify-icon icon="mingcute:user-follow-fill" class="icon"></iconify-icon>
                                             </span>
                                             <div>
                                                 <span class="mb-2 fw-medium text-secondary-light text-sm">Clientes</span>
@@ -238,7 +238,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                         <span class="text-primary-light fw-medium text-md ps-12">
                                             Apartadas
                                         </span>
-                                    
+
                                         <div class="unit-bar">
                                             <div class="progress progress-sm rounded-pill"
                                                  role="progressbar"
@@ -251,7 +251,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                                 </x-f-div>
                                             </div>
                                         </div>
-                                    
+
                                         <span class="unit-percent text-secondary-light font-xs fw-semibold">
                                             <x-f-text id="percent_apartado" :data="$data"></x-f-text>
                                         </span>
@@ -261,7 +261,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                         <span class="text-primary-light fw-medium text-md ps-12">
                                             Vendidas
                                         </span>
-                                    
+
                                         <div class="unit-bar">
                                             <div class="progress progress-sm rounded-pill"
                                                  role="progressbar"
@@ -274,7 +274,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                                 </x-f-div>
                                             </div>
                                         </div>
-                                    
+
                                         <span class="unit-percent text-secondary-light font-xs fw-semibold">
                                             <x-f-text id="percent_sold" :data="$data"></x-f-text>
                                         </span>
@@ -285,7 +285,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                         <span class="text-primary-light fw-medium text-md ps-12">
                                             Bloqueadas
                                         </span>
-                                    
+
                                         <div class="unit-bar">
                                             <div class="progress progress-sm rounded-pill"
                                                  role="progressbar"
@@ -298,13 +298,13 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                                 </x-f-div>
                                             </div>
                                         </div>
-                                    
+
                                         <span class="unit-percent text-secondary-light font-xs fw-semibold">
                                             <x-f-text id="percent_blocked" :data="$data"></x-f-text>
                                         </span>
                                     </div>
                                     -->
-                                    
+
                                 </div>
 
                             </div>
@@ -314,7 +314,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                         <div class="card h-100 radius-8 border-0 overflow-hidden">
                             <div class="card-body p-24">
                                 <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                                    <h6 class="mb-2 fw-bold text-lg">Modelos Disponibles</h6>
+                                    <h6 class="mb-2 fw-bold text-lg">{{config("listing.dashboard.model_name","Modelo")}}s Disponibles</h6>
                                 </div>
 
                                 <div class="d-flex flex-wrap align-items-center mt-3">
@@ -326,10 +326,10 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                         </li>
                                         @endforeach
                                     </ul>
-                                    <x-donut-chart 
-                                        id="model-donut" 
-                                        :names="$model_names" 
-                                        :percents="$model_disponibility_percents" 
+                                    <x-donut-chart
+                                        id="model-donut"
+                                        :names="$model_names"
+                                        :percents="$model_disponibility_percents"
                                         :colors="$model_colors"
                                         added_char=""
                                     > </x-donut-chart>
@@ -347,7 +347,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
                     <div class="card-body">
                         <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                            <h6 class="mb-2 fw-bold text-lg mb-0">Cotizaciones por Modelo</h6>
+                            <h6 class="mb-2 fw-bold text-lg mb-0">Cotizaciones por {{config("listing.dashboard.model_name","Modelo")}}</h6>
                         </div>
 
                         <div class="mt-32">
@@ -355,7 +355,9 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                             @foreach($data->get('model_data') as $model)
                             <div class="d-flex align-items-center justify-content-between gap-3 mb-32">
                                 <div class="d-flex align-items-center">
+                                    @if(!empty(config('listing.dashboard.img_path')))
                                     <img src="{{ image(config('listing.dashboard.img_path').$model['name'].'.'.config('listing.dashboard.img_extension')) }}" alt="" class="w-40-px h-40-px rounded-circle flex-shrink-0 me-12 overflow-hidden">
+                                    @endif
                                     <div class="flex-grow-1">
                                         <h6 class="text-md mb-0">{{ $model['name'] }}</h6>
                                         <span class="text-sm text-secondary-light fw-medium">Precio promedio: ${{ number_format($model['price'], 2, '.', ',') }}</span>
@@ -364,9 +366,7 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                                 <span class="text-primary-light text-md fw-medium">{{ $model['quote_count'] }}</span>
                             </div>
                             @endforeach
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -374,14 +374,14 @@ use Ro749\SharedUtils\Statistics\ChartTime;
                 <div class="card h-100">
                     <div class="card-header">
                         <div class="d-flex align-items-center flex-wrap gap-2 justify-content-between">
-                            <h6 class="mb-2 fw-bold text-lg mb-0">Porcentaje de Cotizaciones por Modelo</h6>
+                            <h6 class="mb-2 fw-bold text-lg mb-0">Porcentaje de Cotizaciones por {{config("listing.dashboard.model_name","Modelo")}}</h6>
                         </div>
                     </div>
                     <div class="card-body p-24 d-flex align-items-center gap-16">
-                        <x-multi-radial-chart 
+                        <x-multi-radial-chart
                             id="radialMultipleBar"
-                            :names="$model_names" 
-                            :percents="$model_quote_percents" 
+                            :names="$model_names"
+                            :percents="$model_quote_percents"
                             :colors="$model_colors"
                         >
                         </x-multi-radial-chart>
