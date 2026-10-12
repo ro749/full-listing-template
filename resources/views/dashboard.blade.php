@@ -38,8 +38,6 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 <body>
     @include(config('overrides.views.header-admin'))
     <h3 style="color: #333; font-weight: 600;">Dashboard</h3>
-
-    @json($asesores_table)
     <x-data :data="$data">
         <div class="row gy-4">
             <div class="row gy-4">
