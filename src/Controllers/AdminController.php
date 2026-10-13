@@ -36,6 +36,8 @@ use Ro749\SharedUtils\Statistics\ChartTime;
 
 use Ro749\FullListingTemplate\Tables\AsesorsDashboard;
 
+use Inertia\Inertia;
+
 class AdminController extends Controller
 {
 
@@ -110,19 +112,19 @@ class AdminController extends Controller
             'label_column'=>'name',
             'data_column'=>'quote_percent'
         ];
-
-        return view(config('overrides.views.dashboard'), [
-            'data'=>$data->get_data(),
-            'asesors_chart'=>$asesors_chart->get(),
-            'clients_chart'=>$clients_chart->get(),
-            'sold_units_chart'=>$sold_units_chart->get(),
-            'available_units_chart'=>$available_units_chart->get(),
-            'quotes_chart'=>$quotes_chart->get(),
-            'sales_chart'=>$sales_chart->get(),
-            'asesores_table'=>$asesores_table->get_info(),
-            'asesors_quotes_chart'=>$asesors_quotes_chart->get(),
-            'models_chart'=>$models_chart,
-            'models_quotes_chart'=>$models_quotes_chart,
+        return Inertia::render("Dashboard",[
+            'info'=>$data->get_data(),
+            'asesorsChart'=>$asesors_chart->get(),
+            'clientsChart'=>$clients_chart->get(),
+            'soldUnitsChart'=>$sold_units_chart->get(),
+            'availableUnitsChart'=>$available_units_chart->get(),
+            'quotesChart'=>$quotes_chart->get(),
+            'salesChart'=>$sales_chart->get(),
+            'asesoresTable'=>$asesores_table->get_info(),
+            'asesorsQuotesChart'=>$asesors_quotes_chart->get(),
+            'modelsChart'=>$models_chart,
+            'modelsQuotesChart'=>$models_quotes_chart,
+            'config'=>config('listing')
         ]);
     }
 
