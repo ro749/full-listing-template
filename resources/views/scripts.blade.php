@@ -10,21 +10,21 @@
         });
         @else
         $(document).ready(function () {
-            fill_data();    
+            fill_data();
         });
         @endif
-        
+
     });
     function fill_data(){
         @if(!empty($is_open))
         $('#unit').val(data["id"]).trigger('change');
         @endif
-        @stack('before_fill') 
+        @stack('before_fill')
         @stack('fill')
         @stack('after_fill')
     }
 </script>
 @endpush
-@if(isset($imp) && get_class($imp) == 'Ro749\ListingUtils\ImageMapPro\SingleImageMapPro')
+@if(isset($imp) && str_contains(get_class($imp),'SingleImageMapPro'))
 @include('listing-utils::ImageMapPro.image-map-pro',['imp'=>$imp])
 @endif
